@@ -67,7 +67,7 @@ export const getScatterChartConfig = themeColors => {
 }
 export const getLineChartSimpleConfig = themeColors => {
   const { themeBorderColor, themeDisabledTextColor } = colorVariables(themeColors)
- 
+  
   return {
     chart: {
       parentHeightOffset: 0,

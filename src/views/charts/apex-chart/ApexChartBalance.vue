@@ -1,7 +1,7 @@
 <script setup>
-import { getLineChartSimpleConfig } from '@core/libs/apex-chart/apexCharConfig'
 import VueApexCharts from 'vue3-apexcharts'
 import { useTheme } from 'vuetify'
+import { getLineChartSimpleConfig } from '@core/libs/apex-chart/apexCharConfig'
 
 const vuetifyTheme = useTheme()
 const balanceChartConfig = computed(() => getLineChartSimpleConfig(vuetifyTheme.current.value))
@@ -23,7 +23,6 @@ const series = [{
     150,
     100,
     50,
-    300,
   ],
 }]
 </script>
