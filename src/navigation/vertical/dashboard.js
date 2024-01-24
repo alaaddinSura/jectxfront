@@ -1,22 +1,33 @@
+
+const children = [
+  {
+    title: "Misafir Dağılım",
+    to: "dashboards-misafir-dagilim",
+  },
+  {
+    title: "Rezervasyon Dağılım",
+    to: "dashboards-rezervasyon-dagilim",
+  },
+  {
+    title: "Rezervasyon Gelir",
+    to: "dashboards-rezervasyon-gelir",
+  },
+  {
+    title: "Rezervasyon Analiz",
+    to: "dashboards-rezervasyon-analiz",
+  },
+  {
+    title: "Rezervasyon Karşılaştırma",
+    to: "dashboards-rezervasyon-karsilastirma",
+  },
+]
+
 export default [
   {
     title: 'Dashboards',
     icon: { icon: 'tabler-smart-home' },
-    children: [
-      {
-        title: 'Analytics',
-        to: 'dashboards-analytics',
-      },
-      {
-        title: 'eCommerce',
-        to: 'dashboards-ecommerce',
-      },
-      {
-        title: 'CRM',
-        to: 'dashboards-crm',
-      },
-    ],
-    badgeContent: '2',
-    badgeClass: 'bg-light-primary text-primary',
+    children: children,
+    badgeContent: children.length,
+    badgeClass: 'bg-primary',
   },
 ]
