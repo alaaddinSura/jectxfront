@@ -1,164 +1,216 @@
 <script setup>
-import { VForm } from 'vuetify/components'
-import { useAppAbility } from '@/plugins/casl/useAppAbility'
-import AuthProvider from '@/views/pages/authentication/AuthProvider.vue'
-import axios from '@axios'
-import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
-import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
-import { themeConfig } from '@themeConfig'
-import {
-  emailValidator,
-  requiredValidator,
-} from '@validators'
-import authV2LoginIllustrationBorderedDark from '@images/pages/auth-v2-login-illustration-bordered-dark.png'
-import authV2LoginIllustrationBorderedLight from '@images/pages/auth-v2-login-illustration-bordered-light.png'
-import authV2LoginIllustrationDark from '@images/pages/auth-v2-login-illustration-dark.png'
-import authV2LoginIllustrationLight from '@images/pages/auth-v2-login-illustration-light.png'
-import authV2MaskDark from '@images/pages/misc-mask-dark.png'
-import authV2MaskLight from '@images/pages/misc-mask-light.png'
+import { useAppAbility } from "@/plugins/casl/useAppAbility";
+import * as dates from "@/views/dashboards/functions/dates";
+import axios from "@axios";
+import authV1BottomShape from "@images/svg/auth-v1-bottom-shape.svg?raw";
+import authV1TopShape from "@images/svg/auth-v1-top-shape.svg?raw";
+import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
+import { themeConfig } from "@themeConfig";
+import { emailValidator, requiredValidator } from "@validators";
+import { config } from "@/views/dashboards/functions/config";
 
-const authThemeImg = useGenerateImageVariant(authV2LoginIllustrationLight, authV2LoginIllustrationDark, authV2LoginIllustrationBorderedLight, authV2LoginIllustrationBorderedDark, true)
-const authThemeMask = useGenerateImageVariant(authV2MaskLight, authV2MaskDark)
-const isPasswordVisible = ref(false)
-const route = useRoute()
-const router = useRouter()
-const ability = useAppAbility()
+const route = useRoute();
+const router = useRouter();
+const ability = useAppAbility();
+
+const refVForm = ref();
+
+const form = ref({
+  email: "",
+  password: "",
+  remember: false,
+  isValid: false,
+  showMessage: false,
+});
 
 const errors = ref({
   email: undefined,
   password: undefined,
-})
+});
 
-const refVForm = ref()
-const email = ref('admin@demo.com')
-const password = ref('admin')
-const rememberMe = ref(false)
+// let config = {
+//   method: "post",
+//   maxBodyLength: Infinity,
+//   url: "https://jectxbackend-672789bf3678.herokuapp.com/rezmiktari",
+//   headers: {
+//     "Content-Type": "application/json",
+//   },
+//   data: data,
+// };
+
+const vericik = ref({
+  createdDate: "2022-09-20",
+  hotelId: 22966,
+  anaKanal: "BABA",
+  count: 5,
+  night: 22,
+});
+
+const isPasswordVisible = ref(false);
 
 const login = () => {
-  axios.post('/auth/login', {
-    email: email.value,
-    password: password.value,
-  }).then(r => {
-    const { accessToken, userData, userAbilities } = r.data
+  axios
+    .post(
+      "https://suraanaliz-05a6f1924519.herokuapp.com/login?email=" +
+        form.value.email +
+        "&password=" +
+        form.value.password
+    )
+    .then((r) => {
+      form.value.isValid = r.data.isValid;
 
-    localStorage.setItem('userAbilities', JSON.stringify(userAbilities))
-    ability.update(userAbilities)
-    localStorage.setItem('userData', JSON.stringify(userData))
-    localStorage.setItem('accessToken', JSON.stringify(accessToken))
+      if (form.value.isValid) {
+        form.value.showMessage = false;
+        let from = dates.findYesterdayDate();
+        let to = dates.findtodayDate();
 
-    // Redirect to `to` query if exist or redirect to index route
-    router.replace(route.query.to ? String(route.query.to) : '/')
-  }).catch(e => {
-    const { errors: formErrors } = e.response.data
+        let data = JSON.stringify({
+          dateRange: ["2020-12-12", "2020-12-15", "2020-12-16", "2020-12-17"],
+          hotelidArray: [22964, 22966],
+        });
+        const url =
+          "https://jectxbackend-672789bf3678.herokuapp.com/rezmiktari";
 
-    errors.value = formErrors
-    console.error(e.response.data)
-  })
-}
+        axios.request(config(url, data)).then((r) => {
+          console.log(r.data);
+          localStorage.setItem("rezCount", JSON.stringify(r.data));
+        });
+
+        let canalURL = "https://jectxbackend-672789bf3678.herokuapp.com/kanalrezdagilim"
+        let canalData = JSON.stringify({
+          dateRange: ["2020-12-12", "2020-12-15", "2020-12-16", "2020-12-17"],
+          hotelidArray: [22964, 22966],
+        });
+        axios.request(config(canalURL, canalData)).then(r=>{
+          localStorage.setItem("canalRez", JSON.stringify(r.data))
+          console.log(r.data)
+        })
+        let onlineRezUrl = "https://jectxbackend-672789bf3678.herokuapp.com/onlrezmiktari"
+        let onlineRezData = JSON.stringify({
+          dateRange: ["2020-12-12","2020-12-15","2020-12-16","2020-12-17","2020-12-20"],
+          hotelidArray: [22964, 22966],
+        });
+        axios.request(config(onlineRezUrl, onlineRezData)).then(r=>{
+          localStorage.setItem('onlineRez', JSON.stringify(r.data))
+          console.log("S",r.data)
+        })
+        let nightAmountUrl = "https://jectxbackend-672789bf3678.herokuapp.com/gecelemiktarlari"
+        let nightAmountData = JSON.stringify({
+          dateRange: ["2020-12-12","2020-12-15","2020-12-16","2017-01-01"],
+          hotelidArray: [22964, 22966],
+        })
+        axios.request(config(nightAmountUrl, nightAmountData)).then(r=>{
+          localStorage.setItem("nightAmount", JSON.stringify(r.data))
+        })
+        let userAbilities = [{ action: "manage", subject: "all" }];
+        let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
+        let userData = {
+          avatar: "/src/assets/images/avatars/avatar-1.png",
+          email: form.value.email,
+          fullName: form.value.email,
+          id: 1,
+          role: form.value.isValid ? "admin" : None,
+          username: form.value.email,
+          pages: r.data.role,
+        };
+
+        localStorage.setItem("userAbilities", JSON.stringify(userAbilities));
+        ability.update(userAbilities);
+        localStorage.setItem("userData", JSON.stringify(userData));
+        localStorage.setItem("accessToken", JSON.stringify(accessToken));
+
+        // Redirect to `to` query if exist or redirect to index route
+        router.replace(route.query.to ? String(route.query.to) : "/");
+      } else {
+        form._value.showMessage = true;
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
 
 const onSubmit = () => {
   refVForm.value?.validate().then(({ valid: isValid }) => {
-    if (isValid)
-      login()
-  })
-}
+    if (isValid) {
+      login();
+    }
+  });
+};
 </script>
 
 <template>
-  <VRow
-    no-gutters
-    class="auth-wrapper"
-  >
-    <VCol
-      lg="8"
-      class="d-none d-lg-flex"
-    >
-      <div class="position-relative auth-bg rounded-lg w-100 ma-8 me-0">
-        <div class="d-flex align-center justify-center w-100 h-100">
-          <VImg
-            max-width="505"
-            :src="authThemeImg"
-            class="auth-illustration mt-16 mb-2"
-          />
-        </div>
+  <div class="auth-wrapper d-flex align-center justify-center pa-4">
+    <div class="position-relative my-sm-16">
+      <!-- 👉 Top shape -->
+      <VNodeRenderer
+        :nodes="h('div', { innerHTML: authV1TopShape })"
+        class="text-primary auth-v1-top-shape d-none d-sm-block"
+      />
 
-        <VImg
-          :src="authThemeMask"
-          class="auth-footer-mask"
-        />
-      </div>
-    </VCol>
+      <!-- 👉 Bottom shape -->
+      <VNodeRenderer
+        :nodes="h('div', { innerHTML: authV1BottomShape })"
+        class="text-primary auth-v1-bottom-shape d-none d-sm-block"
+      />
 
-    <VCol
-      cols="12"
-      lg="4"
-      class="d-flex align-center justify-center"
-    >
-      <VCard
-        flat
-        :max-width="500"
-        class="mt-12 mt-sm-0 pa-4"
-      >
-        <VCardText>
-          <VNodeRenderer
-            :nodes="themeConfig.app.logo"
-            class="mb-6"
-          />
+      <!-- 👉 Auth Card -->
+      <VCard class="auth-card pa-4" max-width="448">
+        <VCardItem class="justify-center">
+          <template #prepend>
+            <div class="d-flex">
+              <VNodeRenderer :nodes="themeConfig.app.logo" />
+            </div>
+          </template>
 
-          <h5 class="text-h5 font-weight-semibold mb-1">
-            Welcome to {{ themeConfig.app.title }}! 👋🏻
+          <VCardTitle class="font-weight-bold text-capitalize text-h5 py-1">
+            {{ themeConfig.app.title }}
+          </VCardTitle>
+        </VCardItem>
+
+        <VCardText class="pt-1">
+          <h5 class="text-h5 mb-1">
+            <span class="text-capitalize"
+              >{{ themeConfig.app.title }}'a hoşgeldiniz</span
+            >! 👋🏻
           </h5>
           <p class="mb-0">
-            Please sign-in to your account and start the adventure
+            Giriş yapmak için sahip olduğunuz email ve şifrenizi giriniz.
           </p>
         </VCardText>
+
         <VCardText>
-          <VAlert
-            color="primary"
-            variant="tonal"
-          >
-            <p class="text-caption mb-2">
-              Admin Email: <strong>admin@demo.com</strong> / Pass: <strong>admin</strong>
-            </p>
-            <p class="text-caption mb-0">
-              Client Email: <strong>client@demo.com</strong> / Pass: <strong>client</strong>
-            </p>
-          </VAlert>
-        </VCardText>
-        <VCardText>
-          <VForm
-            ref="refVForm"
-            @submit.prevent="onSubmit"
-          >
+          <VForm ref="refVForm" @submit.prevent="onSubmit">
             <VRow>
               <!-- email -->
               <VCol cols="12">
                 <VTextField
-                  v-model="email"
+                  v-model="form.email"
+                  autofocus
                   label="Email"
                   type="email"
                   :rules="[requiredValidator, emailValidator]"
-                  :error-messages="errors.email"
+                  :error-messages="errors.mail"
                 />
               </VCol>
 
               <!-- password -->
               <VCol cols="12">
                 <VTextField
-                  v-model="password"
+                  v-model="form.password"
                   label="Password"
                   :rules="[requiredValidator]"
                   :type="isPasswordVisible ? 'text' : 'password'"
-                  :error-messages="errors.password"
-                  :append-inner-icon="isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'"
+                  :append-inner-icon="
+                    isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'
+                  "
                   @click:append-inner="isPasswordVisible = !isPasswordVisible"
                 />
 
-                <div class="d-flex align-center flex-wrap justify-space-between mt-2 mb-4">
-                  <VCheckbox
-                    v-model="rememberMe"
-                    label="Remember me"
-                  />
+                <!-- remember me checkbox -->
+                <div
+                  class="d-flex align-center justify-space-between flex-wrap mt-2 mb-4"
+                >
                   <RouterLink
                     class="text-primary ms-2 mb-1"
                     :to="{ name: 'forgot-password' }"
@@ -167,49 +219,18 @@ const onSubmit = () => {
                   </RouterLink>
                 </div>
 
-                <VBtn
-                  block
-                  type="submit"
-                >
-                  Login
-                </VBtn>
-              </VCol>
-
-              <!-- create account -->
-              <VCol
-                cols="12"
-                class="text-center"
-              >
-                <span>New on our platform?</span>
-                <RouterLink
-                  class="text-primary ms-2"
-                  :to="{ name: 'register' }"
-                >
-                  Create an account
-                </RouterLink>
-              </VCol>
-              <VCol
-                cols="12"
-                class="d-flex align-center"
-              >
-                <VDivider />
-                <span class="mx-4">or</span>
-                <VDivider />
-              </VCol>
-
-              <!-- auth providers -->
-              <VCol
-                cols="12"
-                class="text-center"
-              >
-                <AuthProvider />
+                <!-- login button -->
+                <div v-if="form.showMessage">
+                  Kullanıcı Adı ya da Şifresi Hatalı/Mevcut Değil
+                </div>
+                <VBtn block type="submit"> Login </VBtn>
               </VCol>
             </VRow>
           </VForm>
         </VCardText>
       </VCard>
-    </VCol>
-  </VRow>
+    </div>
+  </div>
 </template>
 
 <style lang="scss">

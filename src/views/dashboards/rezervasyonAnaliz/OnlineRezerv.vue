@@ -1,4 +1,5 @@
 <script setup>
+import { store } from "@/store/index"
 import { hexToRgb } from '@layouts/utils'
 import {
   useDisplay,
@@ -11,13 +12,33 @@ const vuetifyTheme = useTheme()
 const display = useDisplay()
 
 let data = computed(() => {
+let chosenDate = store.state.dateRange
+let chosenHotels= store.state.selectedHotels
+let startDate = chosenDate.split(' to ')[0]
+let endDate = chosenDate.split(' to ')[1]
 
+
+let onlRezData = JSON.parse(localStorage.getItem('onlineRez'))
+console.log()
+let statData = onlRezData.filter(item => chosenHotels.includes(item.hotelId))
+
+let rezAdet = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
+
+let agodaData = statData.filter(item => item.altKanal == 'AGODA').map(item=>item.gece != 'nan' ? Number(item.gece): 0).reduce((f,s)=>f+s,0)
+
+let bookingData = statData.filter(item => item.altKanal == 'BOOKING').map(item=>item.gece != 'nan' ? Number(item.gece): 0).reduce((f,s)=>f+s,0)
+
+let expediaData = statData.filter(item => item.altKanal == 'EXPEDIA').map(item=>item.gece != 'nan' ? Number(item.gece): 0).reduce((f,s)=>f+s,0)
+
+let webData = statData.filter(item => item.altKanal == 'WEB').map(item=>item.gece != 'nan' ? Number(item.gece): 0).reduce((f,s)=>f+s,0)
+
+let digerData = statData.filter(item => item.altKanal == 'ONLDIGER').map(item=>item.gece != 'nan' ? Number(item.gece): 0).reduce((f,s)=>f+s,0)
   return {
-    totalNight: 25,
-    totalAmountNight: 50,
+    totalNight: rezAdet,
+    totalAmountNight: agodaData + bookingData + expediaData + webData + digerData,
     labels: ['AGODA', 'BOOKING', 'EXPEDIA', 'WEB', 'DIGER'],
     series: [
-      25, 25, 25, 25, 25,
+      agodaData, bookingData, expediaData, webData, digerData,
     ],
     percentage: 32,
     name: 'Onl Rezerv Miktarı',

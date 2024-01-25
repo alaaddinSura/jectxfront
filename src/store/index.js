@@ -4,7 +4,7 @@ import { createStore } from "vuex"
 export const store = createStore({
   state: {
     dateRange: dates.findYesterdayDate() + "to" + dates.findtodayDate(),
-    selectedHotels: ['22964', '22966'],
+    selectedHotels: [22964, 22966],
     guestTypes: {},
     guestNations: [],
     rawData: [],
