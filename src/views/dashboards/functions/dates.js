@@ -248,8 +248,28 @@ export function findLastMonth(currentDate){
   else{
     month = String(month)
   }
-  
-  
   return year + '-' + month
 }
-  
+
+export function findBetweenDates(startDate, endDate){
+    let tarih1 = startDate
+    let tarih2 = endDate
+
+    // Eğer tarih değerleri eksikse veya aynı değerdeyse boş bir dizi döndürelim
+    if (!tarih1 || !tarih2 || tarih1 === tarih2) {
+        return [];
+    }
+
+    // Tarih değerlerini Date nesnelerine çevirelim
+    let date1 = new Date(tarih1);
+    let date2 = new Date(tarih2);
+
+    let tarihDizisi = [];
+
+    // Döngü ile her günün tarihini ekleyelim
+    for (var currentDate = date1; currentDate <= date2; currentDate.setDate(currentDate.getDate() + 1)) {
+        tarihDizisi.push(currentDate.toISOString().split('T')[0]);
+    }
+
+    return tarihDizisi;
+}

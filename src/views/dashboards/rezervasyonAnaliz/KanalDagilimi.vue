@@ -9,7 +9,7 @@ const statistics = computed(() => {
   let startDate = chosenDate.split(" to ")[0];
   let endDate = chosenDate.split(" to ")[1];
 
-  let canalRez = JSON.parse(localStorage.getItem("canalRez"));
+  let canalRez = JSON.parse(localStorage.getItem("kanalRezDagilim"));
 
   let statData = canalRez.filter((item) => chosenHotels.includes(item.hotelId));
 

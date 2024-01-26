@@ -20,7 +20,7 @@ let data = computed(() => {
   let endDate = dateRange.split(' to ')[1]
   let anaKanallar = ['ONL','WH','AGT','IND']
 
-  let rezData = JSON.parse(localStorage.getItem('rezCount'))
+  let rezData = JSON.parse(localStorage.getItem('rezMiktar'))
 
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
   

@@ -3,7 +3,13 @@ import { store } from '@/store/index'
 
 let nationData = store.state.guestNations
 
-const salesByCountries = [
+const salesByCountries = computed(()=>{
+  let chosenHotels = store.state.selectedHotels
+
+  let nationData = store.state.guestNations
+
+  let guestData = nationData.length == 0 ? JSON.parse(localStorage.getItem('guestNations')) : [...nationData]
+  return [
   {
     flag: "flag-tr-1x1",
     rezAdet: 116,
@@ -45,6 +51,7 @@ const salesByCountries = [
     adr: 91.7,
   },
 ]
+})
 </script>
 
 <template>

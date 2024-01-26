@@ -5,6 +5,7 @@ export const store = createStore({
   state: {
     dateRange: dates.findYesterdayDate() + "to" + dates.findtodayDate(),
     selectedHotels: [22964, 22966],
+    yatakDagilim: [],
     guestTypes: {},
     guestNations: [],
     rawData: [],
@@ -25,6 +26,9 @@ export const store = createStore({
     },
     changeRawData(state, payload){
       state.rawData = payload
+    },
+    changeYatakDagilim(state, payload){
+      state.yatakDagilim = payload
     },
   },
   actions: {},

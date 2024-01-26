@@ -8,6 +8,8 @@ import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { themeConfig } from "@themeConfig";
 import { emailValidator, requiredValidator } from "@validators";
 import { config } from "@/views/dashboards/functions/config";
+import * as fetchData from "@/views/dashboards/functions/fetchData"
+
 
 const route = useRoute();
 const router = useRouter();
@@ -58,50 +60,35 @@ const login = () => {
     )
     .then((r) => {
       form.value.isValid = r.data.isValid;
-
       if (form.value.isValid) {
         form.value.showMessage = false;
         let from = dates.findYesterdayDate();
         let to = dates.findtodayDate();
 
-        let data = JSON.stringify({
-          dateRange: ["2020-12-12", "2020-12-15", "2020-12-16", "2020-12-17"],
-          hotelidArray: [22964, 22966],
-        });
-        const url =
-          "https://jectxbackend-672789bf3678.herokuapp.com/rezmiktari";
+        let dateRange = ["2020-12-12", "2020-12-15", "2020-12-16", "2020-12-17"];
+        let hotelids =  [22964, 22966];
 
-        axios.request(config(url, data)).then((r) => {
-          console.log(r.data);
-          localStorage.setItem("rezCount", JSON.stringify(r.data));
-        });
+        //Rezerv Miktarı        
+        fetchData.callRezervMiktari(dateRange,hotelids,true)
 
-        let canalURL = "https://jectxbackend-672789bf3678.herokuapp.com/kanalrezdagilim"
-        let canalData = JSON.stringify({
-          dateRange: ["2020-12-12", "2020-12-15", "2020-12-16", "2020-12-17"],
-          hotelidArray: [22964, 22966],
-        });
-        axios.request(config(canalURL, canalData)).then(r=>{
-          localStorage.setItem("canalRez", JSON.stringify(r.data))
-          console.log(r.data)
-        })
-        let onlineRezUrl = "https://jectxbackend-672789bf3678.herokuapp.com/onlrezmiktari"
-        let onlineRezData = JSON.stringify({
-          dateRange: ["2020-12-12","2020-12-15","2020-12-16","2020-12-17","2020-12-20"],
-          hotelidArray: [22964, 22966],
-        });
-        axios.request(config(onlineRezUrl, onlineRezData)).then(r=>{
-          localStorage.setItem('onlineRez', JSON.stringify(r.data))
-          console.log("S",r.data)
-        })
-        let nightAmountUrl = "https://jectxbackend-672789bf3678.herokuapp.com/gecelemiktarlari"
-        let nightAmountData = JSON.stringify({
-          dateRange: ["2020-12-12","2020-12-15","2020-12-16","2017-01-01"],
-          hotelidArray: [22964, 22966],
-        })
-        axios.request(config(nightAmountUrl, nightAmountData)).then(r=>{
-          localStorage.setItem("nightAmount", JSON.stringify(r.data))
-        })
+          //Kanalara rezervasyon Dağılım
+        fetchData.callKanalRezDagilim(dateRange, hotelids, true)
+
+        //Online Rezervasyon Miktarı
+        fetchData.callOnlineRezMiktari(dateRange, hotelids, true)
+
+        //Geceleme Miktarı
+        fetchData.callGecelemeMiktari(dateRange, hotelids, true)
+        
+        // yatak dağılım çağırma
+        fetchData.callYatakDagilim(dateRange, hotelids, true)
+
+        //Geceleme Dağılım 
+        fetchData.callGecelemeDagilim(dateRange, hotelids, true)
+
+        //Ülke Dağılım
+        fetchData.callUlkeDagilim(dateRange, hotelids, true)
+
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {

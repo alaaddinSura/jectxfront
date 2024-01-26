@@ -4,38 +4,27 @@ import { store } from '@/store/index'
 import * as dates from '@/views/dashboards/functions/dates'
 import axios from '@axios'
 import { ref, watch } from 'vue'
+import * as fetchData from "@/views/dashboards/functions/fetchData"
 
 let dateRange = ref(dates.findYesterdayDate() + " to " + dates.findtodayDate())
 let isPersistent = ref(true)
 
 
 watch(dateRange, (newValue, oldValue) => {
+
+  let hotelids = [22964, 22966]
+  const tarih = dates.findBetweenDates('2023-10-10', '2023-10-15')
+
   if(newValue.includes('to')){
     store.commit('changeDateRange', newValue)
     let startDate = dateRange.value.split(' to ')[0]
     let endDate = dateRange.value.split(' to ')[1] 
-    axios.get('https://suraanaliz-05a6f1924519.herokuapp.com/guestnation?datetype=CHECKINDATE&from=' + startDate + '&to=' + endDate)
-      .then(r => {
-        store.commit('changeGuestNations', r.data)
-      })
-    axios.get('https://suraanaliz-05a6f1924519.herokuapp.com/subraw?from=' + startDate + '&to=' + endDate)
-      .then(r => {
-        store.commit('changeRawData', r.data)
-      })
+    let d_range = dates.findBetweenDates(startDate, endDate)
+    fetchData.callYatakDagilim(d_range, hotelids)
   }
   else{
-    let dateValue = newValue + ' to ' + newValue
-    store.commit('changeDateRange', dateValue)
-    let startDate = dateValue.split(' to ')[0]
-    let endDate = dates.findAfterDate(startDate)
-    axios.get('https://suraanaliz-05a6f1924519.herokuapp.com/guestnation?datetype=CHECKINDATE&from=' + startDate + '&to=' + endDate)
-      .then(r => {
-        store.commit('changeGuestNations', r.data)
-      })
-    axios.get('https://suraanaliz-05a6f1924519.herokuapp.com/subraw?from=' + startDate + '&to=' + endDate)
-      .then(r => {
-        store.commit('changeRawData', r.data)
-      })
+    let d_range = [newValue]
+    fetchData.callYatakDagilim(d_range, hotelids)
   }
 })
 </script>
