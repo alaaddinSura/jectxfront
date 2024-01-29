@@ -8,7 +8,6 @@ import DolulukOrani from '../stats/DolulukOrani.vue'
  let color = ref('#512DA8')
  let nightcount = computed(() => {
 
-   let chosenDate = store.state.dateRange
    let chosenHotels = store.state.selectedHotels
    let roomCounts = [
     {
@@ -20,10 +19,8 @@ import DolulukOrani from '../stats/DolulukOrani.vue'
       count: 220
     }
    ]
-   let startDate = chosenDate.split(' to ')[0]
-   let endDate = chosenDate.split(' to ')[1]
 
-   let rezData = JSON.parse(localStorage.getItem("nightAmount"))
+   let rezData = store.state.doluluk.length == 0 ? JSON.parse(localStorage.getItem("nightAmount")) : store.state.doluluk
    //console.log(rezData)
    let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
    
@@ -46,7 +43,7 @@ import DolulukOrani from '../stats/DolulukOrani.vue'
    
 
   let geceCount = 120
-  let oran = [(nightCount / roomCount * 100).toFixed(2)]
+  let oran = [(nightCount / roomCount * 1).toFixed(2)]
   
   
   return {

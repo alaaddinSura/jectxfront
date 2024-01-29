@@ -12,14 +12,11 @@ const vuetifyTheme = useTheme()
 const display = useDisplay()
 
 let data = computed(() => {
-let chosenDate = store.state.dateRange
 let chosenHotels= store.state.selectedHotels
-let startDate = chosenDate.split(' to ')[0]
-let endDate = chosenDate.split(' to ')[1]
 
 
-let onlRezData = JSON.parse(localStorage.getItem('onlineRez'))
-console.log()
+let onlRezData = store.state.onlineRezMiktari.length == 0 ? JSON.parse(localStorage.getItem('onlineRez')) : store.state.onlineRezMiktari
+
 let statData = onlRezData.filter(item => chosenHotels.includes(item.hotelId))
 
 let rezAdet = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)

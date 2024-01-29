@@ -9,7 +9,7 @@ export const callYatakDagilim = (dateRange, hotelids, isLocal) =>{
             localStorage.setItem("yatakDagilim", JSON.stringify(r.data))//bedScatter
         }
         else{
-            store.commit('changeYatakDagilim', JSON.stringify(r.data))
+            store.commit('changeYatakDagilim', r.data)
         }
         
       }).catch(d => console.log(d))
@@ -21,6 +21,9 @@ export const callGecelemeDagilim = (dateRange, hotelids, isLocal) =>{
             localStorage.setItem("gecelemeDagilim", JSON.stringify(r.data))
             console.log(r.data)
         }
+        else{
+            store.commit('changeGecelemeDagilim', r.data)
+        }
     }).catch(d => console.log(d))
 }
 
@@ -28,6 +31,9 @@ export const callRezervMiktari = (dateRange, hotelids, isLocal)=>{
     axios.request(configs.rezervMiktariConfig(dateRange,hotelids)).then((r)=>{
         if(isLocal){
             localStorage.setItem("rezMiktar", JSON.stringify(r.data))//rezCount
+        }
+        else{
+            store.commit('changeRezervMiktar', r.data);
         }
     }).catch(d => console.log(d));
 }
@@ -37,6 +43,9 @@ export const callKanalRezDagilim = (dateRange, hotelids, isLocal)=>{
         if(isLocal){
             localStorage.setItem("kanalRezDagilim", JSON.stringify(r.data))//canalRez
         }
+        else{
+            store.commit("changeKanalRezDagilim", r.data)
+        }
     }).catch(d=> console.log(d));
 }
 
@@ -45,6 +54,9 @@ export const callOnlineRezMiktari = (dateRange, hotelids, isLocal) =>{
         if(isLocal){
             localStorage.setItem("onlineRez", JSON.stringify(r.data))//onlineRez
         }
+        else{
+            store.commit("changeOnlineRezMiktari", r.data)
+        }
     }).catch(d=> console.log(d));
 }
 
@@ -52,6 +64,9 @@ export const callGecelemeMiktari = (dateRange, hotelids, isLocal) =>{
     axios.request(configs.gecelemeMiktariConfig(dateRange, hotelids)).then((r)=>{
         if(isLocal){
             localStorage.setItem("nightAmount", JSON.stringify(r.data))
+        }
+        else{
+            store.commit("changeDoluluk", r.data)
         }
     }).catch(d=> console.log(d));
 }

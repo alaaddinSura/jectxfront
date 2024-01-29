@@ -1,6 +1,6 @@
 <script setup>
 import AyDoluluk from "@/views/dashboards/rezervasyonAnaliz/AyDoluluk.vue"
-import AyasofyaDoluluk from "@/views/dashboards/rezervasyonAnaliz/AyasofyaDoluluk.vue"
+import Doluluk from "@/views/dashboards/rezervasyonAnaliz/Doluluk.vue"
 import GecmisRezervasyonlar from "@/views/dashboards/rezervasyonAnaliz/GecmisRezervasyonlar.vue"
 import GenelRezerv from "@/views/dashboards/rezervasyonAnaliz/GenelRezerv.vue"
 import HaftaDoluluk from "@/views/dashboards/rezervasyonAnaliz/HaftaDoluluk.vue"
@@ -42,7 +42,7 @@ import YediAyDoluluk from "@/views/dashboards/rezervasyonAnaliz/YediAyDoluluk.vu
       md="6"
       lg="2"
     >
-      <AyasofyaDoluluk />
+      <Doluluk />
     </VCol>
     <VCol
       cols="12"

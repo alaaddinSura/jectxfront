@@ -89,6 +89,8 @@ const login = () => {
         //Ülke Dağılım
         fetchData.callUlkeDagilim(dateRange, hotelids, true)
 
+        //Rezervasyon Analiz
+
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {

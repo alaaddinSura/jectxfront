@@ -6,6 +6,11 @@ export const store = createStore({
     dateRange: dates.findYesterdayDate() + "to" + dates.findtodayDate(),
     selectedHotels: [22964, 22966],
     yatakDagilim: [],
+    gecelemeDagilim: [],
+    rezervMiktar: [],
+    kanalRezDagilim: [],
+    onlineRezMiktari: [],
+    doluluk: [],
     guestTypes: {},
     guestNations: [],
     rawData: [],
@@ -30,6 +35,21 @@ export const store = createStore({
     changeYatakDagilim(state, payload){
       state.yatakDagilim = payload
     },
+    changeGecelemeDagilim(state, payload){
+      state.gecelemeDagilim = payload;
+    },
+    changeRezervMiktar(state,payload){
+      state.rezervMiktar = payload;
+    },
+    changeKanalRezDagilim(state,payload){
+      state.kanalRezDagilim = payload;
+    },
+    changeOnlineRezMiktari(state, payload){
+      state.onlineRezMiktari = payload;
+    },
+    changeDoluluk(state, payload){
+      state.doluluk = payload;
+    }
   },
   actions: {},
 })

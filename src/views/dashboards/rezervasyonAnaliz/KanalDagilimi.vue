@@ -4,12 +4,9 @@ import * as dates from "@/views/dashboards/functions/dates";
 import Bar from "../stats/Bar.vue";
 
 const statistics = computed(() => {
-  let chosenDate = store.state.dateRange;
   let chosenHotels = store.state.selectedHotels;
-  let startDate = chosenDate.split(" to ")[0];
-  let endDate = chosenDate.split(" to ")[1];
 
-  let canalRez = JSON.parse(localStorage.getItem("kanalRezDagilim"));
+  let canalRez = store.state.kanalRezDagilim.length == 0 ? JSON.parse(localStorage.getItem("kanalRezDagilim")) : store.state.kanalRezDagilim;
 
   let statData = canalRez.filter((item) => chosenHotels.includes(item.hotelId));
 

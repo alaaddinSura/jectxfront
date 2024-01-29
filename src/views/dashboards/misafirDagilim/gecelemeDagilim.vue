@@ -4,14 +4,12 @@ import Bar from "../stats/Bar.vue"
 import { store } from '@/store/index'
 
 const statistic = computed(()=>{
-  let chosenDate = store.state.dateRange
   let chosenHotels = store.state.selectedHotels
-  let startDate = chosenDate.split(' to ')[0]
-  let endDate = chosenDate.split(' to ')[1]
 
   let nightScatter = JSON.parse(localStorage.getItem("gecelemeDagilim"))
-  console.log(nightScatter)
-  let statData = nightScatter.filter(item => chosenHotels.includes(item.hotelId))
+  console.log("Geceleme Dağılım")
+  console.log(store.state.gecelemeDagilim)
+  let statData = store.state.gecelemeDagilim.length == 0 ? nightScatter.filter(item => chosenHotels.includes(item.hotelId)) : store.state.gecelemeDagilim
   return [
   {
     title: 'Tek Kişi',

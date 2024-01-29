@@ -20,11 +20,32 @@ watch(dateRange, (newValue, oldValue) => {
     let startDate = dateRange.value.split(' to ')[0]
     let endDate = dateRange.value.split(' to ')[1] 
     let d_range = dates.findBetweenDates(startDate, endDate)
+    // Yatak Dağılım
     fetchData.callYatakDagilim(d_range, hotelids)
+
+    //Geceleme Dağılım
+    fetchData.callGecelemeDagilim(d_range, hotelids)
+
+    // Genel Rezerv (Rezerv Miktarı)
+    fetchData.callRezervMiktari(d_range, hotelids)
+
+    // Kanallara Rezervasyon Dağılımı
+    fetchData.callKanalRezDagilim(d_range, hotelids)
+
+    // Online Rezerv Miktarı
+    fetchData.callOnlineRezMiktari(d_range, hotelids)
+
+    // Doluluk
+    fetchData.callGecelemeMiktari(d_range, hotelids)
   }
   else{
     let d_range = [newValue]
     fetchData.callYatakDagilim(d_range, hotelids)
+    fetchData.callGecelemeDagilim(d_range, hotelids)
+    fetchData.callOnlineRezMiktari(d_range, hotelids)
+    fetchData.callGecelemeMiktari(d_range, hotelids)
+    fetchData.callRezervMiktari(d_range, hotelids)
+    fetchData.callKanalRezDagilim(d_range, hotelids)
   }
 })
 </script>
