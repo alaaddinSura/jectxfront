@@ -32,12 +32,6 @@ let data = computed(() => {
   let rezAdet = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
 
   let nightCount = statData.map(item => item.count != 'nan' ? Number(item.night): 0).reduce((f,s)=> f+s,0)
-  
-  console.log(kanallar)
-  console.log(rezData)
-  console.log(statData)
-  console.log(chosenHotels)
-  console.log(totalCount)
 
   return {
     totalNight: totalCount,

@@ -7,6 +7,13 @@ const props = defineProps({
 
 const statistic = computed(()=> {return props.data})
 
+function formatNumber(num) {
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'K';
+  }
+  return num.toString();
+}
+
 const text = computed(()=>props.subtitle ? "Toplam Miktar " + String(props.data.map(item=>item.stats).reduce((f, s)=>f+s, 0)): "")
 </script>
 
@@ -32,7 +39,7 @@ const text = computed(()=>props.subtitle ? "Toplam Miktar " + String(props.data.
               <VIcon :icon="item.icon" />
             </VAvatar>
             <div class="d-flex flex-column">
-              <span class="text-h5 font-weight-medium">{{ item.stats }}</span>
+              <span class="text-h5 font-weight-medium">{{ formatNumber(item.stats) }}</span>
               <span class="text-sm">
                 {{ item.title }}
               </span>

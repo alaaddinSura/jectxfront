@@ -89,7 +89,14 @@ const login = () => {
         //Ülke Dağılım
         fetchData.callUlkeDagilim(dateRange, hotelids, true)
 
-        //Rezervasyon Analiz
+        //Hafta Doluluk
+        fetchData.callHaftaDoluluk(dateRange, hotelids,true)
+
+        //Ay Doluluk
+        fetchData.callAyDoluluk(dateRange, hotelids, true)
+
+        //Son 7 ay Doluluk
+        fetchData.callSonYediAyDoluluk(dateRange, hotelids, true)
 
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";

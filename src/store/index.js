@@ -3,6 +3,7 @@ import { createStore } from "vuex"
 
 export const store = createStore({
   state: {
+    dateCount: 1,
     dateRange: dates.findYesterdayDate() + "to" + dates.findtodayDate(),
     selectedHotels: [22964, 22966],
     yatakDagilim: [],
@@ -11,6 +12,9 @@ export const store = createStore({
     kanalRezDagilim: [],
     onlineRezMiktari: [],
     doluluk: [],
+    ayDoluluk: [],
+    haftaDoluluk: [],
+    sonYediAyDoluluk: [],
     guestTypes: {},
     guestNations: [],
     rawData: [],
@@ -49,6 +53,18 @@ export const store = createStore({
     },
     changeDoluluk(state, payload){
       state.doluluk = payload;
+    },
+    changeAyDoluluk(state,payload){
+      state.ayDoluluk = payload;
+    },
+    changeHaftaDoluluk(state,payload){
+      state.haftaDoluluk = payload;
+    },
+    changesonYediAyDoluluk(state,payload){
+      state.sonYediAyDoluluk = payload;
+    },
+    changeDateCount(state, payload){
+      state.dateCount = payload
     }
   },
   actions: {},

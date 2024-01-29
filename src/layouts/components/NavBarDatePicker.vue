@@ -14,12 +14,20 @@ watch(dateRange, (newValue, oldValue) => {
 
   let hotelids = [22964, 22966]
   const tarih = dates.findBetweenDates('2023-10-10', '2023-10-15')
+  
+  let dayCount = 30
+  let weekCount = 7
+  let sevenMonth = 210;
 
   if(newValue.includes('to')){
     store.commit('changeDateRange', newValue)
     let startDate = dateRange.value.split(' to ')[0]
-    let endDate = dateRange.value.split(' to ')[1] 
+    let endDate = dateRange.value.split(' to ')[1]
     let d_range = dates.findBetweenDates(startDate, endDate)
+    console.log(d_range.length)
+    store.commit("changeDateCount", d_range.length)
+    
+    
     // Yatak Dağılım
     fetchData.callYatakDagilim(d_range, hotelids)
 
@@ -37,6 +45,15 @@ watch(dateRange, (newValue, oldValue) => {
 
     // Doluluk
     fetchData.callGecelemeMiktari(d_range, hotelids)
+
+    //Ay Doluluk
+    fetchData.callAyDoluluk(endDate, hotelids)
+
+    //Hafta Doluluk
+    fetchData.callHaftaDoluluk(endDate, hotelids)
+
+    //Son 7 ay doluluk
+    fetchData.callSonYediAyDoluluk(endDate, hotelids)
   }
   else{
     let d_range = [newValue]
@@ -46,6 +63,10 @@ watch(dateRange, (newValue, oldValue) => {
     fetchData.callGecelemeMiktari(d_range, hotelids)
     fetchData.callRezervMiktari(d_range, hotelids)
     fetchData.callKanalRezDagilim(d_range, hotelids)
+    fetchData.callAyDoluluk(newValue, hotelids)
+    fetchData.callHaftaDoluluk(newValue, hotelids)
+    fetchData.callSonYediAyDoluluk(newValue, hotelids)
+    store.commit("changeDateCount", 1)
   }
 })
 </script>

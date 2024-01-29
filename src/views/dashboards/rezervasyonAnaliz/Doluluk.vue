@@ -12,39 +12,22 @@ import DolulukOrani from '../stats/DolulukOrani.vue'
    let roomCounts = [
     {
       hotelId: 22966,
-      count: 60
+      count: 60 * store.state.dateCount
     },
     {
       hotelId: 22964,
-      count: 220
+      count: 220 * store.state.dateCount
     }
    ]
 
    let rezData = store.state.doluluk.length == 0 ? JSON.parse(localStorage.getItem("nightAmount")) : store.state.doluluk
-   //console.log(rezData)
    let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
-   
    roomCounts = roomCounts.filter(item => chosenHotels.includes(item.hotelId))
-  
-
-  /*
-  console.log('stat data is here ')
-  console.log(statData)
-  */
+   roomCounts = roomCounts.map(item => item.count).reduce((f,s) => f+s, 0)
 
    let nightCount = statData.map(item => item.count != 'nan' ? item.count: 0).reduce((f,s)=>f+s,0)
 
-   let roomCount = roomCounts.map(item => item.count).reduce((f,s) => f+s, 0)
-   console.log(roomCount)
-  /*
-   let designRooms = roomCount.filter(item => item.hotelId == 22966 ? 'Design': 0)
-   let ayaRooms = roomCount.filter(item=> item.hotelId == 22964 ? "Ayasofya": 0) 
-  */
-   
-
-  let geceCount = 120
-  let oran = [(nightCount / roomCount * 1).toFixed(2)]
-  
+   let oran = [(nightCount / roomCounts * 100).toFixed(2)]
   
   return {
     nightCount, oran,

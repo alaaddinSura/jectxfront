@@ -64,7 +64,7 @@ const tableData = computed(()=>{
       </VRow>
     </VCardText>
     <VDivider />
-    <v-data-table
+    <VDataTable
       :headers="header"
       :items="tableData"
     />

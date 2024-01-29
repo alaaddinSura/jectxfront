@@ -1,6 +1,7 @@
 import axios from "@axios";
 import * as configs from "@/views/dashboards/functions/config"
 import { store } from '@/store/index'
+import * as dates from '@/views/dashboards/functions/dates'
 
 
 export const callYatakDagilim = (dateRange, hotelids, isLocal) =>{
@@ -61,6 +62,7 @@ export const callOnlineRezMiktari = (dateRange, hotelids, isLocal) =>{
 }
 
 export const callGecelemeMiktari = (dateRange, hotelids, isLocal) =>{
+    
     axios.request(configs.gecelemeMiktariConfig(dateRange, hotelids)).then((r)=>{
         if(isLocal){
             localStorage.setItem("nightAmount", JSON.stringify(r.data))
@@ -69,6 +71,48 @@ export const callGecelemeMiktari = (dateRange, hotelids, isLocal) =>{
             store.commit("changeDoluluk", r.data)
         }
     }).catch(d=> console.log(d));
+}
+
+export const callAyDoluluk = (endDate, hotelids, isLocal) =>{
+    const dayCount = 30
+    let dateRange = [...new Set(dates.getLastDatesFromDate(endDate, dayCount))]
+
+    axios.request(configs.ayDolulukConfig(dateRange,hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("nightAmount", JSON.stringify(r.data))
+        }
+        else{
+            store.commit("changeAyDoluluk", r.data)
+        }
+    })
+}
+
+export const callHaftaDoluluk =  (endDate, hotelids, isLocal) =>{
+    const dayCount = 7
+    let dateRange = [...new Set(dates.getLastDatesFromDate(endDate, dayCount))]
+
+    axios.request(configs.haftaDolulukConfig(dateRange,hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("nightAmount", JSON.stringify(r.data))
+        }
+        else{
+            store.commit("changeHaftaDoluluk", r.data)
+        }
+    })
+}
+
+export const callSonYediAyDoluluk =  (endDate, hotelids, isLocal) =>{
+    const dayCount = 210
+    let dateRange = [...new Set(dates.getLastDatesFromDate(endDate, dayCount))]
+
+    axios.request(configs.sonYediAyDolulukConfig(dateRange,hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("nightAmount", JSON.stringify(r.data))
+        }
+        else{
+            store.commit("changesonYediAyDoluluk",r.data)
+        }
+    })
 }
 
 export const callUlkeDagilim = (dateRange, hotelids, isLocal)=>{

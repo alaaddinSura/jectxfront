@@ -70,6 +70,33 @@ export const gecelemeMiktariConfig = (dateRange, hotelidArray) =>{
   return config(url, data)
 }
 
+export const ayDolulukConfig = (dateRange, hotelidArray) =>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/gecelemiktarlari";
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
+
+export const haftaDolulukConfig = (dateRange, hotelidArray) =>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/gecelemiktarlari";
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
+
+export const sonYediAyDolulukConfig = (dateRange, hotelidArray) =>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/gecelemiktarlari";
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
+
 export const ulkeDagilimConfig = (dateRange, hotelidArray) =>{
 const url = "https://jectxbackend-672789bf3678.herokuapp.com/ulkedagilim"
 let data =  JSON.stringify({

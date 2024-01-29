@@ -13,6 +13,13 @@ const props = defineProps({
 const vuetifyTheme = useTheme()
 const display = useDisplay()
 
+function formatNumber(num) {
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'K';
+  }
+  return num.toString();
+}
+
 
 const series = computed(() => {
   return props.data.series
@@ -81,7 +88,7 @@ const chartOptions = computed(() => {
               label: 'Geceleme',
               fontFamily: 'Public Sans',
               formatter() {
-                return String(props.data.totalAmountNight)
+                return formatNumber(String(props.data.totalAmountNight))
               },
             },
           },
@@ -114,21 +121,23 @@ const chartOptions = computed(() => {
 
 <template>
   <VCard>
-    <VCardText>
+    <VCardText class="d-flex justify-space-between">
       <div class="d-flex flex-column">
         <div class="mb-auto">
-          <h5 class="text-h5 text-no-wrap">
+          <h6 class="text-h6 text-no-wrap">
             {{ data.name }}
-          </h5>
+          </h6>
+          <span class="text-sm">Seçili Tarih Raporu</span>
         </div>
 
         <div>
-          <h3 class="text-h3 mb-1">
-            {{ data.totalNight }}
-          </h3>
-          <div>
+          <h5 class="text-h5 mb-1">
+            {{ formatNumber(data.totalNight) }}
+          </h5>
+          <div class="text-sm">
             <VIcon
               icon="tabler-chevron-up"
+              size="24"
               color="success"
               class="me-1"
             />
@@ -142,7 +151,7 @@ const chartOptions = computed(() => {
         <VueApexCharts
           :options="chartOptions"
           :series="series"
-          :height="110"
+          :height="147"
         />
       </div>
     </VCardText>

@@ -10,6 +10,13 @@ const props = defineProps({
   oran: Array,
 })
 
+function formatNumber(num) {
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'K';
+  }
+  return num.toString();
+}
+
 const vuetifyTheme = useTheme()
 
 const dataRange = computed(()=>{
@@ -111,7 +118,7 @@ const chartOptions = computed(() => {
     <VCardText>
       <div class="mb-n2">
         <h5 class="text-h5">
-          {{ dataRange.nightCount }}
+          {{ formatNumber(dataRange.nightCount) }}
         </h5>
         <span class="text-disabled text-sm">{{ dataRange.name }}</span>
       </div>

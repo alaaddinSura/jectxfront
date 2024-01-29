@@ -27,12 +27,12 @@ import YediAyDoluluk from "@/views/dashboards/rezervasyonAnaliz/YediAyDoluluk.vu
       md="8"
       lg="8"
     >
-      <KanalDagilimi class="h-100" />
+      <KanalDagilimi class="h-100"/>
     </VCol>
 
     <VCol
       cols="12"
-      md="6"
+      md="4"
       lg="4"
     >
       <OnlineRezerv />
