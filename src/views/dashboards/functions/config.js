@@ -105,3 +105,12 @@ let data =  JSON.stringify({
 })
 return config(url, data)
 }
+
+export const callGecmisRezConfig = (dateRange, hotelidArray) =>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/gecmisRezervasyonlar"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}

@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import DolulukOrani from '../stats/DolulukOrani.vue'
 
 
-let name = ref('Gece Son 7 Ay')
+let name = ref('Son 7 Ay')
 let color = ref('#C2185B')
 let nightcount = computed(() => {
   let chosenHotels = store.state.selectedHotels
@@ -19,7 +19,7 @@ let nightcount = computed(() => {
     }
   ]
 
-  let rezData = store.state.sonYediAyDoluluk == 0 ? JSON.parse(localStorage.getItem('nightAmount')) : store.state.sonYediAyDoluluk
+  let rezData = store.state.sonYediAyDoluluk == 0 ? JSON.parse(localStorage.getItem('gecelemeDagilimSon7Ay')) : store.state.sonYediAyDoluluk
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
 
   roomCounts = roomCounts.filter((item => chosenHotels.includes(item.hotelId)))

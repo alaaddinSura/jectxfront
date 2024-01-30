@@ -22,6 +22,7 @@ function formatNumber(num) {
 
 
 const series = computed(() => {
+  console.log(props.data.series)
   return props.data.series
 })
 
@@ -127,7 +128,6 @@ const chartOptions = computed(() => {
           <h6 class="text-h6 text-no-wrap">
             {{ data.name }}
           </h6>
-          <span class="text-sm">Seçili Tarih Raporu</span>
         </div>
 
         <div>

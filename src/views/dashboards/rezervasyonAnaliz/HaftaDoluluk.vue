@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import DolulukOrani from '../stats/DolulukOrani.vue'
 import { store } from '@/store/index'
 
-let name = ref('Gece Son Hafta')
+let name = ref('Son Hafta')
 let color = ref('#1A237E')
 let nightcount = computed(() => {
   let chosenHotels = store.state.selectedHotels
@@ -17,7 +17,7 @@ let nightcount = computed(() => {
       count: 220 * 7
     }
    ]
-  let rezData = store.state.haftaDoluluk == 0 ? JSON.parse(localStorage.getItem("nightAmount")) : store.state.haftaDoluluk
+  let rezData = store.state.haftaDoluluk == 0 ? JSON.parse(localStorage.getItem("gecelemeDagilimSonHafta")) : store.state.haftaDoluluk
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
   
   roomCounts = roomCounts.filter((item => chosenHotels.includes(item.hotelId)))

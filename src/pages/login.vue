@@ -30,24 +30,6 @@ const errors = ref({
   password: undefined,
 });
 
-// let config = {
-//   method: "post",
-//   maxBodyLength: Infinity,
-//   url: "https://jectxbackend-672789bf3678.herokuapp.com/rezmiktari",
-//   headers: {
-//     "Content-Type": "application/json",
-//   },
-//   data: data,
-// };
-
-const vericik = ref({
-  createdDate: "2022-09-20",
-  hotelId: 22966,
-  anaKanal: "BABA",
-  count: 5,
-  night: 22,
-});
-
 const isPasswordVisible = ref(false);
 
 const login = () => {
@@ -62,10 +44,8 @@ const login = () => {
       form.value.isValid = r.data.isValid;
       if (form.value.isValid) {
         form.value.showMessage = false;
-        let from = dates.findYesterdayDate();
-        let to = dates.findtodayDate();
 
-        let dateRange = ["2020-12-12", "2020-12-15", "2020-12-16", "2020-12-17"];
+        let dateRange = [dates.findYesterdayDate()];
         let hotelids =  [22964, 22966];
 
         //Rezerv Miktarı        
@@ -90,13 +70,16 @@ const login = () => {
         fetchData.callUlkeDagilim(dateRange, hotelids, true)
 
         //Hafta Doluluk
-        fetchData.callHaftaDoluluk(dateRange, hotelids,true)
+        fetchData.callHaftaDoluluk(dateRange[0], hotelids,true)
 
         //Ay Doluluk
-        fetchData.callAyDoluluk(dateRange, hotelids, true)
+        fetchData.callAyDoluluk(dateRange[0], hotelids, true)
 
         //Son 7 ay Doluluk
-        fetchData.callSonYediAyDoluluk(dateRange, hotelids, true)
+        fetchData.callSonYediAyDoluluk(dateRange[0], hotelids, true)
+
+        //Geçmiş Rezervasyonlar
+        fetchData.callGecmisRez(dateRange, hotelids, true)
 
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
@@ -116,7 +99,7 @@ const login = () => {
         localStorage.setItem("accessToken", JSON.stringify(accessToken));
 
         // Redirect to `to` query if exist or redirect to index route
-        router.replace(route.query.to ? String(route.query.to) : "/");
+        // router.replace(route.query.to ? String(route.query.to) : "/");
       } else {
         form._value.showMessage = true;
       }

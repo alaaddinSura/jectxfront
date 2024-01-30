@@ -20,7 +20,6 @@ export const callGecelemeDagilim = (dateRange, hotelids, isLocal) =>{
     axios.request(configs.gecelemeDagilimConfig(dateRange,hotelids)).then((r)=>{
         if(isLocal){
             localStorage.setItem("gecelemeDagilim", JSON.stringify(r.data))
-            console.log(r.data)
         }
         else{
             store.commit('changeGecelemeDagilim', r.data)
@@ -79,7 +78,7 @@ export const callAyDoluluk = (endDate, hotelids, isLocal) =>{
 
     axios.request(configs.ayDolulukConfig(dateRange,hotelids)).then((r)=>{
         if(isLocal){
-            localStorage.setItem("nightAmount", JSON.stringify(r.data))
+            localStorage.setItem("gecelemeDagilimSonAy", JSON.stringify(r.data))
         }
         else{
             store.commit("changeAyDoluluk", r.data)
@@ -93,7 +92,7 @@ export const callHaftaDoluluk =  (endDate, hotelids, isLocal) =>{
 
     axios.request(configs.haftaDolulukConfig(dateRange,hotelids)).then((r)=>{
         if(isLocal){
-            localStorage.setItem("nightAmount", JSON.stringify(r.data))
+            localStorage.setItem("gecelemeDagilimSonHafta", JSON.stringify(r.data))
         }
         else{
             store.commit("changeHaftaDoluluk", r.data)
@@ -107,7 +106,7 @@ export const callSonYediAyDoluluk =  (endDate, hotelids, isLocal) =>{
 
     axios.request(configs.sonYediAyDolulukConfig(dateRange,hotelids)).then((r)=>{
         if(isLocal){
-            localStorage.setItem("nightAmount", JSON.stringify(r.data))
+            localStorage.setItem("gecelemeDagilimSon7Ay", JSON.stringify(r.data))
         }
         else{
             store.commit("changesonYediAyDoluluk",r.data)
@@ -121,4 +120,12 @@ export const callUlkeDagilim = (dateRange, hotelids, isLocal)=>{
             localStorage.setItem("countryDist", JSON.stringify(r.data))
         }
     }).catch(d=> console.log(d));
+}
+
+export const callGecmisRez = (dateRange, hotelids, isLocal) => {
+    axios.request(configs.callGecmisRezConfig(dateRange, hotelids)).then((r) => {
+        if (isLocal) {
+            localStorage.setItem("gecmisRezervs", JSON.stringify(r.data))
+        }
+    }).catch(d => console.log(d));
 }

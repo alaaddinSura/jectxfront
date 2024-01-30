@@ -6,25 +6,19 @@ import axios from '@axios'
 import { ref, watch } from 'vue'
 import * as fetchData from "@/views/dashboards/functions/fetchData"
 
-let dateRange = ref(dates.findYesterdayDate() + " to " + dates.findtodayDate())
+let dateRange = ref(dates.findYesterdayDate() + " to " + dates.findYesterdayDate())
 let isPersistent = ref(true)
 
 
 watch(dateRange, (newValue, oldValue) => {
 
   let hotelids = [22964, 22966]
-  const tarih = dates.findBetweenDates('2023-10-10', '2023-10-15')
-  
-  let dayCount = 30
-  let weekCount = 7
-  let sevenMonth = 210;
 
   if(newValue.includes('to')){
     store.commit('changeDateRange', newValue)
     let startDate = dateRange.value.split(' to ')[0]
     let endDate = dateRange.value.split(' to ')[1]
     let d_range = dates.findBetweenDates(startDate, endDate)
-    console.log(d_range.length)
     store.commit("changeDateCount", d_range.length)
     
     

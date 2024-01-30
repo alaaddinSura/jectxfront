@@ -131,7 +131,7 @@ const chartOptions = computed(() => {
       />
 
       <div class="text-sm text-center clamp-text text-disabled mt-3">
-        Otel Dolalık Oranı
+        Oda Doluluk
       </div>
     </VCardText>
   </VCard>

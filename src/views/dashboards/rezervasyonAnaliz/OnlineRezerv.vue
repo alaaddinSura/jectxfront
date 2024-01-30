@@ -38,7 +38,7 @@ let digerData = statData.filter(item => item.altKanal == 'ONLDIGER').map(item=>i
       agodaData, bookingData, expediaData, webData, digerData,
     ],
     percentage: 32,
-    name: 'Onl Rezerv Miktarı',
+    name: 'Onl Rezerv',
     colors: { series1: vuetifyTheme.current.value.colors.success,
       series2: '#28c76fb3',
       series3: '#28c76f80',

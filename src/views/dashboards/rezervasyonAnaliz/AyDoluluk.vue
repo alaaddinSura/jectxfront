@@ -3,7 +3,7 @@ import { store } from "@/store/index.js";
 import { ref } from "vue";
 import DolulukOrani from "../stats/DolulukOrani.vue";
 
-let name = ref("Gece Son Ay");
+let name = ref("Son Ay");
 let color = ref("#C2185B");
 let nightcount = computed(() => {
   let chosenHotels = store.state.selectedHotels;
@@ -21,7 +21,7 @@ let nightcount = computed(() => {
 
   let rezData =
     store.state.ayDoluluk == 0
-      ? JSON.parse(localStorage.getItem("nightAmount"))
+      ? JSON.parse(localStorage.getItem("gecelemeDagilimSonAy"))
       : store.state.ayDoluluk;
 
   let statData = rezData.filter((item) => chosenHotels.includes(item.hotelId));
