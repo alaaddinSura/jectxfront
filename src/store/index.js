@@ -15,6 +15,7 @@ export const store = createStore({
     ayDoluluk: [],
     haftaDoluluk: [],
     sonYediAyDoluluk: [],
+    gecmisRezervasyonlar: [],
     guestTypes: {},
     guestNations: [],
     rawData: [],
@@ -65,6 +66,9 @@ export const store = createStore({
     },
     changeDateCount(state, payload){
       state.dateCount = payload
+    },
+    changeGecmisRezervasyonlar(state, payload){
+      state.gecmisRezervasyonlar = payload;
     }
   },
   actions: {},

@@ -79,7 +79,7 @@ const login = () => {
         fetchData.callSonYediAyDoluluk(dateRange[0], hotelids, true)
 
         //Geçmiş Rezervasyonlar
-        fetchData.callGecmisRez(dateRange, hotelids, true)
+        fetchData.callGecmisRez(dateRange[0], dateRange.length, hotelids, true)
 
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
@@ -99,7 +99,7 @@ const login = () => {
         localStorage.setItem("accessToken", JSON.stringify(accessToken));
 
         // Redirect to `to` query if exist or redirect to index route
-        // router.replace(route.query.to ? String(route.query.to) : "/");
+        router.replace(route.query.to ? String(route.query.to) : "/");
       } else {
         form._value.showMessage = true;
       }

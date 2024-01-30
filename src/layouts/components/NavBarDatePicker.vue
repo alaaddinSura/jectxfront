@@ -48,6 +48,9 @@ watch(dateRange, (newValue, oldValue) => {
 
     //Son 7 ay doluluk
     fetchData.callSonYediAyDoluluk(endDate, hotelids)
+
+    //Geçmiş Rezervasyonlar
+    fetchData.callGecmisRez(endDate, d_range.length, hotelids)
   }
   else{
     let d_range = [newValue]
@@ -60,6 +63,7 @@ watch(dateRange, (newValue, oldValue) => {
     fetchData.callAyDoluluk(newValue, hotelids)
     fetchData.callHaftaDoluluk(newValue, hotelids)
     fetchData.callSonYediAyDoluluk(newValue, hotelids)
+    fetchData.callGecmisRez(d_range[0], d_range.length, hotelids)
     store.commit("changeDateCount", 1)
   }
 })
