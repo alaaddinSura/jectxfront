@@ -144,7 +144,7 @@ const successRate = computed(()=>{
 <template>
   <VCard>
     <VCardItem class="pb-sm-0">
-      <VCardTitle>Kazanç Durumu</VCardTitle>
+      <VCardTitle>Aylınk Kazanç Durumu</VCardTitle>
     </VCardItem>
 
     <VCardText class="mt-sm-n6">
