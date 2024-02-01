@@ -6,24 +6,25 @@ import CompareBar from '../stats/CompareBar.vue'
 
 const series = computed(() => {
   let chosenHotels = store.state.selectedHotels
-  let rezData = store.state.gelecekDoluluk == 0 ? JSON.parse(localStorage.getItem("gelecekDoluluk")) : store.state.gelecekDoluluk
+  //let rezData = store.state.gelecekDoluluk == 0 ? JSON.parse(localStorage.getItem("dolulukGelecekRez")) : store.state.gelecekDoluluk
 
-  let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
+  console.log("Aşağıdaki veriler Gelecek Rezervasyondur gelecek Doluluktan gelmektedir")
+ // console.log(rezData)
 
-  let dates = [...new Set(statData.map(item => item.DATE))].sort()
-  console.log(dates)
+ // let dates = [...new Set(statData.map(item => item.DATE))].sort()
+  //console.log(dates)
 
   
-  let successData = statData.filter(item => item.SUCCESS)
-  successData = dates.map(item => successData.filter(j => j.DATE == item).map(j => j.COUNT).reduce((f,s) => f+s,0))
+  // let successData = statData.filter(item => item.SUCCESS)
+  // successData = dates.map(item => successData.filter(j => j.DATE == item).map(j => j.COUNT).reduce((f,s) => f+s,0))
   
-  let maxCount = Math.max(...successData)
+  // let maxCount = Math.max(...successData)
   
-  let cancelData = statData.filter(item => !item.SUCCESS)
-  cancelData = dates.map(item => cancelData.filter(j => j.DATE == item).map(j => j.COUNT).reduce((f,s) => f+s,0))
+  // let cancelData = statData.filter(item => !item.SUCCESS)
+  // cancelData = dates.map(item => cancelData.filter(j => j.DATE == item).map(j => j.COUNT).reduce((f,s) => f+s,0))
 
-  cancelData = cancelData.map(item => -item)
-  let minCount = Math.min(...cancelData)
+  // cancelData = cancelData.map(item => -item)
+  // let minCount = Math.min(...cancelData)
 
 
   return {

@@ -15,8 +15,8 @@ import YediAyDoluluk from "@/views/dashboards/rezervasyonAnaliz/YediAyDoluluk.vu
     <!-- Rezervasyon Raporu -->
     <VCol
       cols="12"
-      lg="4"
-      md="4"
+      lg="6"
+      md="5"
     >
       <GenelRezerv />
     </VCol>
@@ -24,43 +24,43 @@ import YediAyDoluluk from "@/views/dashboards/rezervasyonAnaliz/YediAyDoluluk.vu
     <!-- Kanal Dağılımı -->
     <VCol
       cols="12"
-      md="8"
-      lg="8"
+      md="7"
+      lg="6"
     >
       <KanalDagilimi class="h-100"/>
     </VCol>
 
     <VCol
       cols="12"
-      md="4"
+      md="5"
       lg="4"
     >
       <OnlineRezerv />
     </VCol>
     <VCol
       cols="12"
-      md="6"
+      md="3"
       lg="2"
     >
       <Doluluk />
     </VCol>
     <VCol
       cols="12"
-      md="6"
+      md="3"
       lg="2"
     >
       <HaftaDoluluk />
     </VCol>
     <VCol
       cols="12"
-      md="6"
+      md="3"
       lg="2"
     >
       <AyDoluluk />
     </VCol>
     <VCol
       cols="12"
-      md="6"
+      md="3"
       lg="2"
     >
       <YediAyDoluluk />

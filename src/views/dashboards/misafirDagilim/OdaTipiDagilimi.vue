@@ -18,7 +18,6 @@ const monthlyCampaignState = computed(()=>{
 
   roomData = roomData.slice(0, 6)
 
-  console.log(roomData[0].geceleme)
   return [
   {
     avatarColor: 'success',
