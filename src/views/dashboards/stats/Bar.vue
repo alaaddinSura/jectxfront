@@ -8,12 +8,13 @@ const props = defineProps({
 const statistic = computed(()=> {return props.data})
 
 function formatNumber(num) {
-  if (num >= 1000) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'M';
+  } else if (num >= 1000) {
     return (num / 1000).toFixed(1) + 'K';
   }
   return num.toString();
 }
-
 const text = computed(()=>props.subtitle ? "Toplam Miktar " + String(props.data.map(item=>item.stats).reduce((f, s)=>f+s, 0)): "")
 </script>
 

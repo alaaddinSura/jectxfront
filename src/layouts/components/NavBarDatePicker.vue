@@ -19,6 +19,10 @@ watch(dateRange, (newValue, oldValue) => {
     let startDate = dateRange.value.split(' to ')[0]
     let endDate = dateRange.value.split(' to ')[1]
     let d_range = dates.findBetweenDates(startDate, endDate)
+    let between = dates.findMidDate(d_range[0], d_range[d_range.length - 1])
+    console.log(between);
+    console.log(d_range[0])
+    console.log(d_range[d_range.length - 1])
     store.commit("changeDateCount", d_range.length)
     
     
@@ -51,6 +55,24 @@ watch(dateRange, (newValue, oldValue) => {
 
     //Geçmiş Rezervasyonlar
     fetchData.callGecmisRez(endDate, d_range.length, hotelids)
+
+    //Rez Analiz
+    fetchData.callRezAnaliz(d_range, hotelids)
+
+    //İptal Analiz
+    fetchData.callIptalAnaliz(d_range, hotelids)
+
+    //İptal Edebilir Analiz
+    fetchData.callIptalEdebilirAnaliz(endDate,d_range.length, hotelids)
+
+    //Ülke Dağılım
+    fetchData.callUlkeDagilim(d_range, hotelids)
+
+    //Doluluk Geçmiş
+    fetchData.callGecmisRezervasyonDagilim(endDate, d_range.length ,hotelids)
+
+    //Gelecek Doluluk
+    fetchData.callGelecekDoluluk(endDate, hotelids)
   }
   else{
     let d_range = [newValue]
@@ -64,6 +86,18 @@ watch(dateRange, (newValue, oldValue) => {
     fetchData.callHaftaDoluluk(newValue, hotelids)
     fetchData.callSonYediAyDoluluk(newValue, hotelids)
     fetchData.callGecmisRez(d_range[0], d_range.length, hotelids)
+    //Rez Analiz
+    fetchData.callRezAnaliz(d_range, hotelids)
+    //İptal Analiz
+    fetchData.callIptalAnaliz(d_range,hotelids)
+    //İptal Edebilir Analiz
+    fetchData.callIptalEdebilirAnaliz(d_range,hotelids)
+    //Ülke Dağılım
+    fetchData.callUlkeDagilim(d_range, hotelids)
+    //Doluluk Geçmiş
+    fetchData.callGecmisRezervasyonDagilim(d_range[0],d_range.length,hotelids)
+    //Gelecek Doluluk
+    fetchData.callGelecekDoluluk(d_range, hotelids)
     store.commit("changeDateCount", 1)
   }
 })

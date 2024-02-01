@@ -1,32 +1,42 @@
 <script setup>
-import Bar from "../stats/Bar.vue"
+import { store } from "@/store/index";
+import Bar from "../stats/Bar.vue";
 
-const statistics = [
+const statistics = computed(()=>{
+  let chosenHotels = store.state.selectedHotels
+
+  let rezData = store.state.iptalAnaliz == 0 ? JSON.parse(localStorage.getItem("iptalAnaliz")) : store.state.iptalAnaliz
+  let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
+  let rezAdet = [...new Set(statData.map(item => item.RESID))]
+  let toplam = statData.map(item => item.DAILYRATE != 'nan' ? Number(item.DAILYRATE): 0).reduce((f,s)=>f+s,0).toFixed(1)
+  return [
   {
     title: 'Adet',
-    stats: 1,
+    stats: rezAdet.length,
     icon: 'tabler-circle-letter-x',
     color: 'error',
   },
   {
     title: 'Geceleme',
-    stats: 1,
+    stats: statData.length,
     icon: 'tabler-moon',
     color: 'error',
   },
   {
     title: 'Oran',
-    stats: `1.00`,
+    stats: Number(statData.length/rezAdet.length).toFixed(2),
     icon: 'tabler-divide',
     color: 'error',
   },
   {
     title: 'Kayıp',
-    stats: `120.0`,
+    stats: toplam,
     icon: 'tabler-arrow-badge-down',
     color: 'error',
   },
 ]
+})
+
 </script>
 
 <template>

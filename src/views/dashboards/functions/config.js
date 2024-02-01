@@ -114,3 +114,48 @@ export const callGecmisRezConfig = (dateRange, hotelidArray) =>{
   })
   return config(url, data)
 }
+
+export const rezAnalizConfig = (dateRange, hotelidArray)=>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/rezAnaliz"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
+
+export const iptalAnalizConfig = (dateRange, hotelidArray) =>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/iptalAnaliz"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
+
+export const iptalEdebilirAnalizConfig = (dateRange, hotelidArray) =>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/iptalEdilebilirAnaliz"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
+
+export const gecmisRezervasyonDagilimConfig = (dateRange, hotelidArray)=>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/doluluk"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
+
+export const gelecekDolulukConfig = (dateRange, hotelidArray)=>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/doluluk"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}

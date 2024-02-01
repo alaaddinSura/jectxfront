@@ -16,6 +16,12 @@ export const store = createStore({
     haftaDoluluk: [],
     sonYediAyDoluluk: [],
     gecmisRezervasyonlar: [],
+    rezAnaliz:[],
+    iptalAnaliz: [],
+    iptalEdebilirAnaliz: [],
+    gecmisRezervasyonDagilim: [],
+    ulkeDagilim: [],
+    gelecekDoluluk: [],
     guestTypes: {},
     guestNations: [],
     rawData: [],
@@ -65,10 +71,28 @@ export const store = createStore({
       state.sonYediAyDoluluk = payload;
     },
     changeDateCount(state, payload){
-      state.dateCount = payload
+      state.dateCount = payload;
     },
     changeGecmisRezervasyonlar(state, payload){
       state.gecmisRezervasyonlar = payload;
+    },
+    changeRezAnaliz(state,payload){
+      state.rezAnaliz = payload;
+    },
+    changeIptalAnaliz(state,payload){
+      state.iptalAnaliz = payload;
+    },
+    changeiptalEdebilirAnaliz(state, payload){
+      state.iptalEdebilirAnaliz = payload;
+    },
+    changeGecmisRezervasyonDagilim(state, payload){
+      state.gecmisRezervasyonDagilim = payload;
+    },
+    changeUlkeDagilim(state, payload){
+      state.ulkeDagilim = payload;
+    },
+    changeGelecekDoluluk(state, payload){
+      state.gelecekDoluluk = payload;
     }
   },
   actions: {},

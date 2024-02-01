@@ -144,7 +144,14 @@ const chartOptions = computed(() => {
 })
 
 const totalEarnings = computed(() => {
+  let chosenHotels = store.state.selectedHotels
+  let rezData = store.state.iptalEdebilirAnaliz == 0 ? JSON.parse(localStorage.getItem("iptalEdilebilirAnaliz")) : store.state.iptalEdebilirAnaliz
+
+  let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
+
+  let NRFAdet = [...new Set(statData.filter(item=> item.RATETYPE === 'NRF').map(item=> item.RESID))]
   
+  let RFAdet = [...new Set(statData.filter(item=> item.RATETYPE === 'RF').map(item=> item.RESID))]
 
   return [
     {
@@ -152,14 +159,14 @@ const totalEarnings = computed(() => {
       avatarColor: 'primary',
       title: 'NRF',
       subtitle: 'Non-Refundable',
-      earning: 27,
+      earning: NRFAdet.length,
     },
     {
       avatar: 'tabler-arrow-move-down',
       avatarColor: 'secondary',
       title: 'RF',
       subtitle: 'Refundable',
-      earning: 32,
+      earning: RFAdet.length,
     },
   ]
 })

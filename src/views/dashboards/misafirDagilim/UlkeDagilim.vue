@@ -1,56 +1,42 @@
 <script setup>
 import { store } from '@/store/index'
+import * as countryName from '@/views/dashboards/functions/countries'
 
-let nationData = store.state.guestNations
+
 
 const salesByCountries = computed(()=>{
   let chosenHotels = store.state.selectedHotels
 
   let nationData = store.state.guestNations
+  let rezData = store.state.ulkeDagilim == 0 ? JSON.parse(localStorage.getItem("countryDist")) : store.state.ulkeDagilim
+  console.log("Aşağıda Ülke Dağılım")
+  console.log(rezData)
 
-  let guestData = nationData.length == 0 ? JSON.parse(localStorage.getItem('guestNations')) : [...nationData]
-  return [
-  {
-    flag: "flag-tr-1x1",
-    rezAdet: 116,
-    ulke: "TUR",
-    geceleme: 227,
-    oran: 2,
-    adr: 101.9,
-  },
-  {
-    flag: "flag-gb-1x1",
-    rezAdet: 66,
-    ulke: "GBR",
-    geceleme: 217,
-    oran: 3.3,
-    adr: 108.4,
-  },
-  {
-    flag: "flag-fr-1x1",
-    rezAdet: 23,
-    ulke: "FRA",
-    geceleme: 66,
-    oran: 2.9,
-    adr: 93.7,
-  },
-  {
-    flag: "flag-ru-1x1",
-    rezAdet: 22,
-    ulke: "RUS",
-    geceleme: 88,
-    oran: 4,
-    adr: 108,
-  },
-  {
-    flag: "flag-de-1x1",
-    rezAdet: 14,
-    ulke: "DEU",
-    geceleme: 49,
-    oran: 3.5,
-    adr: 91.7,
-  },
-]
+  let statData = rezData.filter(item => chosenHotels.includes(item.hotelId) && item.nationality !== 'Tanımsız')
+
+  let countries = [...new Set(statData.map(item => item.nationality))]
+
+  let countries_dist = countries.map(item => ({
+    adet: statData.filter(j => j.nationality === item).map(i => i.count != 'nan' ? Number(i.count): 0).reduce((f,s)=>f+s,0),
+    geceleme: statData.filter(j => j.nationality === item).map(i => i.night != 'nan' ? Number(i.night): 0).reduce((f,s)=>f+s,0),
+    gelir: statData.filter(j=> j.nationality === item).map(i => i.adr != 'nan' ? Number(i.adr):0).reduce((f,s)=>f+s,0), country: item, adetOran: statData.filter(i=> i.nationality === item).map(j => j.count != 'nan' ? Number(j.count): 0).reduce((f,s)=>f+s,0)/statData.map(k=> k.count != 'nan' ? Number(k.count): 0).reduce((f,s)=>f+s,0)
+  }))
+
+  let country_dist_paroti = []
+  let index = 0
+
+  country_dist_paroti = countries_dist.sort((a, b) => b.adetOran - a.adetOran).map(item => ({
+    flag: "flag-" + countryName.findCountry2Letter(item.country) + "-1x1",
+    rezAdet: item.adet,
+    ulke: item.country,
+    adr: Number((item.gelir/item.geceleme).toFixed(1)),
+    geceleme: item.geceleme,
+    oran: Number((item.geceleme/item.adet).toFixed(1)),
+  }))
+
+  country_dist_paroti = country_dist_paroti.slice(0, 5)
+
+  return country_dist_paroti
 })
 </script>
 

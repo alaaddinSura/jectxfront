@@ -118,6 +118,8 @@ export const callUlkeDagilim = (dateRange, hotelids, isLocal)=>{
     axios.request(configs.ulkeDagilimConfig(dateRange,hotelids)).then((r)=>{
         if(isLocal){
             localStorage.setItem("countryDist", JSON.stringify(r.data))
+        }else{
+            store.commit("changeUlkeDagilim",r.data)
         }
     }).catch(d=> console.log(d));
 }
@@ -155,13 +157,90 @@ export const callGecmisRez = (endDate,dayCount, hotelids, isLocal) => {
                     item['DATE'] = item.DATE.split("-")[0] + "-" + item.DATE.split("-")[1]
                     store.commit("changeGecmisRezervasyonlar", rData)
                 })
-                console.log(rData);
-                console.log(rData.filter(item => item.DATE == "2024-12"));
             }
-            
-
             //store.commit("changeGecmisRezervasyonlar", r.data)
         }
     }).catch(d => console.log(d));
+}
+
+export const callRezAnaliz = (dateRange, hotelids, isLocal)=>{
+    axios.request(configs.rezAnalizConfig(dateRange,hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("rezAnaliz", JSON.stringify(r.data))
+        }else{
+            store.commit("changeRezAnaliz", r.data)
+        }
+    })
+}
+
+export const callIptalAnaliz = (dateRange, hotelids, isLocal)=>{
+    axios.request(configs.iptalAnalizConfig(dateRange,hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("iptalAnaliz", JSON.stringify(r.data))
+        }else{
+            store.commit("changeIptalAnaliz", r.data)
+        }
+    })
+}
+
+export const callIptalEdebilirAnaliz = (dateRange, hotelids, isLocal)=>{
+    axios.request(configs.iptalEdebilirAnalizConfig(dateRange,hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("iptalEdilebilirAnaliz", JSON.stringify(r.data));
+        }else{
+            store.commit("changeiptalEdebilirAnaliz", r.data);
+        }
+    })
+}
+
+export const callGecmisRezervasyonDagilim = (endDate,dayCount, hotelids, isLocal)=>{
     
+    let dateRange
+
+     if(dayCount <= 7){
+         dateRange = dates.getLastDatesFromDate(endDate, 7)
+     }
+     else if(dayCount > 7 && dayCount <= 49){
+         dateRange = dates.getLastDatesFromDate(endDate, 49)
+         console.log('kaşskdşaslkdşlaskdş')
+     }
+     else{
+        dateRange = dates.getLastDatesFromDate(endDate, 365)
+     }
+    axios.request(configs.gecmisRezervasyonDagilimConfig(dateRange,hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("gecmisRezervasyonDagilim", JSON.stringify(r.data));
+        }else{
+            let rData = r.data
+            if(rData.length == 28){
+                store.commit("changeGecmisRezervasyonDagilim", rData)
+            }
+            else if(rData.length == 196){
+                rData.forEach(item => {
+                    item['DATE'] = dates.findWeek(item.DATE)
+                    store.commit("changeGecmisRezervasyonDagilim", rData)
+                })
+            }else{
+                rData.forEach(item =>{
+                    item['DATEORJ'] = item.DATE
+                    item['DATE'] = item.DATE.split("-")[0] + "-" + item.DATE.split("-")[1]
+                    store.commit("changeGecmisRezervasyonDagilim", rData)
+                })
+                
+            }
+        }
+    })
+}
+
+export const callGelecekDoluluk = (endDate, hotelids, isLocal) =>{
+
+    console.log(configs.gelecekDolulukConfig(endDate,hotelids))
+
+     axios.request(configs.gelecekDolulukConfig(endDate,hotelids)).then((r=>{
+         if(isLocal){
+             localStorage.setItem("gelecekDoluluk", JSON.stringify(r.data))
+         }else{
+             store.commit("changeGelecekDoluluk", r.data)
+         }
+     })).catch(err => console.log(err))
 }

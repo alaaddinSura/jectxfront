@@ -81,6 +81,21 @@ const login = () => {
         //Geçmiş Rezervasyonlar
         fetchData.callGecmisRez(dateRange[0], dateRange.length, hotelids, true)
 
+        //Rez Analiz
+        fetchData.callRezAnaliz(dateRange, hotelids, true)
+
+        //İptal Analiz
+        fetchData.callIptalAnaliz(dateRange, hotelids, true)
+
+        //İptal Edebilir Analiz
+        fetchData.callIptalEdebilirAnaliz(dateRange, hotelids, true)
+
+        //Geçmiş Rezervasyonlar Dağılım
+        fetchData.callGecmisRezervasyonDagilim(dateRange[0], dateRange.length, hotelids, true)
+
+        //Gelecek Doluluk
+        fetchData.callGelecekDoluluk(dateRange[0], hotelids, true)
+
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {

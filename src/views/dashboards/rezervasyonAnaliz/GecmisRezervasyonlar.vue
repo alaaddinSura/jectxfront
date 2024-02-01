@@ -3,7 +3,7 @@ import { store } from "@/store/index"
 import * as dates from '@/views/dashboards/functions/dates'
 import CompareBar from '../stats/CompareBar.vue'
 
-
+//Burayı Kopyala
 const series = computed(() => {
   let chosenHotels = store.state.selectedHotels
 
