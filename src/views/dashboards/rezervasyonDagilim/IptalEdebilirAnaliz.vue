@@ -23,14 +23,19 @@ const NRFORAN = computed(() => {
 })
 
 const series = computed(() => {
+  let chosenHotels = store.state.selectedHotels
+  let rezData = store.state.iptalEdebilirAnaliz == 0 ? JSON.parse(localStorage.getItem("iptalEdilebilirAnaliz")) : store.state.iptalEdebilirAnaliz
+  let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
+  console.log("Bu İptal Edebilir Analiz Series den geliyor")
+  console.log(statData)
   return [
     {
       name: 'NRF',
-      data: [160, 170, 190, 20, 50, 90, 70],
+      data: [160, 170, 190, 80, 50, 90, 70],
     },
     {
       name: 'RF',
-      data: [90, 120, 30, 40, 80, 90, 70],
+      data: [90, 120, 30, 190, 80, 90, 70],
     },
   ]
 })
@@ -149,9 +154,10 @@ const totalEarnings = computed(() => {
 
   let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
 
-  let NRFAdet = [...new Set(statData.filter(item=> item.RATETYPE === 'NRF').map(item=> item.RESID))]
+  let NRFAdet = statData.filter(item=> item.RATETYPE === 'NRF').map(item=> item.COUNT).reduce((f,s)=>f+s,0)
+
   
-  let RFAdet = [...new Set(statData.filter(item=> item.RATETYPE === 'RF').map(item=> item.RESID))]
+  let RFAdet = statData.filter(item=> item.RATETYPE === 'RF').map(item=> item.COUNT).reduce((f,s)=>f+s,0)
 
   return [
     {
@@ -159,14 +165,14 @@ const totalEarnings = computed(() => {
       avatarColor: 'primary',
       title: 'NRF',
       subtitle: 'Non-Refundable',
-      earning: NRFAdet.length,
+      earning: NRFAdet,
     },
     {
       avatar: 'tabler-arrow-move-down',
       avatarColor: 'secondary',
       title: 'RF',
       subtitle: 'Refundable',
-      earning: RFAdet.length,
+      earning: RFAdet,
     },
   ]
 })
