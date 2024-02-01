@@ -125,19 +125,18 @@ const chartOptions = computed(() => {
     <VCardText class="d-flex justify-space-between">
       <div class="d-flex flex-column">
         <div class="mb-auto">
-          <h6 class="text-h6 text-no-wrap">
+          <h6 class="text-h5 text-no-wrap">
             {{ data.name }}
           </h6>
         </div>
 
         <div>
-          <h5 class="text-h5 mb-1">
+          <h5 class="text-h3 mb-1">
             {{ formatNumber(data.totalNight) }}
           </h5>
           <div class="text-sm">
             <VIcon
               icon="tabler-chevron-up"
-              size="24"
               color="success"
               class="me-1"
             />

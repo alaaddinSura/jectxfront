@@ -144,7 +144,7 @@ const successRate = computed(()=>{
 <template>
   <VCard>
     <VCardItem class="pb-sm-0">
-      <VCardTitle>Aylınk Kazanç Durumu</VCardTitle>
+      <VCardTitle>Aylık Kazanç Durumu</VCardTitle>
     </VCardItem>
 
     <VCardText class="mt-sm-n6">
@@ -184,7 +184,7 @@ const successRate = computed(()=>{
         </VCol>
       </VRow>
 
-      <div class="border rounded mt-3 px-5 py-4">
+      <div class="border rounded mt-3 px-5 py-3">
         <VRow>
           <VCol
             v-for="report in earningsReports"
@@ -192,7 +192,7 @@ const successRate = computed(()=>{
             cols="12"
             sm="4"
           >
-            <div class="d-flex align-center">
+            <div class="d-flex align-center mt-3">
               <VAvatar
                 rounded
                 size="26"
@@ -210,7 +210,7 @@ const successRate = computed(()=>{
                 {{ report.title }}
               </h6>
             </div>
-            <h4 class="text-h4 my-3">
+            <h4 class="text-h5 my-3 d-flex text-center ml-5">
               {{ report.amount }}
             </h4>
           </VCol>

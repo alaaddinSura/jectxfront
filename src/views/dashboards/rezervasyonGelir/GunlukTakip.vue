@@ -116,8 +116,8 @@ const rezAdetDay ='39'
           sm="6"
           class="mt-auto"
         >
-          <div class="mb-6">
-            <h4 class="text-h1">
+          <div class="mb-6 mt-6">
+            <h4 class="text-h3">
               {{ rezAdetDay }}
             </h4>
             <p>

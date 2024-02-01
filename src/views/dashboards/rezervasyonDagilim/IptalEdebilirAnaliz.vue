@@ -178,7 +178,7 @@ const totalEarnings = computed(() => {
       <VCardTitle>İptal Edilebilir Analiz</VCardTitle>
 
       <div class="d-flex align-center mt-2">
-        <h4 class="text-h1 me-2">
+        <h4 class="text-h3 me-2">
           {{ NRFORAN.ORAN }}%
         </h4>
         <div :class="NRFORAN.CLASS">

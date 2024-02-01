@@ -69,3 +69,9 @@ const salesByCountries = computed(()=>{
     </VCardText>
   </VCard>
 </template>
+
+<style lang="scss" scoped>
+.card-list{
+  --v-card-list-gap: 19px;
+}
+</style>
