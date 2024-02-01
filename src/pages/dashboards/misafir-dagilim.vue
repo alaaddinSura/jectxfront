@@ -11,7 +11,7 @@ import GecelemeDagilim from "@/views/dashboards/misafirDagilim/gecelemeDagilim.v
     <!-- Kişi Sayısına Göre Yatak Dağılımı -->
     <VCol
       cols="12"
-      md="7"
+      md="6"
       lg="6"
     >
       <YatakDagilim class="h-100" />
@@ -19,7 +19,7 @@ import GecelemeDagilim from "@/views/dashboards/misafirDagilim/gecelemeDagilim.v
     <!-- Geceleme Sayısına Göre Dağılım -->
     <VCol
       cols="12"
-      md="7"
+      md="6"
       lg="6"
     >
       <GecelemeDagilim class="h-100" />

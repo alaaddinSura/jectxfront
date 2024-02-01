@@ -31,7 +31,7 @@ const statistic = computed(()=>{
   },
   {
     title: 'Grup',
-    stats: statData.filter(item=> item.nightType === '+10').map(item => Number(item.count)).reduce((f,s)=>f+s,0),
+    stats: statData.filter(item=> item.nightType === '10+').map(item => Number(item.count)).reduce((f,s)=>f+s,0),
     icon: 'tabler-users-group',
     color: 'primary',
   },
