@@ -159,3 +159,12 @@ export const gelecekDolulukConfig = (dateRange, hotelidArray)=>{
   })
   return config(url, data)
 }
+
+export const odaTipiDagilimConfig = (dateRange, hotelidArray)=>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/odatipidagilim"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}

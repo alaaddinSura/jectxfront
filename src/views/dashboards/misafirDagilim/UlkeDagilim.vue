@@ -9,8 +9,6 @@ const salesByCountries = computed(()=>{
 
   let nationData = store.state.guestNations
   let rezData = store.state.ulkeDagilim == 0 ? JSON.parse(localStorage.getItem("countryDist")) : store.state.ulkeDagilim
-  console.log("Aşağıda Ülke Dağılım")
-  console.log(rezData)
 
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId) && item.nationality !== 'Tanımsız')
 

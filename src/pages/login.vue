@@ -96,6 +96,9 @@ const login = () => {
         //Gelecek Doluluk
         fetchData.callGelecekDoluluk(dateRange[0], hotelids, true)
 
+        //Oda Tipi Dağılım
+        fetchData.callOdatipiDagilim(dateRange,hotelids,true)
+
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {

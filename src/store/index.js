@@ -22,6 +22,7 @@ export const store = createStore({
     gecmisRezervasyonDagilim: [],
     ulkeDagilim: [],
     gelecekDoluluk: [],
+    odaTipiDagilim: [],
     guestTypes: {},
     guestNations: [],
     rawData: [],
@@ -93,6 +94,9 @@ export const store = createStore({
     },
     changeGelecekDoluluk(state, payload){
       state.gelecekDoluluk = payload;
+    },
+    changeOdaTipiDagilim(state, payload){
+      state.odaTipiDagilim = payload;
     }
   },
   actions: {},

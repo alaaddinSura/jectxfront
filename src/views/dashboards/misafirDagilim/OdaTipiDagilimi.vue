@@ -1,54 +1,74 @@
 <script setup>
-const monthlyCampaignState = [
+import { store } from "@/store/index"
+
+const monthlyCampaignState = computed(()=>{
+  let chosenHotels = store.state.selectedHotels
+  let rezData = store.state.odaTipiDagilim == 0 ? JSON.parse(localStorage.getItem("odaTipiDagilim")) : store.state.odaTipiDagilim
+  let statData = rezData.filter(item=> chosenHotels.includes(item.hotelId))
+  console.log(statData)
+
+  let roomsName = [...new Set(statData.map(item=> item.roomType))]
+  let gecelemeHepsi = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
+  let roomData = roomsName.map(item =>({
+    roomName: roomsName,
+    geceleme: statData.filter(item => item.roomType == item).map(k=> k.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0),
+    oran: Math.round((statData.filter(k=> k.roomType == item).map(k=> k.count != 'nan' ? Number(k.count):0).reduce((f,s)=>f+s,0)/ gecelemeHepsi)*1000) / 10,
+  }))
+
+  roomData = roomData.sort((a, b) => b.geceleme - a.geceleme)
+
+  roomData = roomData.slice(0, 6)
+  return [
   {
     avatarColor: 'success',
     avatarIcon: 'tabler-hotel-service',
-    title: "STD-DBL",
-    count: 393,
-    stats: 34.4 + "%",
+    title: roomData[0].roomName,
+    count: roomData[0].geceleme,
+    stats: roomData[0].oran + "%",
     statsColor: 'success',
   },
   {
     avatarColor: 'success',
     avatarIcon: 'tabler-hotel-service',
-    title: "DDXARTW",
-    count: 122,
-    stats: 10.7 + "%",
+    title: roomData[1].roomName,
+    count: roomData[1].geceleme,
+    stats: roomData[1].oran + "%",
     statsColor: 'success',
   },
   {
     avatarColor: 'success',
     avatarIcon: 'tabler-hotel-service',
-    title: "CLS-DBL",
-    count: 114,
-    stats: 10 + "%",
+    title: roomData[2].roomName,
+    count: roomData[2].geceleme,
+    stats: roomData[2].oran + "%",
     statsColor: 'success',
   },
   {
     avatarColor: 'success',
     avatarIcon: 'tabler-hotel-service',
-    title: "STD-TRP",
-    count: 62,
-    stats: 5.4 + "%",
+    title: roomData[3].roomName,
+    count: roomData[3].geceleme,
+    stats: roomData[3].oran + "%",
     statsColor: 'success',
   },
   {
     avatarColor: 'secondary',
     avatarIcon: 'tabler-hotel-service',
-    title: "CLS-TWN",
-    count: 110,
-    stats: 9.6 + "%",
+    title: roomData[4].roomName,
+    count: roomData[4].geceleme,
+    stats: roomData[4].oran + "%",
     statsColor: 'success',
   },
   {
     avatarColor: 'error',
     avatarIcon: 'tabler-hotel-service',
-    title: "STD-TWN",
-    count: 65,
-    stats: 5.7 + "%",
+    title: roomData[5].roomName,
+    count: roomData[5].geceleme,
+    stats: roomData[5].oran + "%",
     statsColor: 'success',
   },
 ]
+})
 </script>
 
 <template>

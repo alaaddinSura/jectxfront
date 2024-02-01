@@ -234,7 +234,7 @@ export const callGecmisRezervasyonDagilim = (endDate,dayCount, hotelids, isLocal
 
 export const callGelecekDoluluk = (endDate, hotelids, isLocal) =>{
 
-    console.log(configs.gelecekDolulukConfig(endDate,hotelids))
+    //console.log(configs.gelecekDolulukConfig(endDate,hotelids))
 
      axios.request(configs.gelecekDolulukConfig(endDate,hotelids)).then((r=>{
          if(isLocal){
@@ -243,4 +243,14 @@ export const callGelecekDoluluk = (endDate, hotelids, isLocal) =>{
              store.commit("changeGelecekDoluluk", r.data)
          }
      })).catch(err => console.log(err))
+}
+
+export const callOdatipiDagilim = (dateRange, hotelids, isLocal) =>{
+    axios.request(configs.odaTipiDagilimConfig(dateRange,hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("odaTipiDagilim", JSON.stringify(r.data))
+        }else{
+            store.commit("changeOdaTipiDagilim", r.data)
+        }
+    })
 }

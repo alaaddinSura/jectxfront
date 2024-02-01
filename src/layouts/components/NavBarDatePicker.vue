@@ -73,6 +73,9 @@ watch(dateRange, (newValue, oldValue) => {
 
     //Gelecek Doluluk
     fetchData.callGelecekDoluluk(endDate, hotelids)
+
+    //Oda tipi dağılım
+    fetchData.callOdatipiDagilim(d_range,hotelids)
   }
   else{
     let d_range = [newValue]
@@ -98,6 +101,8 @@ watch(dateRange, (newValue, oldValue) => {
     fetchData.callGecmisRezervasyonDagilim(d_range[0],d_range.length,hotelids)
     //Gelecek Doluluk
     fetchData.callGelecekDoluluk(d_range, hotelids)
+    //Oda Tipi Dağılım
+    fetchData.callOdatipiDagilim(d_range,hotelids)
     store.commit("changeDateCount", 1)
   }
 })
