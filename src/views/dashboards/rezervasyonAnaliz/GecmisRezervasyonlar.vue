@@ -6,9 +6,10 @@ import CompareBar from '../stats/CompareBar.vue'
 //Burayı Kopyala
 const series = computed(() => {
   let chosenHotels = store.state.selectedHotels
-
+  console.log(JSON.parse(localStorage.getItem("gecmisRezervs")))
   let rezData = store.state.gecmisRezervasyonlar == 0 ? JSON.parse(localStorage.getItem("gecmisRezervs")) : store.state.gecmisRezervasyonlar
   let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
+  console.log(rezData);
   let dates = [...new Set(statData.map(item => item.DATE))]
   
   let successData = statData.filter(item => item.SUCCESS)
@@ -35,8 +36,8 @@ const series = computed(() => {
     ],
     title: 'Geçmiş Rezervasyonlar',
     categories: dates.sort(),
-    max:  Math.round(maxCount * 1.2),
-    min: Math.round(minCount * 1.2),
+    max:  Math.round(maxCount * 1.002),
+    min: Math.round(minCount * 1.002),
   }
 })
 </script>

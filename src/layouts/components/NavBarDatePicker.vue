@@ -63,7 +63,7 @@ watch(dateRange, (newValue, oldValue) => {
     fetchData.callIptalAnaliz(d_range, hotelids)
 
     //İptal Edebilir Analiz
-    fetchData.callIptalEdebilirAnaliz(endDate,d_range.length, hotelids)
+    fetchData.callIptalEdebilirAnaliz(d_range, hotelids)
 
     //Ülke Dağılım
     fetchData.callUlkeDagilim(d_range, hotelids)

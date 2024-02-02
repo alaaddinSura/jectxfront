@@ -7,6 +7,14 @@ const props = defineProps({
   series: Object,
 })
 
+const propsData = computed(()=>{
+  const min = props.series.min
+  const max = props.series.max
+  return{
+
+  }
+})
+
 const vuetifyTheme = useTheme()
 
 const chartOptions = computed(() => {
@@ -88,8 +96,8 @@ const chartOptions = computed(() => {
             fontFamily: 'Public Sans',
           },
         },
-        min: props.series.min * 1.2,
-        max: props.series.max * 1.2,
+        min: props.series.min * 1.000222,
+        max: props.series.max * 1.000011,
         tickAmount: 5,
       },
       responsive: [

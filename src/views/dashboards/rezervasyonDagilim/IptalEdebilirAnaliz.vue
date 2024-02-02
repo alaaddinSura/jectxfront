@@ -26,16 +26,18 @@ const series = computed(() => {
   let chosenHotels = store.state.selectedHotels
   let rezData = store.state.iptalEdebilirAnaliz == 0 ? JSON.parse(localStorage.getItem("iptalEdilebilirAnaliz")) : store.state.iptalEdebilirAnaliz
   let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
-  //console.log("Bu İptal Edebilir Analiz Series den geliyor")
-  //console.log(statData)
+
+  let NRFAdet = statData.filter(item=> item.RATETYPE === 'NRF').map(item => item.COUNT)
+  
+  let RFAdet = statData.filter(item=> item.RATETYPE === 'RF').map(item=> item.COUNT)
   return [
     {
       name: 'NRF',
-      data: [160, 170, 190, 80, 50, 90, 70],
+      data: NRFAdet,
     },
     {
       name: 'RF',
-      data: [90, 120, 30, 190, 80, 90, 70],
+      data: RFAdet,
     },
   ]
 })
@@ -151,7 +153,6 @@ const chartOptions = computed(() => {
 const totalEarnings = computed(() => {
   let chosenHotels = store.state.selectedHotels
   let rezData = store.state.iptalEdebilirAnaliz == 0 ? JSON.parse(localStorage.getItem("iptalEdilebilirAnaliz")) : store.state.iptalEdebilirAnaliz
-
   let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
 
   let NRFAdet = statData.filter(item=> item.RATETYPE === 'NRF').map(item=> item.COUNT).reduce((f,s)=>f+s,0)

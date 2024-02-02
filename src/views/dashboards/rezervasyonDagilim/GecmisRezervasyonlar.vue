@@ -34,8 +34,8 @@ const series = computed(() => {
     ],
     title: 'Geçmiş Doluluk',
     categories: dates.sort(),
-    max:  Math.round(maxCount * 1.2),
-    min: Math.round(minCount * 1.2),
+    max:  Math.round(maxCount * 1.002),
+    min: Math.round(minCount * 1.002),
   }
 })
 </script>

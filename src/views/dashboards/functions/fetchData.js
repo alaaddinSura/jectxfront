@@ -157,7 +157,7 @@ export const callGecmisRez = (endDate,dayCount, hotelids, isLocal) => {
                     store.commit("changeGecmisRezervasyonlar", rData)
                 })
             }
-            //store.commit("changeGecmisRezervasyonlar", r.data)
+            store.commit("changeGecmisRezervasyonlar", r.data)
         }
     }).catch(d => console.log(d));
 }
@@ -183,7 +183,6 @@ export const callIptalAnaliz = (dateRange, hotelids, isLocal)=>{
 }
 
 export const callIptalEdebilirAnaliz = (dateRange, hotelids, isLocal)=>{
-    
     axios.request(configs.iptalEdebilirAnalizConfig(dateRange,hotelids)).then((r)=>{
         if(isLocal){
             localStorage.setItem("iptalEdilebilirAnaliz", JSON.stringify(r.data));
@@ -231,13 +230,8 @@ export const callGecmisRezervasyonDagilim = (endDate,dayCount, hotelids, isLocal
 }
 
 export const callDolulukGelecekRez = (startDate, hotelids, isLocal) =>{
-    // console.log("date Range :"+dateRange)
-    // console.log(dateRange)
-    // let configggg = dates.findNext12months(String(dateRange))
-    // console.log(configggg)
-    //let dateRange = dates.getNextYearDates(startDate)
+
     let dateRange = dates.getNextDatesFromDate(startDate, 365)
-    //console.log(dateRange)
     axios.request(configs.dolulukGelecekRezConfig(dateRange,hotelids)).then((r)=>{
         if(isLocal){
             let rData = r.data
