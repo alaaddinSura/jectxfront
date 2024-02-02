@@ -153,7 +153,6 @@ export const callGecmisRez = (endDate,dayCount, hotelids, isLocal) => {
                 })
             }else{
                 rData.forEach(item =>{
-                    item['DATEORJ'] = item.DATE
                     item['DATE'] = item.DATE.split("-")[0] + "-" + item.DATE.split("-")[1]
                     store.commit("changeGecmisRezervasyonlar", rData)
                 })
@@ -184,6 +183,7 @@ export const callIptalAnaliz = (dateRange, hotelids, isLocal)=>{
 }
 
 export const callIptalEdebilirAnaliz = (dateRange, hotelids, isLocal)=>{
+    
     axios.request(configs.iptalEdebilirAnalizConfig(dateRange,hotelids)).then((r)=>{
         if(isLocal){
             localStorage.setItem("iptalEdilebilirAnaliz", JSON.stringify(r.data));
@@ -202,7 +202,6 @@ export const callGecmisRezervasyonDagilim = (endDate,dayCount, hotelids, isLocal
      }
      else if(dayCount > 7 && dayCount <= 49){
          dateRange = dates.getLastDatesFromDate(endDate, 49)
-         console.log('kaşskdşaslkdşlaskdş')
      }
      else{
         dateRange = dates.getLastDatesFromDate(endDate, 365)
@@ -222,7 +221,6 @@ export const callGecmisRezervasyonDagilim = (endDate,dayCount, hotelids, isLocal
                 })
             }else{
                 rData.forEach(item =>{
-                    item['DATEORJ'] = item.DATE
                     item['DATE'] = item.DATE.split("-")[0] + "-" + item.DATE.split("-")[1]
                     store.commit("changeGecmisRezervasyonDagilim", rData)
                 })
@@ -232,12 +230,27 @@ export const callGecmisRezervasyonDagilim = (endDate,dayCount, hotelids, isLocal
     })
 }
 
-export const callDolulukGelecekRez = (dateRange, hotelids, isLocal) =>{
+export const callDolulukGelecekRez = (startDate, hotelids, isLocal) =>{
+    // console.log("date Range :"+dateRange)
+    // console.log(dateRange)
+    // let configggg = dates.findNext12months(String(dateRange))
+    // console.log(configggg)
+    //let dateRange = dates.getNextYearDates(startDate)
+    let dateRange = dates.getNextDatesFromDate(startDate, 365)
+    //console.log(dateRange)
     axios.request(configs.dolulukGelecekRezConfig(dateRange,hotelids)).then((r)=>{
         if(isLocal){
+            let rData = r.data
+            rData.forEach(item => {
+                item['DATE'] = item['DATE'].split('-')[0] + '-' + item['DATE'].split('-')[1]
+            })
             localStorage.setItem("dolulukGelecekRez", JSON.stringify(r.data))
         }else{
-            store.commit("gelecekDoluluk", r.data)
+            let rData = r.data
+            rData.forEach(item => {
+                item['DATE'] = item['DATE'].split('-')[0] + '-' + item['DATE'].split('-')[1]
+            })
+            store.commit("changeGelecekDoluluk", r.data)
         }
     })
 }

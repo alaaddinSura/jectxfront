@@ -22,7 +22,6 @@ function formatNumber(num) {
 
 
 const series = computed(() => {
-  console.log(props.data.series)
   return props.data.series
 })
 

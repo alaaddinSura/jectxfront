@@ -93,6 +93,8 @@ const login = () => {
         //Geçmiş Rezervasyonlar Dağılım
         fetchData.callGecmisRezervasyonDagilim(dateRange[0], dateRange.length, hotelids, true)
 
+        //Gelecek Doluluk
+        fetchData.callDolulukGelecekRez(dateRange[0],hotelids,true)
 
         //Oda Tipi Dağılım
         fetchData.callOdatipiDagilim(dateRange,hotelids,true)

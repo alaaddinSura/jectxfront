@@ -26,8 +26,8 @@ const series = computed(() => {
   let chosenHotels = store.state.selectedHotels
   let rezData = store.state.iptalEdebilirAnaliz == 0 ? JSON.parse(localStorage.getItem("iptalEdilebilirAnaliz")) : store.state.iptalEdebilirAnaliz
   let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
-  console.log("Bu İptal Edebilir Analiz Series den geliyor")
-  console.log(statData)
+  //console.log("Bu İptal Edebilir Analiz Series den geliyor")
+  //console.log(statData)
   return [
     {
       name: 'NRF',

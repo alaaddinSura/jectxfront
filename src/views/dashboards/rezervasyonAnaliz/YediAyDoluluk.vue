@@ -28,7 +28,6 @@ let nightcount = computed(() => {
   let geceCount = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
   
   let oran = [((geceCount / roomCounts * 100).toFixed(2))]
-  console.log("Son Yedi Ay oranı " + oran)
 
  
 

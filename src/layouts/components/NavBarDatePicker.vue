@@ -71,6 +71,9 @@ watch(dateRange, (newValue, oldValue) => {
     //Doluluk Geçmiş
     fetchData.callGecmisRezervasyonDagilim(endDate, d_range.length ,hotelids)
 
+    //Gelecek Doluluk
+    fetchData.callDolulukGelecekRez(d_range[0],hotelids)
+
     //Oda tipi dağılım
     fetchData.callOdatipiDagilim(d_range,hotelids)
   }
@@ -96,6 +99,9 @@ watch(dateRange, (newValue, oldValue) => {
     fetchData.callUlkeDagilim(d_range, hotelids)
     //Doluluk Geçmiş
     fetchData.callGecmisRezervasyonDagilim(d_range[0],d_range.length,hotelids)
+
+    //Gelecek Doluluk
+    fetchData.callDolulukGelecekRez(d_range,hotelids)
 
     //Oda Tipi Dağılım
     fetchData.callOdatipiDagilim(d_range,hotelids)

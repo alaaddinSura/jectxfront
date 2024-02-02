@@ -85,6 +85,18 @@ export function getLastDatesFromDate(startDate, dayCount){
   return lastDates
 }
 
+export function getNextDatesFromDate(startDate, dayCount){
+  let currentDate = new Date(startDate)
+  let lastDates = []
+
+  for(let i = 0; i < dayCount; i++){
+    currentDate.setDate(currentDate.getDate() + 1)
+    lastDates.push(formatDate(currentDate))
+  }
+
+  return lastDates
+}
+
 export function findWeek(day){
   let lastDigit = day.split('-')[2]
   lastDigit = Number(lastDigit)
@@ -272,4 +284,26 @@ export function findBetweenDates(startDate, endDate){
     }
 
     return tarihDizisi;
+}
+
+export function getNextYearDates(startDate) {
+  const dates = [];
+  const currentDate = new Date(startDate); // Başlangıç tarihini oluştur
+
+  // 1 yıl boyunca her gün için döngü
+  for (let i = 0; i < 365; i++) {
+      // Ay, gün ve yıl bilgisini al
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth() + 1; // JavaScript'te aylar 0'dan başlar, bu yüzden 1 ekliyoruz
+      const day = currentDate.getDate();
+
+      // Tarih bilgisini YYYY-MM-DD formatına dönüştür ve diziye ekle
+      const formattedDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+      dates.push(formattedDate);
+
+      // Bir sonraki gün için tarihi güncelle
+      currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return dates;
 }
