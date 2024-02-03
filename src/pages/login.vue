@@ -90,6 +90,9 @@ const login = () => {
         //İptal Edebilir Analiz
         fetchData.callIptalEdebilirAnaliz(dateRange, hotelids, true)
 
+        //İptal Edilebilie Analiz GÜnlük
+        fetchData.callIptalEdebilirAnalizGunluk(dateRange, hotelids, true)
+
         //Geçmiş Rezervasyonlar Dağılım
         fetchData.callGecmisRezervasyonDagilim(dateRange[0], dateRange.length, hotelids, true)
 

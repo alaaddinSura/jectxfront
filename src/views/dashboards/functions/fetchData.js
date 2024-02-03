@@ -183,11 +183,22 @@ export const callIptalAnaliz = (dateRange, hotelids, isLocal)=>{
 }
 
 export const callIptalEdebilirAnaliz = (dateRange, hotelids, isLocal)=>{
-    axios.request(configs.iptalEdebilirAnalizConfig(dateRange,hotelids)).then((r)=>{
+    let dRange = dates.find7MonthsWithOrigin(dates.findMidDate(dateRange.sort()[0], dateRange.sort()[dateRange.length - 1]))
+    axios.request(configs.iptalEdebilirAnalizConfig(dRange,hotelids)).then((r)=>{
         if(isLocal){
             localStorage.setItem("iptalEdilebilirAnaliz", JSON.stringify(r.data));
         }else{
             store.commit("changeiptalEdebilirAnaliz", r.data);
+        }
+    })
+}
+
+export const callIptalEdebilirAnalizGunluk = (dateRange, hotelids, isLocal) => {
+    axios.request(configs.iptalEdebilirAnalizConfigGunluk(dateRange, hotelids)).then((r) => {
+        if (isLocal) {
+            localStorage.setItem("iptalEdilebilirAnalizGunluk", JSON.stringify(r.data));
+        } else {
+            store.commit("changeiptalEdebilirAnalizGunluk", r.data);
         }
     })
 }

@@ -19,6 +19,7 @@ export const store = createStore({
     rezAnaliz:[],
     iptalAnaliz: [],
     iptalEdebilirAnaliz: [],
+    iptalEdilebilirAnalizGunluk: [],
     gecmisRezervasyonDagilim: [],
     ulkeDagilim: [],
     gelecekDoluluk: [],
@@ -85,6 +86,9 @@ export const store = createStore({
     },
     changeiptalEdebilirAnaliz(state, payload){
       state.iptalEdebilirAnaliz = payload;
+    },
+    changeiptalEdebilirAnalizGunluk(state, payload) {
+      state.iptalEdilebilirAnalizGunluk = payload;
     },
     changeGecmisRezervasyonDagilim(state, payload){
       state.gecmisRezervasyonDagilim = payload;

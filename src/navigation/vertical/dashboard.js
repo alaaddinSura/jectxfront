@@ -6,7 +6,7 @@ const children = [
   },
   {
     title: "Doluluk Dağılım",
-    to: "dashboards-rezervasyon-dagilim",
+    to: "dashboards-doluluk-dagilim",
   },
   {
     title: "Rezervasyon Gelir",
