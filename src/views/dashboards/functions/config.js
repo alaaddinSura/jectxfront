@@ -134,6 +134,15 @@ export const iptalAnalizConfig = (dateRange, hotelidArray) =>{
 }
 
 export const iptalEdebilirAnalizConfig = (dateRange, hotelidArray) =>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/iptalEdilebilirAnalizAylik"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
+
+export const iptalEdebilirAnalizConfigGunluk = (dateRange, hotelidArray) => {
   const url = "https://jectxbackend-672789bf3678.herokuapp.com/iptalEdilebilirAnaliz"
   let data = JSON.stringify({
     "dateRange": dateRange,

@@ -9,11 +9,40 @@ import { useTheme } from 'vuetify'
 const vuetifyTheme = useTheme()
 
 const NRFORAN = computed(() => {
+  let dateRange = store.state.dateRange
+  let chosenHotels = store.state.selectedHotels
+  let startDate = dateRange.split(' to ')[0]
+  let endDate = dateRange.split(' to ')[1]
 
-  let ORAN = 70
-  let DEGISIM = 90
-  let CLASS = DEGISIM > 0 ? 'text-success' : 'text-error' 
-  let ICON = DEGISIM > 0 ? 'tabler-chevron-up' : 'tabler-chevron-down' 
+  let rezData = store.state.iptalEdilebilirAnalizGunluk == 0 ? JSON.parse(localStorage.getItem("iptalEdilebilirAnalizGunluk")) : store.state.iptalEdilebilirAnalizGunluk
+  
+  let chosenDates = [...new Set(rezData.map(item => item.DATE))]
+
+  let statData = rezData.filter(item => chosenDates.includes(item.DATE))
+  statData = statData.filter(item => chosenHotels.includes(item.HOTELID))
+
+  let NRFADET = statData.filter(item => item.RATETYPE === 'NRF').map(item => Number(item.COUNT)).reduce((f, s) => f + s, 0)
+  let TUMADET = statData.map(item => Number(item.COUNT)).reduce((f, s) => f + s, 0)
+
+
+  let chosenDates2 = chosenDates.slice(0, -1)
+  let last7months = dates.finLast7months(dates.findtodayDate())
+  let last7DayCount = 210
+  let last7monthsNRF = last7months.map(date => rezData.filter(item => item.DATE.includes(date)
+    && item.RATETYPE == 'NRF'
+    && chosenHotels.includes(item.HOTELID)).map(item => item.COUNT != 'nan' ? Number(item.COUNT) : 0).reduce((f, s) => f + s, 0)).reduce((f, s) => f + s, 0)
+
+
+  let statData2 = rezData.filter(item => chosenDates2.includes(item.DATE))
+  statData2 = statData2.filter(item => chosenHotels.includes(item.HOTELID))
+
+  let ORAN = Math.round((Number(NRFADET / TUMADET) * 100))
+  let ORAN2 = Math.round((last7monthsNRF / last7DayCount))
+  let ORAN3 = Math.round((NRFADET / chosenDates.length))
+
+  let DEGISIM = ORAN3 - ORAN2
+  let CLASS = DEGISIM > 0 ? 'text-success' : 'text-error'
+  let ICON = DEGISIM > 0 ? 'tabler-chevron-up' : 'tabler-chevron-down'
   DEGISIM = DEGISIM > 0 ? DEGISIM : -DEGISIM
 
   return {
@@ -24,20 +53,24 @@ const NRFORAN = computed(() => {
 
 const series = computed(() => {
   let chosenHotels = store.state.selectedHotels
-  let rezData = store.state.iptalEdebilirAnaliz == 0 ? JSON.parse(localStorage.getItem("iptalEdilebilirAnaliz")) : store.state.iptalEdebilirAnaliz
-  let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
+  let rezData = store.state.iptalEdebilirAnaliz.length == 0 ? JSON.parse(localStorage.getItem("iptalEdilebilirAnaliz")) : store.state.iptalEdebilirAnaliz
+  let dates = [...new Set(rezData.map(item => item.DATE))].sort()
 
-  let NRFAdet = statData.filter(item=> item.RATETYPE === 'NRF').map(item => item.COUNT)
-  
-  let RFAdet = statData.filter(item=> item.RATETYPE === 'RF').map(item=> item.COUNT)
+  let NRFList = rezData.filter(item => item.RATETYPE == 'NRF' && chosenHotels.includes(item.HOTELID))
+  NRFList = dates.map(date => NRFList.filter(item => item.DATE == date).map(item => item.COUNT).reduce((f,s) => f+s, 0))
+
+  let RFList = rezData.filter(item => item.RATETYPE == 'RF' && chosenHotels.includes(item.HOTELID))
+  RFList = dates.map(date => RFList.filter(item => item.DATE == date).map(item => item.COUNT).reduce((f, s) => f + s, 0))
+  RFList = RFList.map(item => -item)
+
   return [
     {
       name: 'NRF',
-      data: NRFAdet,
+      data: NRFList,
     },
     {
       name: 'RF',
-      data: RFAdet,
+      data: RFList,
     },
   ]
 })
@@ -152,12 +185,11 @@ const chartOptions = computed(() => {
 
 const totalEarnings = computed(() => {
   let chosenHotels = store.state.selectedHotels
-  let rezData = store.state.iptalEdebilirAnaliz == 0 ? JSON.parse(localStorage.getItem("iptalEdilebilirAnaliz")) : store.state.iptalEdebilirAnaliz
+  let rezData = store.state.iptalEdilebilirAnalizGunluk == 0 ? JSON.parse(localStorage.getItem("iptalEdilebilirAnalizGunluk")) : store.state.iptalEdilebilirAnalizGunluk
   let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
 
   let NRFAdet = statData.filter(item=> item.RATETYPE === 'NRF').map(item=> item.COUNT).reduce((f,s)=>f+s,0)
 
-  
   let RFAdet = statData.filter(item=> item.RATETYPE === 'RF').map(item=> item.COUNT).reduce((f,s)=>f+s,0)
 
   return [
@@ -188,13 +220,6 @@ const totalEarnings = computed(() => {
         <h4 class="text-h3 me-2">
           {{ NRFORAN.ORAN }}%
         </h4>
-        <div :class="NRFORAN.CLASS">
-          <VIcon
-            size="18"
-            :icon="NRFORAN.ICON"
-          />
-          <span class="text-base">{{ NRFORAN.DEGISIM }}%</span>
-        </div>
       </div>
     </VCardItem>
 

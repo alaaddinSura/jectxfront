@@ -19,12 +19,9 @@ watch(dateRange, (newValue, oldValue) => {
     let startDate = dateRange.value.split(' to ')[0]
     let endDate = dateRange.value.split(' to ')[1]
     let d_range = dates.findBetweenDates(startDate, endDate)
-    let between = dates.findMidDate(d_range[0], d_range[d_range.length - 1])
-    console.log(between);
-    console.log(d_range[0])
-    console.log(d_range[d_range.length - 1])
-    store.commit("changeDateCount", d_range.length)
     
+    // ????
+    store.commit("changeDateCount", d_range.length)
     
     // Yatak Dağılım
     fetchData.callYatakDagilim(d_range, hotelids)
@@ -64,6 +61,9 @@ watch(dateRange, (newValue, oldValue) => {
 
     //İptal Edebilir Analiz
     fetchData.callIptalEdebilirAnaliz(d_range, hotelids)
+
+    //İptal Edebilir Analiz Günlük
+    fetchData.callIptalEdebilirAnalizGunluk(d_range, hotelids)
 
     //Ülke Dağılım
     fetchData.callUlkeDagilim(d_range, hotelids)

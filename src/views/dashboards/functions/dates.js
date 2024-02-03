@@ -178,6 +178,8 @@ export function find7MonthsWithOrigin(currentDate){
   let currentMonth = Number(currentDate.split('-')[1])
   let months = []
   
+  months.push(currentDate.split('-')[0] + "-" + currentDate.split('-')[1])
+
   //last 3 month
   for(let i=0; i<3;i++){
     if(currentMonth === 1){
@@ -218,8 +220,6 @@ export function find7MonthsWithOrigin(currentDate){
       months.push(String(currentYear) + n)
     }
   }
-  
-  months.push(currentDate)
   
   return months.sort()
 }

@@ -30,7 +30,7 @@ import RezAnaliz from "@/views/dashboards/rezervasyonDagilim/RezAnaliz.vue"
       md="6"
       lg="4"
     >
-      <IptalEdebilirAnaliz class="h-100" />
+      <IptalEdebilirAnaliz  />
     </VCol>
     <!-- 12 Aylık Bazında Geçmiş Rezervasyonlar -->
     <VCol

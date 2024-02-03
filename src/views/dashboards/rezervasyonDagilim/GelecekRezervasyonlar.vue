@@ -11,16 +11,17 @@ const series = computed(() => {
   let rezData = store.state.gelecekDoluluk == 0 ? JSON.parse(localStorage.getItem("dolulukGelecekRez")): store.state.gelecekDoluluk
   let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
   let dates = [...new Set(statData.map(item => item.DATE))].sort()
+  
   let successData = statData.filter(item => item.SUCCESS)
   successData = dates.map(item => successData.filter(i => i.DATE == item).map(j=> j.COUNT).reduce((f,s)=>f+s,0))
-  console.log(successData)
+  
   let cancelData = statData.filter(item => !item.SUCCESS)
   cancelData = dates.map(item => cancelData.filter(i => i.DATE == item).map(j=> j.COUNT).reduce((f,s)=>f+s,0))
   cancelData = cancelData.map(item => -item)
+  
   let maxCount = Math.max(...successData)
-  console.log(maxCount)
   let minCount = Math.min(...cancelData)
-  console.log(Math.round(maxCount + 100))
+  
   return {
     bar: [
       {
