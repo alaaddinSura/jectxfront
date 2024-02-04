@@ -17,9 +17,9 @@ const children = [
     to: "dashboards-rezervasyon-analiz",
   },
   {
-    title: "Rezervasyon Karşılaştırma",
-    to: "dashboards-rezervasyon-karsilastirma",
-  },
+    title: "Geçmiş Karşılaştırma",
+    to: "dashboards-rezervasyon-gecmis"
+  }
 ]
 
 export default [

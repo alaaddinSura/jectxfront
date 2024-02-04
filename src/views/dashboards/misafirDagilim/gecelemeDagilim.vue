@@ -3,6 +3,7 @@ import { computed } from "vue"
 import Bar from "../stats/Bar.vue"
 import { store } from '@/store/index'
 
+
 const statistic = computed(()=>{
   let chosenHotels = store.state.selectedHotels
 
@@ -10,6 +11,7 @@ const statistic = computed(()=>{
   console.log("Geceleme Dağılım")
   console.log(store.state.gecelemeDagilim)
   let statData = store.state.gecelemeDagilim.length == 0 ? nightScatter.filter(item => chosenHotels.includes(item.hotelId)) : store.state.gecelemeDagilim
+  
   return [
   {
     title: 'Tek Kişi',

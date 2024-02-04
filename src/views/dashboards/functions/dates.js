@@ -307,3 +307,32 @@ export function getNextYearDates(startDate) {
 
   return dates;
 }
+
+export function subtractYearFromDate(inputDateString) {
+  // Split the input date string based on "-"
+  const dateParts = inputDateString.split('-');
+
+  // Subtract one from the year part
+  dateParts[0] = String(Number(dateParts[0]) - 1);
+
+  // Join the parts back into a string
+  const resultDateString = dateParts.join('-');
+
+  return resultDateString;
+}
+
+export function generatePreviousMonths(startMonth, numberOfMonths) {
+  const result = [];
+
+  for (let i = 0; i < numberOfMonths; i++) {
+    const date = new Date(startMonth + '-01'); // Assuming day is always '01'
+    date.setMonth(date.getMonth() - i);
+
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+
+    result.push(`${year}-${month}`);
+  }
+
+  return result;
+}
