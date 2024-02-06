@@ -21,8 +21,9 @@ const colorVariables = themeColors => {
   const themeDisabledTextColor = `rgba(${hexToRgb(themeColors.colors['on-surface'])},${themeColors.variables['disabled-opacity']})`
   const themeBorderColor = `rgba(${hexToRgb(String(themeColors.variables['border-color']))},${themeColors.variables['border-opacity']})`
   const themePrimaryTextColor = `rgba(${hexToRgb(themeColors.colors['on-surface'])},${themeColors.variables['high-emphasis-opacity']})`
+  const legendColor = `rgba(${hexToRgb(themeColors.colors['on-background'])},${themeColors.variables['high-emphasis-opacity']})`
   
-  return { themeSecondaryTextColor, themeDisabledTextColor, themeBorderColor, themePrimaryTextColor }
+  return { themeSecondaryTextColor, themeDisabledTextColor, themeBorderColor, themePrimaryTextColor, legendColor }
 }
 
 const graphData = computed(() => {
@@ -43,7 +44,7 @@ const series = computed(() =>{
 
 const getSubBalanceConfig = computed(() => {
   const themeColors = vuetifyTheme.current.value
-  const { themeBorderColor, themeDisabledTextColor } = colorVariables(themeColors)
+  const { themeBorderColor, themeDisabledTextColor, legendColor } = colorVariables(themeColors)
   
 
   return {
@@ -54,6 +55,21 @@ const getSubBalanceConfig = computed(() => {
     },
     colors: ['#ff9f43', '#3F51B5', '#28c76f', '#3F51B5'],
     stroke: { curve: 'straight' },
+    legend: {
+      show: true,
+      horizontalAlign: 'left',
+      position: 'top',
+      fontFamily: 'Public Sans',
+      markers: {
+        height: 12,
+        width: 12,
+        radius: 12,
+        offsetX: -3,
+        offsetY: 2,
+      },
+      labels: { colors: legendColor },
+      itemMargin: { horizontal: 5 },
+    },
     dataLabels: { enabled: true },
     markers: {
       strokeWidth: 7,

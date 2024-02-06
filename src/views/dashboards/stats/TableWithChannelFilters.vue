@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from "vue"
 //import { VDataTable } from '@/vuetify/labs/VDataTable'
+import VDataTable from "./VDataTable.vue"
+
 
 const props = defineProps({
   header: Array,

@@ -27,6 +27,9 @@ export const store = createStore({
     guestTypes: {},
     guestNations: [],
     rawData: [],
+    channelTable: [],
+    rawData: [],
+    kanalDagilimGelir: []
   },
   getters: {},
   mutations: {
@@ -101,6 +104,15 @@ export const store = createStore({
     },
     changeOdaTipiDagilim(state, payload){
       state.odaTipiDagilim = payload;
+    },
+    changeChannelTable(state, payload){
+      state.channelTable = payload
+    },
+    changeRawData(state, payload){
+      state.rawData = payload
+    },
+    changeKanalDagilimGelir(state, payload){
+      state.kanalDagilimGelir = payload
     }
   },
   actions: {},

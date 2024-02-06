@@ -108,6 +108,21 @@ const login = () => {
         // Geçmiş Rezervasyon Karşılaştırma Aylik
         fetchData.callRezervasyonGecmisAylik(hotelids, true)
 
+        // channel table
+        fetchData.callChannelTable(dateRange, hotelids, true)
+        
+        // call raw data
+        fetchData.callRawData(dateRange, hotelids, true)
+
+        // call kanal dağılım gelirler
+        fetchData.callKanalDagilimGelir(dateRange, hotelids, true)
+
+        //call günlük takip
+        fetchData.callGunlukTakip(dateRange, hotelids, true)
+
+        //call aylik takip
+        fetchData.callAylikTakip(dateRange, hotelids, true)
+
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {

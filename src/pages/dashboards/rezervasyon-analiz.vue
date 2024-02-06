@@ -8,6 +8,7 @@ import KanalDagilimi from "@/views/dashboards/rezervasyonAnaliz/KanalDagilimi.vu
 import OnlineRezerv from "@/views/dashboards/rezervasyonAnaliz/OnlineRezerv.vue"
 import RezervTablo from "@/views/dashboards/rezervasyonAnaliz/RezervTablo.vue"
 import YediAyDoluluk from "@/views/dashboards/rezervasyonAnaliz/YediAyDoluluk.vue"
+import RawTablo from "@/views/dashboards/rezervasyonAnaliz/RawTablo.vue"
 </script>
 
 <template>
@@ -84,7 +85,7 @@ import YediAyDoluluk from "@/views/dashboards/rezervasyonAnaliz/YediAyDoluluk.vu
       cols="12"
       lg="12"
     >
-      <!-- <RawTablo /> --> 
+      <RawTablo/>
     </VCol>
   </VRow>
 </template>

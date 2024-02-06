@@ -2,6 +2,7 @@
 import VueApexCharts from 'vue3-apexcharts'
 import { useTheme } from 'vuetify'
 import { hexToRgb } from '@layouts/utils'
+import { store } from '@/store/index'
 
 const vuetifyTheme = useTheme()
 const series = [36]
@@ -9,7 +10,7 @@ const series = [36]
 const chartOptions = computed(() => {
   const currentTheme = vuetifyTheme.current.value.colors
   const variableTheme = vuetifyTheme.current.value.variables
-  
+
   return {
     labels: ['Completed Task'],
     chart: { type: 'radialBar' },
@@ -26,14 +27,14 @@ const chartOptions = computed(() => {
         dataLabels: {
           name: {
             offsetY: -20,
-            color: `rgba(${ hexToRgb(currentTheme['on-background']) },${ variableTheme['disabled-opacity'] })`,
+            color: `rgba(${hexToRgb(currentTheme['on-background'])},${variableTheme['disabled-opacity']})`,
             fontSize: '13px',
             fontWeight: '400',
             fontFamily: 'Public Sans',
           },
           value: {
             offsetY: 10,
-            color: `rgba(${ hexToRgb(currentTheme['on-background']) },${ variableTheme['high-emphasis-opacity'] })`,
+            color: `rgba(${hexToRgb(currentTheme['on-background'])},${variableTheme['high-emphasis-opacity']})`,
             fontSize: '38px',
             fontWeight: '400',
             fontFamily: 'Public Sans',
@@ -76,28 +77,43 @@ const chartOptions = computed(() => {
   }
 })
 
-const supportTicket = [
-  {
-    avatarColor: 'primary',
-    avatarIcon: 'tabler-ticket',
-    title: 'ADR',
-    subtitle: '109.64',
-  },
-  {
-    avatarColor: 'info',
-    avatarIcon: 'tabler-circle-check',
-    title: 'GELİR',
-    subtitle: '9.2K',
-  },
-  {
-    avatarColor: 'error',
-    avatarIcon: 'tabler-circle-check',
-    title: 'KAYIP',
-    subtitle: '120',
-  },
-]
+const supportTicket = computed(() => {
 
-const rezAdetDay ='39'
+  let data = JSON.parse(localStorage.getItem('gunlukTakip'))
+
+  return [
+    {
+      avatarColor: 'primary',
+      avatarIcon: 'tabler-ticket',
+      title: 'ADR',
+      subtitle: data.adr.toFixed(2),
+    },
+    {
+      avatarColor: 'info',
+      avatarIcon: 'tabler-circle-check',
+      title: 'GELİR',
+      subtitle: data.gelir.toFixed(2),
+    },
+    {
+      avatarColor: 'error',
+      avatarIcon: 'tabler-circle-check',
+      title: 'KAYIP',
+      subtitle: data.kayip,
+    },
+  ]
+})
+
+const rezAdetDay = computed(() => {
+  let chosenHotels = store.state.selectedHotels.length == 0 ? [22966, 22964] : store.state.selectedHotels
+
+  let rezData = store.state.rezervMiktar.length == 0 ? JSON.parse(localStorage.getItem('rezMiktar')) : store.state.rezervMiktar
+
+  let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
+
+  let totalCount = statData.map(item => item.count).reduce((f, s) => f + s, 0)
+
+  return totalCount
+})
 </script>
 
 <template>
@@ -110,12 +126,7 @@ const rezAdetDay ='39'
 
     <VCardText>
       <VRow>
-        <VCol
-          cols="12"
-          md="5"
-          sm="6"
-          class="mt-auto"
-        >
+        <VCol cols="12" md="5" sm="6" class="mt-auto">
           <div class="mb-6 mt-6">
             <h4 class="text-h3">
               {{ rezAdetDay }}
@@ -126,10 +137,7 @@ const rezAdetDay ='39'
           </div>
 
           <VList class="card-list">
-            <VListItem
-              v-for="ticket in supportTicket"
-              :key="ticket.title"
-            >
+            <VListItem v-for="ticket in supportTicket" :key="ticket.title">
               <VListItemTitle class="font-weight-medium">
                 {{ ticket.title }}
               </VListItemTitle>
@@ -137,28 +145,15 @@ const rezAdetDay ='39'
                 {{ ticket.subtitle }}
               </VListItemSubtitle>
               <template #prepend>
-                <VAvatar
-                  rounded
-                  size="34"
-                  :color="ticket.avatarColor"
-                  variant="tonal"
-                >
+                <VAvatar rounded size="34" :color="ticket.avatarColor" variant="tonal">
                   <VIcon :icon="ticket.avatarIcon" />
                 </VAvatar>
               </template>
             </VListItem>
           </VList>
         </VCol>
-        <VCol
-          cols="12"
-          md="7"
-          sm="6"
-        >
-          <VueApexCharts
-            :options="chartOptions"
-            :series="series"
-            height="340"
-          />
+        <VCol cols="12" md="7" sm="6">
+          <VueApexCharts :options="chartOptions" :series="series" height="340" />
         </VCol>
       </VRow>
     </VCardText>

@@ -195,3 +195,40 @@ export const callRezervasyonGecmisAylik = (dateRange, hotelidArray) => {
   })
   return config(url, data)
 }
+
+export const callChannelTable = (dateRange, hotelidArray) => {
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/kanallaragoretablo"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
+
+export const callRawData = (dateRange, hotelidArray) => {
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/rawdatatablo"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
+
+
+export const callKanalDagilimGelir = (dateRange, hotelidArray) => {
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/kanaldagilimgelir"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data) 
+}
+
+export const callKazancTakip = (dateRange, hotelidArray) => {
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/kazanctakip"
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}

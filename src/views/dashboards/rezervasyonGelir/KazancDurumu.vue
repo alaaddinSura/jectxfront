@@ -86,42 +86,39 @@ const chartOptions = computed(() => {
   }
 })
 
-const earningsReports = [
-  {
-    color: 'primary',
-    icon: 'tabler-target-arrow',
-    title: 'Hedef',
-    amount: '1.2M',
-    progress: '55',
-  },
-  {
-    color: 'info',
-    icon: 'tabler-currency-euro',
-    title: 'Kazanç',
-    amount: '436K',
-    progress: '25',
-  },
-  {
-    color: 'error',
-    icon: 'tabler-currency-euro-off',
-    title: 'Kayıp',
-    amount: '7.8K',
-    progress: '65',
-  },
-]
+const earningsReports = computed(() => {
 
-const moreList = [
-  {
-    title: 'View More',
-    value: 'View More',
-  },
-  {
-    title: 'Delete',
-    value: 'Delete',
-  },
-]
+  let data = JSON.parse(localStorage.getItem('aylikTakip'))
 
-const rezAdetMonth = "468"
+  return [
+    {
+      color: 'primary',
+      icon: 'tabler-target-arrow',
+      title: 'Hedef',
+      amount: '1.2M',
+      progress: '55',
+    },
+    {
+      color: 'info',
+      icon: 'tabler-currency-euro',
+      title: 'Kazanç',
+      amount: data.gelir.toFixed(2),
+      progress: '25',
+    },
+    {
+      color: 'error',
+      icon: 'tabler-currency-euro-off',
+      title: 'Kayıp',
+      amount: data.kayip.toFixed(2),
+      progress: '65',
+    },
+  ]
+})
+
+
+const rezAdetMonth = computed(() => {
+  return 345
+})
 
 const revenueChange = computed(()=>{
   let changeRevenue = 5.6

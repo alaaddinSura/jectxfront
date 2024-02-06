@@ -2,6 +2,7 @@ import axios from "@axios";
 import * as configs from "@/views/dashboards/functions/config"
 import { store } from '@/store/index'
 import * as dates from '@/views/dashboards/functions/dates'
+import _ from 'lodash'
 
 
 export const callYatakDagilim = (dateRange, hotelids, isLocal) => {
@@ -294,7 +295,7 @@ export const callRezervasyonGecmisGunluk = (hotelids, isLocal) => {
                     },
                 ]
             }
-            localStorage.setItem('rezervasyonGecmisGunluk', JSON.stringify(desiredData)) 
+            localStorage.setItem('rezervasyonGecmisGunluk', JSON.stringify(desiredData))
         })
         .catch(e => console.log('callRezervasyonGecmisGunluk fonksiyonu hata verdi. hata --> ', e))
 }
@@ -326,5 +327,89 @@ export const callRezervasyonGecmisAylik = (hotelids, isLocal) => {
             localStorage.setItem('rezervasyonGecmisAylik', JSON.stringify(desiredData))
         })
         .catch(e => console.log('callRezervasyonGecmisGunluk fonksiyonu hata verdi. hata --> ', e))
+}
+
+export const callChannelTable = (dateRange, hotelids, isLocal) => {
+    axios.request(configs.callChannelTable(dateRange, hotelids)).then((r) => {
+        if (isLocal) {
+            localStorage.setItem("channelTable", JSON.stringify(r.data))
+        } else {
+            store.commit("changeChannelTable", r.data)
+        }
+    })
+}
+
+export const callRawData = (dateRange, hotelids, isLocal) => {
+    axios.request(configs.callRawData(dateRange, hotelids))
+        .then((r) => {
+            if (isLocal) {
+                localStorage.setItem("rawData", JSON.stringify(r.data))
+            } else {
+                store.commit("changeRawData", r.data)
+            }
+        })
+        .catch(e => console.log('error in callRawData --> ', e))
+}
+
+export const callKanalDagilimGelir = (dateRange, hotelids, isLocal) => {
+    axios.request(configs.callKanalDagilimGelir(dateRange, hotelids))
+        .then((r) => {
+            let rData = r.data
+            const groupedAndSummed = _.mapValues(
+                _.groupBy(rData, obj => [obj.ANAKANAL, obj.BASARILI, obj.DATE, obj.HOTELID].join()),
+                group => _.sumBy(group, 'ADR')
+            );
+            //let mapData = 
+            if (isLocal) {
+                localStorage.setItem("kanalDagilimGelir", JSON.stringify(rData))
+            } else {
+                store.commit("changeKanalDagilimGelir", r.data)
+            }
+        })
+        .catch(e => console.log('error in kanalDagilimGelir --> ', e))
+}
+
+export const callGunlukTakip = (dateRange, hotelids, isLocal) => {
+    axios.request(configs.callKazancTakip(dateRange, hotelids))
+        .then((r) => {
+            console.log(dateRange)
+            let data = r.data
+            let geceleme = data.map(item => item.RESID).length
+            let gelir = data.filter(item => item.BASARILI == 'success')
+                .map(item => item.AVERAGENIGHTPRICE)
+                .reduce((f, s) => f + s, 0)
+            let kayip = data.filter(item => item.BASARILI != 'success')
+                .map(item => item.AVERAGENIGHTPRICE)
+                .reduce((f, s) => f + s, 0)
+            let adr = gelir / geceleme
+            localStorage.setItem('gunlukTakip', JSON.stringify({
+                gelir, kayip, adr
+            }))
+        })
+        .catch(e => {
+            console.log('error in callGunlukTakip --> ', e)
+        })
+}
+
+export const callAylikTakip = (dateRange, hotelids, isLocal) => {
+    dateRange = dates.findBetweenDates(dateRange[0].split('-')[0] + '-' + dateRange[0].split('-')[1] + '-01', dateRange[0]) 
+    axios.request(configs.callKazancTakip(dateRange, hotelids))
+        .then((r) => {
+            let data = r.data
+            let geceleme = data.map(item => item.RESID).length
+            let gelir = data.filter(item => item.BASARILI == 'success')
+                .map(item => item.AVERAGENIGHTPRICE)
+                .reduce((f, s) => f + s, 0)
+            let kayip = data.filter(item => item.BASARILI != 'success')
+                .map(item => item.AVERAGENIGHTPRICE)
+                .reduce((f, s) => f + s, 0)
+            let adr = gelir / geceleme
+            localStorage.setItem('aylikTakip', JSON.stringify({
+                gelir, kayip, adr
+            }))
+        })
+        .catch(e => {
+            console.log('error in callGunlukTakip --> ', e)
+        })
 }
 

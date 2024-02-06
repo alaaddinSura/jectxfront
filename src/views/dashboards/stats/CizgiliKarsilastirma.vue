@@ -39,8 +39,6 @@ const graphData = computed(() => {
       data: lineData[key],
     })
   })
-
-  console.log('line son hali --- >>> ', line)
   
   return {
     line,
