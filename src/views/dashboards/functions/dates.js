@@ -333,6 +333,24 @@ export function generatePreviousMonths(startMonth, numberOfMonths) {
 
     result.push(`${year}-${month}`);
   }
-
   return result;
+}
+
+export function getDaysOfMonth(monthYears) {
+  function getAllDaysInMonth(year, month) {
+    const numDays = new Date(year, month, 0).getDate(); // Ayın gün sayısını al
+    const days = [];
+    for (let i = 1; i <= numDays; i++) {
+        days.push(`${year}-${month.toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`);
+    }
+    return days;
+}
+
+// Verilen tarih dizisindeki her bir tarih için tüm günleri hesapla
+const result = monthYears.map(monthYear => {
+    const [year, month] = monthYear.split('-');
+    return getAllDaysInMonth(parseInt(year), parseInt(month));
+});
+
+return result.flat();
 }

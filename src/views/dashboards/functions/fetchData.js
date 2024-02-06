@@ -243,6 +243,7 @@ export const callGecmisRezervasyonDagilim = (endDate, dayCount, hotelids, isLoca
 
 export const callDolulukGelecekRez = (startDate, hotelids, isLocal) => {
 
+
     let dateRange = dates.getNextDatesFromDate(startDate, 365)
     axios.request(configs.dolulukGelecekRezConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
@@ -372,7 +373,6 @@ export const callKanalDagilimGelir = (dateRange, hotelids, isLocal) => {
 export const callGunlukTakip = (dateRange, hotelids, isLocal) => {
     axios.request(configs.callKazancTakip(dateRange, hotelids))
         .then((r) => {
-            console.log(dateRange)
             let data = r.data
             let geceleme = data.map(item => item.RESID).length
             let gelir = data.filter(item => item.BASARILI == 'success')
@@ -413,3 +413,38 @@ export const callAylikTakip = (dateRange, hotelids, isLocal) => {
         })
 }
 
+export const callKazancDurumuRezMiktari = (dateRange, hotelids)=>{
+    dateRange = dates.findBetweenDates(dateRange[0].split('-')[0] + '-' + dateRange[0].split('-')[1] + '-01', dateRange[0])  
+    axios.request(configs.rezervMiktariConfig(dateRange,hotelids)).then((r)=>{
+        localStorage.setItem("kazancDurumuRezMiktar", JSON.stringify(r.data))
+    }).catch(error =>{
+        console.log("Kazanç Durumu Rezervasyon Miktarı error ==> ", e)
+    })
+}
+
+export const callKazancDurumu7AyGrafik = (dateRange, hotelids)=>{
+    dateRange = dates.find7MonthsWithOrigin(dateRange[0])
+    dateRange = dates.getDaysOfMonth(dateRange)
+    axios.request(configs.callKazancTakip(dateRange,hotelids)).then((r)=>{
+        let rData = r.data.filter(item => item.BASARILI == 'success')
+        rData.forEach(item => {
+            item['MONTH'] = item['CHECKINDATE'].split('-')[0] + '-' + item['CHECKINDATE'].split('-')[1]
+         })
+        rData = _.groupBy(rData, ['MONTH', 'HOTELID'])
+        console.log(rData)
+        /*
+        rData = _.map(rData, (values, key) => {
+            const [MONTH, HOTELID] = key.split(',')
+
+            return {
+                MONTH,
+                HOTELID,
+                REVENUE: _.sumBy(values, 'AVERAGENIGHTPRICE')
+            }
+        })
+        */
+        localStorage.setItem('kazancDurumu7AyGrafik', JSON.stringify(rData))
+    }).catch(error =>{
+        console.log("Kazanç Durumu 7'li Grafik Error ==> ", error)
+    })
+}

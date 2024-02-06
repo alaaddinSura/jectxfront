@@ -123,6 +123,12 @@ const login = () => {
         //call aylik takip
         fetchData.callAylikTakip(dateRange, hotelids, true)
 
+        //Aylık Kazanç Durumu Rezervasyon Miktarı
+        fetchData.callKazancDurumuRezMiktari(dateRange,hotelids)
+
+        //Aylık Kazanç Durumu 7'li Grafik
+        fetchData.callKazancDurumu7AyGrafik(dateRange,hotelids)
+
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {

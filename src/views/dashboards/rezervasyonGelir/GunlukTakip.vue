@@ -114,6 +114,15 @@ const rezAdetDay = computed(() => {
 
   return totalCount
 })
+
+function formatNumber(num) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'M';
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'K';
+  }
+  return num.toString();
+}
 </script>
 
 <template>
@@ -129,7 +138,7 @@ const rezAdetDay = computed(() => {
         <VCol cols="12" md="5" sm="6" class="mt-auto">
           <div class="mb-6 mt-6">
             <h4 class="text-h3">
-              {{ rezAdetDay }}
+              {{ formatNumber(rezAdetDay) }}
             </h4>
             <p>
               Rezervasyon Miktarı
@@ -142,7 +151,7 @@ const rezAdetDay = computed(() => {
                 {{ ticket.title }}
               </VListItemTitle>
               <VListItemSubtitle class="text-disabled">
-                {{ ticket.subtitle }}
+                {{ formatNumber(ticket.subtitle) }}
               </VListItemSubtitle>
               <template #prepend>
                 <VAvatar rounded size="34" :color="ticket.avatarColor" variant="tonal">
