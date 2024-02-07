@@ -175,5 +175,5 @@ Son haftanın geçmiş rezervasyon verilerini veren istatistik bar olarak veren 
 Gelen kanallara göre listeleyen ve filtereleyerek listeyi görebileceğiniz yerdir.
 Burada Csv çıktısı da alabilirsiniz.
 
-# Rezervasyon Karşılaştırma 🔄🏨
-Burası rezervasyon karşılaştırmasıdır. 7 aylık ve 1 haftalık olmak üzere iki tane çizgili karşılaştırma istatistik tablomuz vardır. Değerleri o günün tarihinin bir önceki günden alıp başlar. Seçili tarihe göre değişkenlik göstermez ❗️❗️
+# Geçmiş Karşılaştırma 🔄🏨
+Burası rezervasyon karşılaştırmasıdır. 7 aylık ve 1 haftalık olmak üzere iki tane çizgili karşılaştırma istatistik tablomuz vardır. Değerleri o günün tarihinin bir önceki günden alıp başlar, çizgilerin bir tanesi günümüzü bir tanesi de geçen yılı gösterir. Seçili tarihe göre değişkenlik göstermez ❗️❗️
