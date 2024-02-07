@@ -9,12 +9,20 @@ const vuetifyTheme = useTheme();
 
 const series = computed(() => {
   let chosenHotels = store.state.selectedHotels;
-  let rezData = JSON.parse(localStorage.getItem("kazancDurumu7Grafik"));
-  console.log(rezData);
+  let rezData = JSON.parse(localStorage.getItem("kazancDurumu7AyGrafik"));
+
+  rezData.forEach(item => {
+    if(item.TOTALREVENUE == null){
+      item.TOTALREVENUE = 0
+    }
+  })
+
   let statData = rezData.filter((item) => chosenHotels.includes(item.HOTELID));
-  console.log(statData)
-  let data = [120, 65, 50, 45, 90, 55, 70];
-  console.log(data);
+  let dates = [...new Set(statData.map(item => item.DATE))]
+  let data = dates.map(hotel => statData
+  .filter(item => item.DATE == hotel)
+  .map(item => item.TOTALREVENUE)
+  .reduce((f,s) => f+s, 0))
   return [
     {
       data
@@ -22,19 +30,6 @@ const series = computed(() => {
   ];
 });
 
-/*
-const series = [{
-data: [
-120,
-65,
-50,
-45,
-90,
-55,
-70,
-],
-}]
-*/
 
 const chartOptions = computed(() => {
   const currentTheme = vuetifyTheme.current.value.colors;

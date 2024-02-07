@@ -424,25 +424,8 @@ export const callKazancDurumuRezMiktari = (dateRange, hotelids)=>{
 
 export const callKazancDurumu7AyGrafik = (dateRange, hotelids)=>{
     dateRange = dates.find7MonthsWithOrigin(dateRange[0])
-    dateRange = dates.getDaysOfMonth(dateRange)
-    axios.request(configs.callKazancTakip(dateRange,hotelids)).then((r)=>{
+    axios.request(configs.callKazancTakipAylik(dateRange,hotelids)).then((r)=>{
         let rData = r.data.filter(item => item.BASARILI == 'success')
-        rData.forEach(item => {
-            item['MONTH'] = item['CHECKINDATE'].split('-')[0] + '-' + item['CHECKINDATE'].split('-')[1]
-         })
-        rData = _.groupBy(rData, ['MONTH', 'HOTELID'])
-        console.log(rData)
-        /*
-        rData = _.map(rData, (values, key) => {
-            const [MONTH, HOTELID] = key.split(',')
-
-            return {
-                MONTH,
-                HOTELID,
-                REVENUE: _.sumBy(values, 'AVERAGENIGHTPRICE')
-            }
-        })
-        */
         localStorage.setItem('kazancDurumu7AyGrafik', JSON.stringify(rData))
     }).catch(error =>{
         console.log("Kazanç Durumu 7'li Grafik Error ==> ", error)
