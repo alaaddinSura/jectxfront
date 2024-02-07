@@ -431,3 +431,13 @@ export const callKazancDurumu7AyGrafik = (dateRange, hotelids)=>{
         console.log("Kazanç Durumu 7'li Grafik Error ==> ", error)
     })
 }
+
+export const callKanalDagilimGelirler = (dateRange, hotelids)=>{
+    dateRange = dates.find7MonthsWithOrigin(dateRange[0])
+    console.log(dateRange)
+    axios.request(configs.kanalDagilimGelirlerconfig(dateRange,hotelids)).then((r)=>{
+        localStorage.setItem("kanalDagilimGelirler", JSON.stringify(r.data))
+    }).catch(error =>{
+        console.log("Kanal Dağılım Gelirler Dağılım", error)
+    })
+}

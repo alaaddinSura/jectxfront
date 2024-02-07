@@ -129,6 +129,9 @@ const login = () => {
         //Aylık Kazanç Durumu 7'li Grafik
         fetchData.callKazancDurumu7AyGrafik(dateRange,hotelids)
 
+        //Kanal Dağılım Gelirler
+        fetchData.callKanalDagilimGelirler(dateRange,hotelids)
+
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {

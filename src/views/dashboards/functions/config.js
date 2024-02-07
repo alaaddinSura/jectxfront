@@ -236,7 +236,15 @@ export const callKazancTakip = (dateRange, hotelidArray) => {
 
 export const callKazancTakipAylik = (dateRange, hotelidArray) => {
   const url = 'https://jectxbackend-672789bf3678.herokuapp.com/kazanctakipAylik';
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
 
+export const kanalDagilimGelirlerconfig = (dateRange, hotelidArray) => {
+  const url = 'https://jectxbackend-672789bf3678.herokuapp.com/kanaldagilimgelir';
   let data = JSON.stringify({
     "dateRange": dateRange,
     "hotelidArray": hotelidArray

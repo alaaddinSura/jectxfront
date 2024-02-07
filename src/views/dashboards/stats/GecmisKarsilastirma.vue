@@ -84,13 +84,9 @@ const getSubBalanceConfig = computed(() => {
         lines: { show: true },
       },
     },
-    tooltip: {
-      custom(data) {
-        return `<div class='bar-chart pa-2'>
-          <span>${data.series[data.seriesIndex][data.dataPointIndex]}%</span>
-        </div>`
-      },
-    },
+     tooltip: {
+       enabled: false
+     },
     yaxis: {
       labels: {
         style: { colors: themeDisabledTextColor },
