@@ -15,6 +15,15 @@ const propsData = computed(()=>{
   }
 })
 
+function formatNumber(num) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'M';
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'K';
+  }
+  return num.toString();
+}
+
 const vuetifyTheme = useTheme()
 
 const chartOptions = computed(() => {
@@ -90,15 +99,18 @@ const chartOptions = computed(() => {
       yaxis: {
         labels: {
           offsetX: -16,
+          formatter(val) {
+              return `${formatNumber(String(val / 1))}`;
+            },
           style: {
             fontSize: '13px',
             colors: labelColor,
             fontFamily: 'Public Sans',
           },
-        },
-        min: props.series.min * 1.000222,
-        max: props.series.max * 1.000011,
-        tickAmount: 5,
+        },//formatNumber(String(val / 1))
+        // min: props.series.min * 1.000222,
+        // max: formatNumber(Number(props.series.max / 1)),
+        // tickAmount: 5,
       },
       responsive: [
         {

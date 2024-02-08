@@ -24,10 +24,11 @@ let data = computed(() => {
   let totalCount = statData.map(item => item.count).reduce((f,s) => f +s ,0)
 
   let kanallar = anaKanallar.map(item => statData.filter(f=>f.anaKanal == item))
-
   kanallar = kanallar.map(item => item.map(n=> n.night != 'NaN' ? Number(n.night) : 0))
-
+  
   kanallar = kanallar.map(item=> item.reduce((f,s)=>f+s,0))
+ 
+  
 
   let nightCount = statData.map(item => item.count != 'nan' ? Number(item.night): 0).reduce((f,s)=> f+s,0)
 

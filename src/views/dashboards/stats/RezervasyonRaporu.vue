@@ -22,8 +22,11 @@ function formatNumber(num) {
 
 
 const series = computed(() => {
+  
   return props.data.series
 })
+console.log("Rez Raporlama Verileri")
+console.log(series)
 
 const chartOptions = computed(() => {
   const currentTheme = vuetifyTheme.current.value.colors
@@ -125,7 +128,7 @@ const chartOptions = computed(() => {
       <div class="d-flex flex-column">
         <div class="mb-auto">
           <h6 class="text-h5 text-no-wrap">
-            {{ data.name }}
+            {{ data.name }}s
           </h6>
         </div>
 

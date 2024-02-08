@@ -5,6 +5,7 @@ import * as dates from "@/views/dashboards/functions/dates"
 
 
 
+
 const series = computed(() => {
   let chosenHotels = store.state.selectedHotels
 
@@ -12,10 +13,10 @@ const series = computed(() => {
   let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
   let dates = [...new Set(statData.map(item => item.DATE))].sort()
   
-  let successData = statData.filter(item => item.SUCCESS)
+  let successData = statData.filter(item => item.BASARILI)
   successData = dates.map(item => successData.filter(i => i.DATE == item).map(j=> j.COUNT).reduce((f,s)=>f+s,0))
   
-  let cancelData = statData.filter(item => !item.SUCCESS)
+  let cancelData = statData.filter(item => !item.BASARILI)
   cancelData = dates.map(item => cancelData.filter(i => i.DATE == item).map(j=> j.COUNT).reduce((f,s)=>f+s,0))
   cancelData = cancelData.map(item => -item)
   
@@ -44,4 +45,10 @@ const series = computed(() => {
 
 <template>
   <CompareBar :series="series" />
+  
 </template>
+
+<style>
+
+
+</style>

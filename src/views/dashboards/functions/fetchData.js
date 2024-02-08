@@ -5,17 +5,23 @@ import * as dates from '@/views/dashboards/functions/dates'
 import _ from 'lodash'
 
 
+
 export const callYatakDagilim = (dateRange, hotelids, isLocal) => {
     axios.request(configs.yatakDagilimConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("yatakDagilim", JSON.stringify(r.data))//bedScatter
+            console.log("Yatak Dağılım local'e girdi")
         }
         else {
             store.commit('changeYatakDagilim', r.data)
+            console.log("Yatak Dağılım Store'a girdi")
         }
 
-    }).catch(d => console.log(d))
-}
+    }).catch(d => console.log(d)).finally(() => {
+        // İstek tamamlandığında loader'ı gizle
+        store.commit("changeYatakDagilimLoader",1)
+      });
+    }
 
 export const callGecelemeDagilim = (dateRange, hotelids, isLocal) => {
     axios.request(configs.gecelemeDagilimConfig(dateRange, hotelids)).then((r) => {
@@ -244,19 +250,19 @@ export const callGecmisRezervasyonDagilim = (endDate, dayCount, hotelids, isLoca
 export const callDolulukGelecekRez = (startDate, hotelids, isLocal) => {
 
 
-    let dateRange = dates.getNextDatesFromDate(startDate, 365)
+    let dateRange = dates.findNext12months(startDate)
     axios.request(configs.dolulukGelecekRezConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
-            let rData = r.data
-            rData.forEach(item => {
-                item['DATE'] = item['DATE'].split('-')[0] + '-' + item['DATE'].split('-')[1]
-            })
+            // let rData = r.data
+            // rData.forEach(item => {
+            //     item['DATE'] = item['DATE'].split('-')[0] + '-' + item['DATE'].split('-')[1]
+            // })
             localStorage.setItem("dolulukGelecekRez", JSON.stringify(r.data))
         } else {
-            let rData = r.data
-            rData.forEach(item => {
-                item['DATE'] = item['DATE'].split('-')[0] + '-' + item['DATE'].split('-')[1]
-            })
+            // let rData = r.data
+            // rData.forEach(item => {
+            //     item['DATE'] = item['DATE'].split('-')[0] + '-' + item['DATE'].split('-')[1]
+            // })
             store.commit("changeGelecekDoluluk", r.data)
         }
     })

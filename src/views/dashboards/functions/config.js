@@ -171,7 +171,7 @@ export const odaTipiDagilimConfig = (dateRange, hotelidArray) => {
 }
 
 export const dolulukGelecekRezConfig = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/doluluk"
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/dolulukaylik"
   let data = JSON.stringify({
     "dateRange": dateRange,
     "hotelidArray": hotelidArray

@@ -1,4 +1,7 @@
 <script setup>
+import {store} from "@/store/index"
+import Loader from "../functions/loader.vue"
+
 const props = defineProps({
   data: Array,
   title: String,
@@ -39,6 +42,9 @@ const text = computed(()=>props.subtitle ? "Toplam Miktar " + String(props.data.
             >
               <VIcon :icon="item.icon" />
             </VAvatar>
+            <!-- <div v-if="store.state.yatakDagilimLoader == 0">
+              <Loader />
+            </div> -->
             <div class="d-flex flex-column">
               <span class="text-h5 font-weight-medium">{{ formatNumber(item.stats) }}</span>
               <span class="text-sm">

@@ -7,6 +7,7 @@ export const store = createStore({
     dateRange: dates.findYesterdayDate() + "to" + dates.findtodayDate(),
     selectedHotels: [22964, 22966],
     yatakDagilim: [],
+    yatakDagilimLoader: [],
     gecelemeDagilim: [],
     rezervMiktar: [],
     kanalRezDagilim: [],
@@ -113,6 +114,9 @@ export const store = createStore({
     },
     changeKanalDagilimGelir(state, payload){
       state.kanalDagilimGelir = payload
+    },
+    changeYatakDagilimLoader(state, payload){
+      state.yatakDagilimLoader = payload
     }
   },
   actions: {},

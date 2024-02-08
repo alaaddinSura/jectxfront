@@ -35,9 +35,13 @@ let tableHeaders = [
 let tableData = computed(() => {
 
   let channelData = store.state.channelTable.length == 0 ? JSON.parse(localStorage.getItem('channelTable')) : store.state.channelTable 
-  console.log(channelData)
+  
 
   let chosenHotels = store.state.selectedHotels
+
+  channelData = channelData.filter(item => chosenHotels.includes(item.HOTELID))
+  console.log("Chanel Data")
+  console.log(channelData)
 
   let statData = channelData.map(item => ({
     ALTKANAL: item.ALTKANAL,

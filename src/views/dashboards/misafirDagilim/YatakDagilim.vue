@@ -12,7 +12,6 @@ let chosenHotels = store.state.selectedHotels
 
 let bedScatter = store.state.yatakDagilim.length == 0 ? JSON.parse(localStorage.getItem("yatakDagilim")) : store.state.yatakDagilim
 let statData = bedScatter.filter(item => chosenHotels.includes(item.hotelId))
-
   return [
   {
     title: 'Tek Kişi',

@@ -9,7 +9,8 @@ let isPersistent = ref(true)
 
 
 watch(dateRange, (newValue, oldValue) => {
-
+  console.log('new --> ',newValue)
+  console.log('old -->', oldValue)
   let hotelids = [22964, 22966]
   let d_range = newValue.includes('to')
     ? dates.findBetweenDates(dateRange.value.split(' to ')[0], dateRange.value.split(' to ')[1])
