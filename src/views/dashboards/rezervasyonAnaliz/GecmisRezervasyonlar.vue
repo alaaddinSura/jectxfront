@@ -6,19 +6,21 @@ import CompareBar from '../stats/CompareBar.vue'
 //Burayı Kopyala
 const series = computed(() => {
   let chosenHotels = store.state.selectedHotels
-  console.log(JSON.parse(localStorage.getItem("gecmisRezervs")))
   let rezData = store.state.gecmisRezervasyonlar == 0 ? JSON.parse(localStorage.getItem("gecmisRezervs")) : store.state.gecmisRezervasyonlar
   let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
+  console.log("Geçmiş Rezervasyonlar Data")
   console.log(rezData);
   let dates = [...new Set(statData.map(item => item.DATE))]
+  console.log("Geçmiş Rezervasyonlar")
+  console.log(dates)
   
   let successData = statData.filter(item => item.SUCCESS)
-  successData = dates.map(item => successData.filter(j => j.DATE == item).map(j => j.COUNT).reduce((f,s) => f+s,0))
+  successData = dates.map(item => successData.filter(j => j.DATE == item).map(j => Number(j.COUNT)).reduce((f,s) => f+s,0))
   
   let maxCount = Math.max(...successData)
   
   let cancelData = statData.filter(item => !item.SUCCESS)
-  cancelData = dates.map(item => cancelData.filter(j => j.DATE == item).map(j => j.COUNT).reduce((f,s) => f+s,0))
+  cancelData = dates.map(item => cancelData.filter(j => j.DATE == item).map(j => Number(j.COUNT)).reduce((f,s) => f+s,0))
 
   cancelData = cancelData.map(item => -item)
   let minCount = Math.min(...cancelData)

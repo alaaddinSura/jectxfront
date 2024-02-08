@@ -164,7 +164,7 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
                     store.commit("changeGecmisRezervasyonlar", rData)
                 })
             }
-            store.commit("changeGecmisRezervasyonlar", r.data)
+            //store.commit("changeGecmisRezervasyonlar", r.data)
         }
     }).catch(d => console.log(d));
 }
