@@ -9,6 +9,7 @@ let isPersistent = ref(true)
 
 
 watch(dateRange, (newValue, oldValue) => {
+  console.log("-------------------")
   console.log('new --> ',newValue)
   console.log('old -->', oldValue)
   let hotelids = [22964, 22966]

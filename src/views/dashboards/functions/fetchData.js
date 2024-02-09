@@ -216,12 +216,15 @@ export const callGecmisRezervasyonDagilim = (endDate, dayCount, hotelids, isLoca
 
     if (dayCount <= 7) {
         dateRange = dates.getLastDatesFromDate(endDate, 7)
+        console.log("Day Count 7'de")
     }
     else if (dayCount > 7 && dayCount <= 49) {
         dateRange = dates.getLastDatesFromDate(endDate, 49)
+        console.log("Day Count 7 ve 49 arası")
     }
     else {
         dateRange = dates.getLastDatesFromDate(endDate, 365)
+        console.log("49 üzeri")
     }
     axios.request(configs.gecmisRezervasyonDagilimConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {

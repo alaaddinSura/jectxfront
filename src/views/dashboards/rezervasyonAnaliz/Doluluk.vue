@@ -24,14 +24,10 @@ import DolulukOrani from '../stats/DolulukOrani.vue'
    let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
    roomCounts = roomCounts.filter(item => chosenHotels.includes(item.hotelId))
    roomCounts = roomCounts.map(item => item.count).reduce((f,s) => f+s, 0)
-   console.log("Room Count")
-   console.log(roomCounts)
 
    let nightCount = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
-   console.log("Night Count")
-   console.log(nightCount)
 
-   let oran = [(nightCount / roomCounts).toFixed(0)]
+   let oran = [(nightCount / roomCounts* 100).toFixed(0)]
   
   return {
     nightCount, oran,
