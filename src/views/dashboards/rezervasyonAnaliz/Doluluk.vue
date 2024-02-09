@@ -21,13 +21,19 @@ import DolulukOrani from '../stats/DolulukOrani.vue'
    ]
 
    let rezData = store.state.doluluk.length == 0 ? JSON.parse(localStorage.getItem("gecelemeDagilim")) : store.state.doluluk
+   console.log("Geceleme Dağılım")
+   console.log(JSON.parse(localStorage.getItem("gecelemeDagilim")))
+   console.log("Storedan Çekilmiş")
+   console.log(store.state.doluluk)
    let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
    roomCounts = roomCounts.filter(item => chosenHotels.includes(item.hotelId))
    roomCounts = roomCounts.map(item => item.count).reduce((f,s) => f+s, 0)
 
    let nightCount = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
 
-   let oran = [(nightCount / roomCounts* 100).toFixed(0)]
+   console.log("Night Count", nightCount)
+   console.log("roomCounts", roomCounts)
+   let oran = [(nightCount / roomCounts * 100).toFixed(0)]
   
   return {
     nightCount, oran,

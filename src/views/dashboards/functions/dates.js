@@ -78,8 +78,10 @@ export function getLastDatesFromDate(startDate, dayCount){
   let lastDates = []
 
   for(let i = 0; i < dayCount; i++){
-    currentDate.setDate(currentDate.getDate() - 1)
-    lastDates.push(formatDate(currentDate))
+    const previousDate = new Date(currentDate.getTime()) // Mevcut tarih nesnesinin kopyasını oluşturun
+    previousDate.setDate(previousDate.getDate() - 1) // Bir önceki günü ayarlayın
+    lastDates.unshift(formatDate(previousDate)) // Biçimlendirilmiş tarihleri dizinin başına ekleyin
+    currentDate = previousDate // Mevcut tarihi güncelleyin
   }
 
   return lastDates

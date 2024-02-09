@@ -40,8 +40,6 @@ let tableData = computed(() => {
   let chosenHotels = store.state.selectedHotels
 
   channelData = channelData.filter(item => chosenHotels.includes(item.HOTELID))
-  console.log("Chanel Data")
-  console.log(channelData)
 
   let statData = channelData.map(item => ({
     ALTKANAL: item.ALTKANAL,

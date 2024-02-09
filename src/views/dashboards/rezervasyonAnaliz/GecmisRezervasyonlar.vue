@@ -8,11 +8,11 @@ const series = computed(() => {
   let chosenHotels = store.state.selectedHotels
   let rezData = store.state.gecmisRezervasyonlar == 0 ? JSON.parse(localStorage.getItem("gecmisRezervs")) : store.state.gecmisRezervasyonlar
   let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
-  console.log("Geçmiş Rezervasyonlar Data")
-  console.log(rezData);
+  //console.log("Geçmiş Rezervasyonlar Data")
+  //console.log(rezData);
   let dates = [...new Set(statData.map(item => item.DATE))]
-  console.log("Geçmiş Rezervasyonlar")
-  console.log(dates)
+  //console.log("Geçmiş Rezervasyonlar")
+  //console.log(dates)
   
   let successData = statData.filter(item => item.SUCCESS)
   successData = dates.map(item => successData.filter(j => j.DATE == item).map(j => Number(j.COUNT)).reduce((f,s) => f+s,0))

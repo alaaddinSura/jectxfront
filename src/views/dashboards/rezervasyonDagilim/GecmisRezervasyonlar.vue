@@ -9,6 +9,7 @@ const series = computed(() => {
 
   let rezData = store.state.gecmisRezervasyonDagilim == 0 ? JSON.parse(localStorage.getItem("gecmisRezervasyonDagilim")) : store.state.gecmisRezervasyonDagilim
   let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
+  console.log(statData)
   let dates = [...new Set(statData.map(item => item.DATE))].sort()
   
   let successData = statData.filter(item => item.SUCCESS)

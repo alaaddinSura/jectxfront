@@ -18,6 +18,7 @@ watch(dateRange, (newValue, oldValue) => {
     : [newValue]
 
   let endDate = dateRange.value.split(' to ')[1]
+  console.log(endDate)
 
   // Yatak Dağılım
   fetchData.callYatakDagilim(d_range, hotelids)
