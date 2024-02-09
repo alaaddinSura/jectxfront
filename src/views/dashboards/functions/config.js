@@ -23,7 +23,7 @@ export const yatakDagilimConfig = (dateRange, hotelidArray) => {
 }
 
 export const gecelemeDagilimConfig = (dateRange, hotelidArray) => {
-  let url = "https://jectxbackend-672789bf3678.herokuapp.com/gecelemiktarlari"
+  let url = "https://jectxbackend-672789bf3678.herokuapp.com/gecelemedagilim"
 
   let data = JSON.stringify({
     "dateRange": dateRange,

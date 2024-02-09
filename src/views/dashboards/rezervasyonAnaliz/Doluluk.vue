@@ -9,6 +9,7 @@ import DolulukOrani from '../stats/DolulukOrani.vue'
  let nightcount = computed(() => {
 
    let chosenHotels = store.state.selectedHotels
+   console.log("Day Count",store.state.dateCount)
    let roomCounts = [
     {
       hotelId: 22966,
