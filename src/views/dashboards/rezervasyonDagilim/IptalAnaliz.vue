@@ -9,6 +9,7 @@ const statistics = computed(()=>{
   let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
   let rezAdet = [...new Set(statData.map(item => item.RESID))]
   let toplam = statData.map(item => item.DAILYRATE != 'nan' ? Number(item.DAILYRATE): 0).reduce((f,s)=>f+s,0).toFixed(1)
+  
   return [
   {
     title: 'Adet',
@@ -43,5 +44,6 @@ const statistics = computed(()=>{
   <Bar
     :data="statistics"
     title="İptal Analiz"
+    :loader="store.state.iptalAnalizLoader"
   />
 </template>

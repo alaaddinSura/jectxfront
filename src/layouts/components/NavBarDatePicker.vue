@@ -5,15 +5,16 @@ import { ref, watch } from "vue";
 import * as fetchData from "@/views/dashboards/functions/fetchData";
 import { store } from "@/store/index";
 
+const datePickerOpen = ref(false);
+
 let dateRange = ref(
   dates.findYesterdayDate() + " to " + dates.findYesterdayDate()
 );
 let isPersistent = ref(true);
 
-watch(dateRange, (newValue, oldValue) => {
-  console.log("-------------------");
-  console.log("new --> ", newValue);
-  console.log("old -->", oldValue);
+const handleUpdateDate = (newValue) => {
+  datePickerOpen.value = false;
+
   let hotelids = [22964, 22966];
   let d_range = newValue.includes("to")
     ? dates.findBetweenDates(
@@ -87,24 +88,51 @@ watch(dateRange, (newValue, oldValue) => {
 
   //raw data
   fetchData.callRawData(d_range, hotelids);
+};
+
+watch(dateRange, (newValue, oldValue) => {
+  let hotelids = [22964, 22966];
+  let d_range = newValue.includes("to")
+    ? dates.findBetweenDates(
+        dateRange.value.split(" to ")[0],
+        dateRange.value.split(" to ")[1]
+      )
+    : [newValue];
 });
+
+const toggleDatePicker = () => {
+  datePickerOpen.value = !datePickerOpen.value;
+};
 </script>
 
 <template>
-  <VMenu :close-on-content-click="false" offset-y :persistent="isPersistent">
-    <template #activator="{ props }">
-      <IconBtn v-bind="props">
-        <VIcon icon="tabler-calendar-down" />
-      </IconBtn>
-    </template>
-    <VCard width="300">
-      <VCardText>
-        <AppDateTimePicker
-          v-model="dateRange"
-          :config="{ mode: 'range' }"
-          placeholder="Tarih Seçiniz"
-        />
-      </VCardText>
-    </VCard>
-  </VMenu>
+  <div>
+    <IconBtn @click="toggleDatePicker">
+      <!-- <VIcon icon="tabler-calendar-down" /> -->
+    </IconBtn>
+    <VMenu
+      :close-on-content-click="false"
+      offset-y
+      :persistent="isPersistent"
+      v-model="datePickerOpen"
+    >
+      <template #activator="{ props }">
+        <IconBtn v-bind="props">
+          <VIcon icon="tabler-calendar-down" />
+        </IconBtn>
+      </template>
+      <VCard width="300" v-show="datePickerOpen">
+        <VCardText>
+          <VBtn class="p-2 my-2 w-100" @click="handleUpdateDate(dateRange)">
+            Raporla
+          </VBtn>
+          <AppDateTimePicker
+            v-model="dateRange"
+            :config="{ mode: 'range' }"
+            placeholder="Tarih Seçiniz"
+          />
+        </VCardText>
+      </VCard>
+    </VMenu>
+  </div>
 </template>

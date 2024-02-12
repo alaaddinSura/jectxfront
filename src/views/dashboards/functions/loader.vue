@@ -2,28 +2,50 @@
 </script>
 
 <template>
-    <div class="loader"></div> 
+  <div class="circle-spin-2"></div>
 </template>
 
 <style>
-.loader {
-    --s: 64px;
-    width: var(--s);
-    aspect-ratio: 2;
-    --_g: #FFA500 90%, #0000;
-    background: 
-      radial-gradient(farthest-side, var(--_g)) 0   50%/25% 50%,
-      radial-gradient(farthest-side at bottom, var(--_g)) 50%  calc(50% - var(--s)/16)/25% 25%,
-      radial-gradient(farthest-side at top, var(--_g)) 50%  calc(50% + var(--s)/16)/25% 25%,
-      radial-gradient(farthest-side at bottom, var(--_g)) 100% calc(50% - var(--s)/16)/25% 25%,
-      radial-gradient(farthest-side at top, var(--_g)) 100% calc(50% + var(--s)/16)/25% 25%;
-    background-repeat: no-repeat;
-    animation: l14 1s infinite;
+.circle-spin-2 {
+  --size: 24px;
+  --stroke-width: calc(var(--size) / 6);
+  --accent-opacity: .25;
+  --color: currentColor;
+  --animation-timing-function: linear;
+  --animation-duration: 1s;
+  position: relative;
+  width: var(--size);
+  height: var(--size);
+}
+
+.circle-spin-2::before,
+.circle-spin-2::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-width: var(--stroke-width);
+  border-style: solid;
+  border-radius: 50%;
+  transform: rotate(0deg);
+  animation: var(--animation-timing-function) var(--animation-duration) infinite circle-spin-2-animation;
+}
+
+.circle-spin-2::before {
+  border-color: var(--color) var(--color) var(--color) transparent;
+  opacity: var(--accent-opacity);
+}
+
+.circle-spin-2::after {
+  border-color: transparent transparent transparent var(--color);
+}
+
+@keyframes circle-spin-2-animation {
+  from {
+    transform: rotate(0deg);
   }
-  @keyframes l14 {
-      25%  {background-position:0    50%,50% 0,50% 100%,100% 0,100% 100%}
-      50%  {background-position:100% 50%,0   0,0   100%,50%  0,50%  100%}
-      75%,
-      100% {background-position:100% 50%,0 calc(50% - var(--s)/16),0 calc(50% + var(--s)/16),50% calc(50% - var(--s)/16),50% calc(50% + var(--s)/16)}
+
+  to {
+    transform: rotate(360deg);
   }
+}
 </style>

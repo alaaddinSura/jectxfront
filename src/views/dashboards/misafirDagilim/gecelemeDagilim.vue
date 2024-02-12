@@ -46,5 +46,6 @@ const statistic = computed(()=>{
     :data="statistic"
     title="Geceleme Dağılım"
     subtitle
+    :loader="store.state.gecelemeDagilimLoader"
   />
 </template>

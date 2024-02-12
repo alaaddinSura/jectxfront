@@ -7,7 +7,6 @@ export const store = createStore({
     dateRange: dates.findYesterdayDate() + "to" + dates.findtodayDate(),
     selectedHotels: [22964, 22966],
     yatakDagilim: [],
-    yatakDagilimLoader: [],
     gecelemeDagilim: [],
     rezervMiktar: [],
     kanalRezDagilim: [],
@@ -30,7 +29,18 @@ export const store = createStore({
     rawData: [],
     channelTable: [],
     rawData: [],
-    kanalDagilimGelir: []
+    kanalDagilimGelir: [],
+    yatakDagilimLoader: [1],
+    //Misafir Dağılım - Oda Tipi Dağılım
+    odaTipiDagilimLoader: [1],
+    //Misafir Dağılım - Ülkelere Göre Dağılım
+    ulkeDagilimLoader: [1],
+    //Misafir Dağılım - Geceleme Dağılım
+    gecelemeDagilimLoader: [1],
+    //Doluluk Dağılım - Rez Analiz
+    rezAnalizLoader: [1],
+    //Doluluk Dağılım - İptal Analiz
+    iptalAnalizLoader: [1],
   },
   getters: {},
   mutations: {
@@ -107,17 +117,35 @@ export const store = createStore({
       state.odaTipiDagilim = payload;
     },
     changeChannelTable(state, payload){
-      state.channelTable = payload
+      state.channelTable = payload;
     },
     changeRawData(state, payload){
-      state.rawData = payload
+      state.rawData = payload;
     },
     changeKanalDagilimGelir(state, payload){
-      state.kanalDagilimGelir = payload
+      state.kanalDagilimGelir = payload;
     },
+    //Loaderlar
+    //Misafir Dağılım - Yatak Dağılım
     changeYatakDagilimLoader(state, payload){
-      state.yatakDagilimLoader = payload
+      state.yatakDagilimLoader = payload;
+    },//Misafir Dağılım - Oda Tipi Dağılımı
+    changeodaTipiDagilimLoader(state,payload){
+      state.odaTipiDagilimLoader = payload;
+    },//Misafir Dağılım - Ülke Dağılım Loader
+    changeUlkeDagilimLoader(state,payload){
+      state.ulkeDagilimLoader = payload;
+    },//Misafir Dağılım - Geceleme Dağılım
+    changeGecelemeDagilimLoader(state,payload){
+      state.gecelemeDagilimLoader = payload;
+    },//Doluluk Dağılım - Rez Analiz
+    changeRezAnalizLoader(state,payload){
+      state.rezAnalizLoader = payload;
+    },//Doluluk Dağılım - İptal Analiz
+    changeIptalAnalizLoader(state,payload){
+      state.iptalAnalizLoader = payload;
     }
+
   },
   actions: {},
 })

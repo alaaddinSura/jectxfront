@@ -1,5 +1,6 @@
 <script setup>
 import { store } from "@/store/index"
+import Loader from "../functions/loader.vue"
 
 const monthlyCampaignState = computed(()=>{
   let chosenHotels = store.state.selectedHotels
@@ -89,14 +90,19 @@ const monthlyCampaignState = computed(()=>{
               <VIcon :icon="state.avatarIcon" />
             </VAvatar>
           </template>
-          <VListItemTitle class="font-weight-medium">
+          <VListItemTitle class="font-weight-medium" v-if="store.state.odaTipiDagilimLoader == 1">
             {{ state.title }}
           </VListItemTitle>
-
+          <VListItemTitle class="font-weight-medium" v-if="store.state.odaTipiDagilimLoader == 0">
+            <Loader />
+          </VListItemTitle>
           <template #append>
-            <span class="font-weight-medium text-medium-emphasis me-3">
+            <span class="font-weight-medium text-medium-emphasis me-3" v-if="store.state.odaTipiDagilimLoader == 1">
               {{ state.count }}
               <span :class="`text-${state.statsColor}`">{{ state.stats }}</span>
+            </span>
+            <span class="font-weight-medium text-medium-emphasis me-3" v-if="store.state.odaTipiDagilimLoader == 0">
+              <Loader />
             </span>
           </template>
         </VListItem>

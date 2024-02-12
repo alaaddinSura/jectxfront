@@ -7,6 +7,8 @@ const props = defineProps({
   series: Object,
 })
 
+
+
 const propsData = computed(()=>{
   const min = props.series.min
   const max = props.series.max

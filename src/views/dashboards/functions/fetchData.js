@@ -7,29 +7,30 @@ import _ from 'lodash'
 
 
 export const callYatakDagilim = (dateRange, hotelids, isLocal) => {
+    store.commit("changeYatakDagilimLoader",0)
     axios.request(configs.yatakDagilimConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("yatakDagilim", JSON.stringify(r.data))//bedScatter
-            console.log("Yatak Dağılım local'e girdi")
+            store.commit("changeYatakDagilimLoader",1)
         }
         else {
             store.commit('changeYatakDagilim', r.data)
-            console.log("Yatak Dağılım Store'a girdi")
+            store.commit("changeYatakDagilimLoader",1)
         }
 
-    }).catch(d => console.log(d)).finally(() => {
-        // İstek tamamlandığında loader'ı gizle
-        store.commit("changeYatakDagilimLoader",1)
-      });
+    }).catch(d => console.log(d))
     }
 
 export const callGecelemeDagilim = (dateRange, hotelids, isLocal) => {
+    store.commit("changeGecelemeDagilimLoader",0)
     axios.request(configs.gecelemeDagilimConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("gecelemeDagilim", JSON.stringify(r.data))
+            store.commit("changeGecelemeDagilimLoader",1)
         }
         else {
             store.commit('changeGecelemeDagilim', r.data)
+            store.commit("changeGecelemeDagilimLoader",1)
         }
     }).catch(d => console.log(d))
 }
@@ -122,11 +123,14 @@ export const callSonYediAyDoluluk = (endDate, hotelids, isLocal) => {
 }
 
 export const callUlkeDagilim = (dateRange, hotelids, isLocal) => {
+    store.commit("changeUlkeDagilimLoader",0)
     axios.request(configs.ulkeDagilimConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("countryDist", JSON.stringify(r.data))
+            store.commit("changeUlkeDagilimLoader",1)
         } else {
             store.commit("changeUlkeDagilim", r.data)
+            store.commit("changeUlkeDagilimLoader",1)
         }
     }).catch(d => console.log(d));
 }
@@ -151,6 +155,7 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
         } else {
             let rData = r.data
             if (rData.length == 28) {
+                console.log(rData)
                 store.commit("changeGecmisRezervasyonlar", rData)
             }
             else if (rData.length == 196) {
@@ -170,21 +175,27 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
 }
 
 export const callRezAnaliz = (dateRange, hotelids, isLocal) => {
+    store.commit("changeRezAnalizLoader", 0)
     axios.request(configs.rezAnalizConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("rezAnaliz", JSON.stringify(r.data))
-        } else {
+            store.commit("changeRezAnalizLoader", 1)
+        }else {
             store.commit("changeRezAnaliz", r.data)
+            store.commit("changeRezAnalizLoader", 1)
         }
     })
 }
 
 export const callIptalAnaliz = (dateRange, hotelids, isLocal) => {
+    store.commit("changeIptalAnalizLoader", 0)
     axios.request(configs.iptalAnalizConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("iptalAnaliz", JSON.stringify(r.data))
+            store.commit("changeIptalAnalizLoader",1)
         } else {
             store.commit("changeIptalAnaliz", r.data)
+            store.commit("changeIptalAnalizLoader", 1)
         }
     })
 }
@@ -272,11 +283,14 @@ export const callDolulukGelecekRez = (startDate, hotelids, isLocal) => {
 }
 
 export const callOdatipiDagilim = (dateRange, hotelids, isLocal) => {
+    store.commit("changeodaTipiDagilimLoader", 0)
     axios.request(configs.odaTipiDagilimConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("odaTipiDagilim", JSON.stringify(r.data))
+            store.commit("changeodaTipiDagilimLoader",1)
         } else {
             store.commit("changeOdaTipiDagilim", r.data)
+            store.commit("changeodaTipiDagilimLoader",1)
         }
     })
 }

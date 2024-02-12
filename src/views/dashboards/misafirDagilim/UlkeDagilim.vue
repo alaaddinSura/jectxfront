@@ -1,6 +1,7 @@
 <script setup>
 import { store } from '@/store/index'
 import * as countryName from '@/views/dashboards/functions/countries'
+import Loader from '../functions/loader.vue'
 
 
 
@@ -49,20 +50,27 @@ const salesByCountries = computed(()=>{
           <template #prepend>
             <VIcon
               :icon="country.flag"
-              size="34"
+              size="34" v-if="store.state.ulkeDagilimLoader == 1"
             />
+            <div v-if="store.state.ulkeDagilimLoader == 0">
+              <Loader />
+            </div>
           </template>
-          <VListItemTitle class="font-weight-medium">
+          <VListItemTitle class="font-weight-medium" v-if="store.state.ulkeDagilimLoader == 1">
             {{ country.rezAdet }}
           </VListItemTitle>
-          <VListItemTitle class="text-disabled">
+          <VListItemTitle class="text-disabled" v-if="store.state.ulkeDagilimLoader == 1">
             {{ country.ulke }}
+          </VListItemTitle>
+          <VListItemTitle v-if="store.state.ulkeDagilimLoader == 0" class="ml-8">
+            <Loader />
           </VListItemTitle>
 
           <template #append>
-            <VCol><span> {{ country.geceleme }}</span></VCol>
-            <VCol><span> {{ country.oran }}</span></VCol>
-            <VCol><span> {{ Math.abs(country.adr) }}</span></VCol>
+            <VCol v-if="store.state.ulkeDagilimLoader == 1"><span> {{ country.geceleme }}</span></VCol>
+            <VCol v-if="store.state.ulkeDagilimLoader == 1"><span> {{ country.oran }}</span></VCol>
+            <VCol v-if="store.state.ulkeDagilimLoader == 1"><span> {{ Math.abs(country.adr) }}</span></VCol>
+            <VCol v-if="store.state.ulkeDagilimLoader == 0"><Loader /></VCol>
           </template>
         </VListItem>
       </VList>

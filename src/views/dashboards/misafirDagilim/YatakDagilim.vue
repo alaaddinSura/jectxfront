@@ -48,5 +48,6 @@ let statData = bedScatter.filter(item => chosenHotels.includes(item.hotelId))
     :data="statistic"
     title="Yatak Dağılım"
     subtitle
+    :loader="store.state.yatakDagilimLoader"
   />
 </template>
