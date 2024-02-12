@@ -41,6 +41,11 @@ export const store = createStore({
     rezAnalizLoader: [1],
     //Doluluk Dağılım - İptal Analiz
     iptalAnalizLoader: [1],
+
+
+
+    //Rezervasyon Analiz - Kanallara Göre Rezerv Dağılımı
+    kanalRezDagilimLoader: [1],
   },
   getters: {},
   mutations: {
@@ -144,8 +149,14 @@ export const store = createStore({
     },//Doluluk Dağılım - İptal Analiz
     changeIptalAnalizLoader(state,payload){
       state.iptalAnalizLoader = payload;
-    }
+    },
 
+
+
+    //Rezervasyon Analiz - Kanallara Göre Dağılım
+    changeKanalRezDagilimLoader(state,payload){
+      state.kanalRezDagilimLoader = payload;
+    },
   },
   actions: {},
 })

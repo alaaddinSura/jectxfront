@@ -50,5 +50,5 @@ const statistics = computed(() => {
 </script>
 
 <template>
-  <Bar :data="statistics" title="Kanallara Göre Rezerv Dağılımı" subtitle />
+  <Bar :data="statistics" title="Kanallara Göre Rezerv Dağılımı" subtitle :loader="store.state.kanalRezDagilimLoader"/>
 </template>

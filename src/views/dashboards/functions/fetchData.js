@@ -47,12 +47,15 @@ export const callRezervMiktari = (dateRange, hotelids, isLocal) => {
 }
 
 export const callKanalRezDagilim = (dateRange, hotelids, isLocal) => {
+    store.commit("changeKanalRezDagilimLoader", 0)
     axios.request(configs.kanallaraRezDagilimConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("kanalRezDagilim", JSON.stringify(r.data))//canalRez
+            store.commit("changeKanalRezDagilimLoader",1)
         }
         else {
             store.commit("changeKanalRezDagilim", r.data)
+            store.commit("changeKanalRezDagilimLoader",1)
         }
     }).catch(d => console.log(d));
 }

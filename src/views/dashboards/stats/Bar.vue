@@ -47,8 +47,8 @@ const text = computed(()=>props.subtitle ? "Toplam Miktar " + String(props.data.
               <Loader />
             </div> -->
             <div class="d-flex flex-column">
-              <span class="text-h5 font-weight-medium" v-if="loader == 1">{{ formatNumber(item.stats) }}</span>
-              <span class="text-h5 font-weight-medium" v-if="loader == 0"><Loader /></span>
+              <span class="text-h6 font-weight-medium" v-if="loader == 1">{{ formatNumber(item.stats) }}</span>
+              <span class="text-h6 font-weight-medium" v-if="loader == 0"><Loader /></span>
               <span class="text-sm">
                 {{ item.title }}
               </span>
