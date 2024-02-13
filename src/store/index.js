@@ -41,11 +41,32 @@ export const store = createStore({
     rezAnalizLoader: [1],
     //Doluluk Dağılım - İptal Analiz
     iptalAnalizLoader: [1],
-
-
-
+    //Doluluk Dağılım - Geçmiş Doluluk
+    gecmisRezervasyonDagilimLoader: [1],
+    //Doluluk Dağılım - Gelecek Doluluk
+    gelecekDolulukLoader: [1],
+    //Doluluk Dağılım - İptal Edilebilir Analiz (Oranlar)
+    iptalEdilebilirAnalizGunlukLoader: [1],
+    //Doluluk Dağılım - İptal Edilebilir Analiz (İstatistik)
+    iptalEdebilirAnalizLoader: [1],
+    //Rezervasyon Analiz - Raw Tablo
+    rawDataLoader: [1],
     //Rezervasyon Analiz - Kanallara Göre Rezerv Dağılımı
     kanalRezDagilimLoader: [1],
+    //Rezervasyon Analiz - Geçmiş Rezervasyonlar
+    gecmisRezervasyonlarLoader: [1],
+    //Rezervasyon Analiz - Doluluk
+    dolulukLoader: [1],
+    //Rezervasyon Analiz - Hafta Doluluk
+    haftaDolulukLoader: [1],
+    //Rezervasyon Analiz - Ay Doluluk
+    ayDolulukLoader: [1],
+    //Rezervasyon Analiz - Son 7 ay Doluluk
+    sonYediAyDolulukLoader: [1],
+    //Rezervasyon Analiz - Genel Rezerv
+    rezervMiktarLoader: [1],
+    //Rezervasyon Analiz - Online Rezerv
+    onlineRezMiktariLoader: [1],
   },
   getters: {},
   mutations: {
@@ -149,14 +170,49 @@ export const store = createStore({
     },//Doluluk Dağılım - İptal Analiz
     changeIptalAnalizLoader(state,payload){
       state.iptalAnalizLoader = payload;
+    },//Doluluk Dağılım - Gelecek Doluluk
+    changeGelecekDolulukLoader(state, payload){
+      state.gelecekDolulukLoader = payload;
+    },//Doluluk Dağılım İptal Edilebilir Analiz (Oranlar)
+    changeIptalEdilebilirAnalizGunlukLoader(state, payload){
+      state.iptalEdilebilirAnalizGunlukLoader = payload;
+    },//Doluluk Dağılım - İptal Edilebilir Analiz (İstatistik)
+    changeIptalEdebilirAnalizLoader(state,payload){
+      state.iptalEdebilirAnalizLoader = payload
     },
-
-
-
+    //Rezervasyon Analiz - Raw Tablo
+    changeRawDataLoader(state, payload){
+      state.rawDataLoader = payload;
+    },
+    //Rezervasyon Analiz - Geçmiş Rezervasyonlar
+    changeGecmisRezervasyonlarLoader(state, payload){
+      state.gecmisRezervasyonlarLoader = payload;
+    },
     //Rezervasyon Analiz - Kanallara Göre Dağılım
     changeKanalRezDagilimLoader(state,payload){
       state.kanalRezDagilimLoader = payload;
-    },
+    },//Rezervasyon Analiz - Doluluk
+    changeDolulukLoader(state, payload){
+      state.dolulukLoader = payload;
+    },//Rezervasyon Analiz - Hafta Doluluk
+    changeHaftaDolulukLoader(state,payload){
+      state.haftaDolulukLoader = payload;
+    },//Rezervasyon Analiz - Ay Doluluk
+    changeAyDolulukLoader(state,payload){
+      state.haftaDolulukLoader = payload;
+    },//Rezervasyon Analiz - Son Yedi Ay Doluluk
+    changeSonYediAyDolulukLoader(state,payload){
+      state.sonYediAyDolulukLoader = payload
+    },//Rezervasyon Analiz - Genel Rezerv
+    changeRezervMiktarLoader(state, payload){
+      state.rezervMiktarLoader = payload;
+    },//Rezervasyon Analiz - Online Rezerv
+    changeOnlineRezMiktariLoader(state, payload){
+      state.onlineRezMiktariLoader = payload;
+    },// Geçmiş Doluluk - Geçmiş Doluluk
+    changeGecmisRezervasyonDagilimLoader(state,payload){
+      state.gecmisRezervasyonDagilimLoader = payload;
+    }
   },
   actions: {},
 })

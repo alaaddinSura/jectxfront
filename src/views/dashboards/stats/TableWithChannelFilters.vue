@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from "vue"
+import { computed, ref } from "vue"
 //import { VDataTable } from '@/vuetify/labs/VDataTable'
 import VDataTable from "./VDataTable.vue"
+import Skeleton from '../functions/skeleton.vue'
 
 
 const props = defineProps({
   header: Array,
   data: Array,
+  loader: Array,
 })
 
 const selectedAnaKanal = ref('')
@@ -21,6 +23,11 @@ const kanallar = {
 
 const altKanallar = computed(()=>{
   return [...new Set(props.data.filter(item=> item['ANA KANAL'] == selectedAnaKanal.value).map(item => item['ALT KANAL']))]
+})
+
+const skeletonDatas = computed(()=>{
+  let skeletonData = props.loader 
+  return skeletonData
 })
 
 const tableData = computed(()=>{
@@ -39,6 +46,8 @@ const tableData = computed(()=>{
   
   return data
 })
+
+let deneme = 1
 </script>
 
 <template>
@@ -67,9 +76,15 @@ const tableData = computed(()=>{
       </VRow>
     </VCardText>
     <VDivider />
+    <VCardText v-if="loader == 1">
     <VDataTable
       :headers="header"
       :items="tableData"
     />
+  </VCardText>
+  <VCardText v-if="loader == 0">
+    <Skeleton />
+    <Skeleton />
+  </VCardText>
   </VCard>
 </template>

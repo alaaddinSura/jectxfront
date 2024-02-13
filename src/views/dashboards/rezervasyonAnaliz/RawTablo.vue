@@ -78,10 +78,11 @@ let downloadCsv = data => {
 
 <template>
   <VRow>
-    <VCol>
+    <VCol cols="12">
       <TableWithChannelFilters
         :header="rawTableHeaders"
         :data="tableData"
+        :loader="store.state.rawDataLoader"
       />
     </VCol>
     <VCol>

@@ -19,8 +19,8 @@ import DolulukOrani from '../stats/DolulukOrani.vue'
       count: 220 * store.state.dateCount
     }
    ]
-
-   let rezData = store.state.doluluk.length == 0 ? JSON.parse(localStorage.getItem("gecelemeDagilim")) : store.state.doluluk
+ 
+   let rezData = store.state.doluluk.length == 0 ? JSON.parse(localStorage.getItem("nightAmount")) : store.state.doluluk
    let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
    roomCounts = roomCounts.filter(item => chosenHotels.includes(item.hotelId))
    roomCounts = roomCounts.map(item => item.count).reduce((f,s) => f+s, 0)
@@ -40,5 +40,6 @@ import DolulukOrani from '../stats/DolulukOrani.vue'
     :color="color"
     :nightcount="nightcount.nightCount"
     :oran="nightcount.oran"
+    :loader="store.state.dolulukLoader"
   /> 
 </template>

@@ -4,6 +4,8 @@ import * as dates from '@/views/dashboards/functions/dates'
 import { hexToRgb } from '@layouts/utils'
 import VueApexCharts from 'vue3-apexcharts'
 import { useTheme } from 'vuetify'
+import Loader from '../functions/loader.vue'
+import SkeletonCompareBar from '../functions/skeletonCompareBar.vue'
 
 
 const vuetifyTheme = useTheme()
@@ -217,20 +219,25 @@ const totalEarnings = computed(() => {
       <VCardTitle>İptal Edilebilir Analiz</VCardTitle>
 
       <div class="d-flex align-center mt-2">
-        <h4 class="text-h3 me-2">
+        <h4 class="text-h3 me-2" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 1">
           {{ NRFORAN.ORAN }}%
+        </h4>
+        <h4 class="text-h3 me-2" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 0">
+          <Loader />
         </h4>
       </div>
     </VCardItem>
 
     <VCardText>
-      <VueApexCharts
+      <VueApexCharts v-if="store.state.iptalEdebilirAnalizLoader == 1"
         :options="chartOptions"
         :series="series"
         height="210"
         class="my-2"
       />
-
+      <VCardText v-if="store.state.iptalEdebilirAnalizLoader == 0">
+        <Loader style="height: 70px; width: 70px; margin-top: 20px; margin-left: auto; margin-right: auto"/>
+      </VCardText>
       <VList class="card-list mt-4">
         <VListItem
           v-for="earning in totalEarnings"
@@ -254,7 +261,8 @@ const totalEarnings = computed(() => {
           </template>
 
           <template #append>
-            <span class="text-success font-weight-medium">{{ earning.earning }}</span>
+            <span class="text-success font-weight-medium" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 1">{{ earning.earning }}</span>
+            <span class="text-success font-weight-medium" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 0"><Loader style="margin-left: 60px"/></span>
           </template>
         </VListItem>
       </VList>
@@ -265,5 +273,22 @@ const totalEarnings = computed(() => {
 <style lang="scss" scoped>
 .card-list {
   --v-card-list-gap: 18px;
+}
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 45px;
+  aspect-ratio: 1;
+  --c:no-repeat repeating-linear-gradient(90deg,#000 0 calc(100%/7),#0000 0 calc(200%/7));
+  background: var(--c),var(--c),var(--c),var(--c);
+  background-size: 140% 26%;
+  animation: l25 .75s infinite;
+}
+@keyframes l25 {
+ 0%   {background-position:0    calc(0*100%/3),100% calc(1*100%/3),0    calc(2*100%/3),100% calc(3*100%/3)}
+ 25%  {background-position:100% calc(0*100%/3),100% calc(1*100%/3),0    calc(2*100%/3),100% calc(3*100%/3)}
+ 50%  {background-position:100% calc(0*100%/3),0    calc(1*100%/3),0    calc(2*100%/3),100% calc(3*100%/3)}
+ 75%  {background-position:100% calc(0*100%/3),0    calc(1*100%/3),100% calc(2*100%/3),100% calc(3*100%/3)}
+ 100% {background-position:100% calc(0*100%/3),0    calc(1*100%/3),100% calc(2*100%/3),0    calc(3*100%/3)}
 }
 </style>

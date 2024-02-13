@@ -2,12 +2,14 @@
 import { hexToRgb } from '@layouts/utils'
 import VueApexCharts from 'vue3-apexcharts'
 import { useTheme } from 'vuetify'
+import Loader from '../functions/loader.vue'
 
 const props = defineProps({
   name: String,
   color: String,
   nightcount: Number,
   oran: Array,
+  loader: Array,
 })
 
 function formatNumber(num) {
@@ -23,9 +25,10 @@ const dataRange = computed(()=>{
   const oran = props.oran
   const name = props.name
   const nightCount = props.nightcount
+  const loader = props.loader
   
   return{
-    oran, name, nightCount,
+    oran, name, nightCount, loader
   }
 })
 
@@ -117,19 +120,23 @@ const chartOptions = computed(() => {
   <VCard>
     <VCardText>
       <div class="mb-n2">
-        <h5 class="text-h5">
+        <h5 class="text-h5" v-if="dataRange.loader == 1">
           {{ formatNumber(dataRange.nightCount) }}
         </h5>
+        <h5 v-if="dataRange.loader == 0">
+          <Loader />
+      </h5>
         <span class="text-disabled text-sm">{{ dataRange.name }}</span>
       </div>
-
       <VueApexCharts
         :options="chartOptions"
         :series="dataRange.oran"
         type="radialBar"
-        :height="155"
+        :height="155" v-if="loader == 1"
       />
-
+      <VCardText v-if="loader == 0" style="display: flex; justify-content: center; align-items: center; margin-top: 10px">
+        <Loader />
+      </VCardText>
       <div class="text-sm text-center clamp-text text-disabled mt-3">
         Oda Doluluk
       </div>

@@ -36,12 +36,15 @@ export const callGecelemeDagilim = (dateRange, hotelids, isLocal) => {
 }
 
 export const callRezervMiktari = (dateRange, hotelids, isLocal) => {
+    store.commit("changeRezervMiktarLoader", 0)
     axios.request(configs.rezervMiktariConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("rezMiktar", JSON.stringify(r.data))//rezCount
+            store.commit("changeRezervMiktarLoader",1)
         }
         else {
             store.commit('changeRezervMiktar', r.data);
+            store.commit("changeRezervMiktarLoader", 1)
         }
     }).catch(d => console.log(d));
 }
@@ -61,24 +64,29 @@ export const callKanalRezDagilim = (dateRange, hotelids, isLocal) => {
 }
 
 export const callOnlineRezMiktari = (dateRange, hotelids, isLocal) => {
+    store.commit("changeOnlineRezMiktariLoader", 0)
     axios.request(configs.onlineRezervMiktariConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("onlineRez", JSON.stringify(r.data))//onlineRez
+            store.commit("changeOnlineRezMiktariLoader",1)
         }
         else {
             store.commit("changeOnlineRezMiktari", r.data)
+            store.commit("changeOnlineRezMiktariLoader",1)
         }
     }).catch(d => console.log(d));
 }
 
 export const callGecelemeMiktari = (dateRange, hotelids, isLocal) => {
-
+    store.commit("changeDolulukLoader", 0)
     axios.request(configs.gecelemeMiktariConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("nightAmount", JSON.stringify(r.data))
+            store.commit("changeDolulukLoader", 1)
         }
         else {
             store.commit("changeDoluluk", r.data)
+            store.commit("changeDolulukLoader",1)
         }
     }).catch(d => console.log(d));
 }
@@ -86,27 +94,33 @@ export const callGecelemeMiktari = (dateRange, hotelids, isLocal) => {
 export const callAyDoluluk = (endDate, hotelids, isLocal) => {
     const dayCount = 30
     let dateRange = [...new Set(dates.getLastDatesFromDate(endDate, dayCount))]
-
+    store.commit("changeAyDolulukLoader",0)
     axios.request(configs.ayDolulukConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("gecelemeDagilimSonAy", JSON.stringify(r.data))
+            store.commit("changeAyDolulukLoader",1)
         }
         else {
             store.commit("changeAyDoluluk", r.data)
+            store.commit("changeAyDolulukLoader",1)
         }
+    }).catch(e=>{
+        console.log("Call Ay Doluluk FetcData ==>", e)
     })
 }
 
 export const callHaftaDoluluk = (endDate, hotelids, isLocal) => {
     const dayCount = 7
     let dateRange = [...new Set(dates.getLastDatesFromDate(endDate, dayCount))]
-
+    store.commit("changeHaftaDolulukLoader",0)
     axios.request(configs.haftaDolulukConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("gecelemeDagilimSonHafta", JSON.stringify(r.data))
+            store.commit("changeHaftaDolulukLoader",1)
         }
         else {
             store.commit("changeHaftaDoluluk", r.data)
+            store.commit("changeHaftaDolulukLoader",1)
         }
     })
 }
@@ -114,13 +128,15 @@ export const callHaftaDoluluk = (endDate, hotelids, isLocal) => {
 export const callSonYediAyDoluluk = (endDate, hotelids, isLocal) => {
     const dayCount = 210
     let dateRange = [...new Set(dates.getLastDatesFromDate(endDate, dayCount))]
-
+    store.commit("changeSonYediAyDolulukLoader", 0)
     axios.request(configs.sonYediAyDolulukConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("gecelemeDagilimSon7Ay", JSON.stringify(r.data))
+            store.commit("changeSonYediAyDolulukLoader",1)
         }
         else {
             store.commit("changesonYediAyDoluluk", r.data)
+            store.commit("changeSonYediAyDolulukLoader", 1)
         }
     })
 }
@@ -140,7 +156,7 @@ export const callUlkeDagilim = (dateRange, hotelids, isLocal) => {
 
 export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
     let dateRange
-
+    store.commit("changeGecmisRezervasyonlarLoader", 0)
     if (dayCount <= 7) {
         dateRange = dates.getLastDatesFromDate(endDate, 7)
     }
@@ -154,23 +170,26 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
     axios.request(configs.callGecmisRezConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("gecmisRezervs", JSON.stringify(r.data))
-
+            store.commit("changeGecmisRezervasyonlarLoader",1)
         } else {
             let rData = r.data
             if (rData.length == 28) {
                 console.log(rData)
                 store.commit("changeGecmisRezervasyonlar", rData)
+                store.commit("changeGecmisRezervasyonlarLoader",1)
             }
             else if (rData.length == 196) {
                 rData.forEach(item => {
                     item['DATE'] = dates.findWeek(item.DATE)
                     store.commit("changeGecmisRezervasyonlar", rData)
                 })
+                store.commit("changeGecmisRezervasyonlarLoader",1)
             } else {
                 rData.forEach(item => {
                     item['DATE'] = item.DATE.split("-")[0] + "-" + item.DATE.split("-")[1]
                     store.commit("changeGecmisRezervasyonlar", rData)
                 })
+                store.commit("changeGecmisRezervasyonlarLoader",1)
             }
             //store.commit("changeGecmisRezervasyonlar", r.data)
         }
@@ -205,69 +224,74 @@ export const callIptalAnaliz = (dateRange, hotelids, isLocal) => {
 
 export const callIptalEdebilirAnaliz = (dateRange, hotelids, isLocal) => {
     let dRange = dates.find7MonthsWithOrigin(dates.findMidDate(dateRange.sort()[0], dateRange.sort()[dateRange.length - 1]))
+    store.commit("changeIptalEdebilirAnalizLoader",0)
     axios.request(configs.iptalEdebilirAnalizConfig(dRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("iptalEdilebilirAnaliz", JSON.stringify(r.data));
+            store.commit("changeIptalEdebilirAnalizLoader",1)
         } else {
             store.commit("changeiptalEdebilirAnaliz", r.data);
+            store.commit("changeIptalEdebilirAnalizLoader",1)
         }
     })
 }
 
 export const callIptalEdebilirAnalizGunluk = (dateRange, hotelids, isLocal) => {
+    store.commit("changeIptalEdilebilirAnalizGunlukLoader", 0)
     axios.request(configs.iptalEdebilirAnalizConfigGunluk(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("iptalEdilebilirAnalizGunluk", JSON.stringify(r.data));
+            store.commit("changeIptalEdilebilirAnalizGunlukLoader",1)
         } else {
             store.commit("changeiptalEdebilirAnalizGunluk", r.data);
+            store.commit("changeIptalEdilebilirAnalizGunlukLoader",1)
         }
     })
 }
 
 export const callGecmisRezervasyonDagilim = (endDate, dayCount, hotelids, isLocal) => {
-
     let dateRange
+    store.commit("changeGecmisRezervasyonDagilimLoader", 0)
 
     if (dayCount <= 7) {
         dateRange = dates.getLastDatesFromDate(endDate, 7)
-        console.log("Day Count 7'de")
     }
     else if (dayCount > 7 && dayCount <= 49) {
         dateRange = dates.getLastDatesFromDate(endDate, 49)
-        console.log("Day Count 7 ve 49 arası")
     }
     else {
         dateRange = dates.getLastDatesFromDate(endDate, 365)
-        console.log("49 üzeri")
     }
     axios.request(configs.gecmisRezervasyonDagilimConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("gecmisRezervasyonDagilim", JSON.stringify(r.data));
+            store.commit("changeGecmisRezervasyonDagilimLoader", 1)
         } else {
             let rData = r.data
             if (rData.length == 28) {
                 store.commit("changeGecmisRezervasyonDagilim", rData)
+                store.commit("changeGecmisRezervasyonDagilimLoader", 1)
             }
             else if (rData.length == 196) {
                 rData.forEach(item => {
                     item['DATE'] = dates.findWeek(item.DATE)
                     store.commit("changeGecmisRezervasyonDagilim", rData)
                 })
+                store.commit("changeGecmisRezervasyonDagilimLoader", 1)
             } else {
                 rData.forEach(item => {
                     item['DATE'] = item.DATE.split("-")[0] + "-" + item.DATE.split("-")[1]
                     store.commit("changeGecmisRezervasyonDagilim", rData)
                 })
-
+                store.commit("changeGecmisRezervasyonDagilimLoader",1)
             }
         }
     })
 }
 
 export const callDolulukGelecekRez = (startDate, hotelids, isLocal) => {
-
-
     let dateRange = dates.findNext12months(startDate)
+    store.commit("changeGelecekDolulukLoader",0)
     axios.request(configs.dolulukGelecekRezConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             // let rData = r.data
@@ -275,12 +299,14 @@ export const callDolulukGelecekRez = (startDate, hotelids, isLocal) => {
             //     item['DATE'] = item['DATE'].split('-')[0] + '-' + item['DATE'].split('-')[1]
             // })
             localStorage.setItem("dolulukGelecekRez", JSON.stringify(r.data))
+            store.commit("changeGelecekDolulukLoader", 1)
         } else {
             // let rData = r.data
             // rData.forEach(item => {
             //     item['DATE'] = item['DATE'].split('-')[0] + '-' + item['DATE'].split('-')[1]
             // })
             store.commit("changeGelecekDoluluk", r.data)
+            store.commit("changeGelecekDolulukLoader", 1)
         }
     })
 }
@@ -367,12 +393,18 @@ export const callChannelTable = (dateRange, hotelids, isLocal) => {
 }
 
 export const callRawData = (dateRange, hotelids, isLocal) => {
+    store.commit("changeRawDataLoader", 0)
+    console.log("Raw Data içerisine girdi")
     axios.request(configs.callRawData(dateRange, hotelids))
         .then((r) => {
             if (isLocal) {
                 localStorage.setItem("rawData", JSON.stringify(r.data))
+                console.log("Raw Data localStoragede")
+                store.commit("changeRawDataLoader", 1)
             } else {
                 store.commit("changeRawData", r.data)
+                console.log("Raw Dataya store'den girdi girdi")
+                store.commit("changeRawDataLoader", 1)
             }
         })
         .catch(e => console.log('error in callRawData --> ', e))

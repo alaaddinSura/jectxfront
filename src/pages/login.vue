@@ -57,7 +57,7 @@ const login = () => {
         //Online Rezervasyon Miktarı
         fetchData.callOnlineRezMiktari(dateRange, hotelids, true)
 
-        //Geceleme Miktarı
+        //Geceleme Miktarı (Doluluk)
         fetchData.callGecelemeMiktari(dateRange, hotelids, true)
         
         // yatak dağılım çağırma

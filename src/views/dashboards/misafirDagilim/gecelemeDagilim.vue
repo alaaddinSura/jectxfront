@@ -12,25 +12,25 @@ const statistic = computed(()=>{
   
   return [
   {
-    title: 'Tek Kişi',
+    title: 'Tek',
     stats: statData.filter(item=> item.nightType === 'Tek').map(item => Number(item.count)).reduce((f,s)=>f+s,0),
     icon: 'tabler-user',
     color: 'primary',
   },
   {
-    title: 'Çift Kişi',
+    title: '2-4',
     stats: statData.filter(item=> item.nightType === '2-4').map(item => Number(item.count)).reduce((f,s)=>f+s,0),
     icon: 'tabler-users',
     color: 'primary',
   },
   {
-    title: 'Aile',
+    title: '5-10',
     stats: statData.filter(item=> item.nightType === '5-10').map(item => Number(item.count)).reduce((f,s)=>f+s,0),
     icon: 'tabler-baby-carriage',
     color: 'primary',
   },
   {
-    title: 'Grup',
+    title: '10+',
     stats: statData.filter(item=> item.nightType === '10+').map(item => Number(item.count)).reduce((f,s)=>f+s,0),
     icon: 'tabler-users-group',
     color: 'primary',

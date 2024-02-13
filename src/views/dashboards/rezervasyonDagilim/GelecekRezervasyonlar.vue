@@ -44,7 +44,7 @@ const series = computed(() => {
 </script>
 
 <template>
-  <CompareBar :series="series" />
+  <CompareBar :series="series" :loader="store.state.gelecekDolulukLoader"/>
   
 </template>
 

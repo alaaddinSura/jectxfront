@@ -51,5 +51,5 @@ let digerData = statData.filter(item => item.altKanal == 'ONLDIGER').map(item=>i
 </script>
 
 <template>
-  <RezervasyonRaporu :data="data" />
+  <RezervasyonRaporu :data="data" :loader="store.state.onlineRezMiktariLoader"/>
 </template>

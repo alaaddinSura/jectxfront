@@ -5,9 +5,11 @@ import {
   useDisplay,
   useTheme,
 } from 'vuetify'
-
+import Loader from '../functions/loader.vue'
+import { load } from 'webfontloader'
 const props = defineProps({
   data: Object,
+  loader: Array,
 })
 
 const vuetifyTheme = useTheme()
@@ -119,6 +121,7 @@ const chartOptions = computed(() => {
     ],
   }
 })
+let deneme = 0
 </script>
 
 <template>
@@ -132,8 +135,11 @@ const chartOptions = computed(() => {
         </div>
 
         <div>
-          <h5 class="text-h3 mb-1">
+          <h5 class="text-h3 mb-1" v-if="loader == 1">
             {{ formatNumber(data.totalNight) }}
+          </h5>
+          <h5 class="text-h3 mb-1" v-if="loader == 0">
+            <Loader />
           </h5>
           <div class="text-sm">
             <VIcon
@@ -148,11 +154,14 @@ const chartOptions = computed(() => {
         </div>
       </div>
       <div>
-        <VueApexCharts
+        <VueApexCharts v-if="loader == 1"
           :options="chartOptions"
           :series="props.data.series"
           :height="147"
         />
+        <VCardText v-if="loader == 0">
+          <Loader style="height: 100px; width: 100px"/>
+        </VCardText>
       </div>
     </VCardText>
   </VCard>

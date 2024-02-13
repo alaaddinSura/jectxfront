@@ -53,6 +53,6 @@ let data = computed(() => {
 </script>
 
 <template>
-  <RezervasyonRaporu :data="data" /> 
+  <RezervasyonRaporu :data="data" :loader="store.state.rezervMiktarLoader"/> 
 </template>
 

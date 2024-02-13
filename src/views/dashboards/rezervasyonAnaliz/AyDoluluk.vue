@@ -47,5 +47,6 @@ let nightcount = computed(() => {
     :color="color"
     :nightcount="nightcount.geceCount"
     :oran="nightcount.oran"
+    :loader="store.state.ayDolulukLoader"
   />
 </template>

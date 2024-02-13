@@ -2,9 +2,12 @@
 import { hexToRgb } from '@/@layouts/utils'
 import VueApexCharts from 'vue3-apexcharts'
 import { useTheme } from 'vuetify/lib/framework.mjs'
+import SkeletonCompareBarVue from '../functions/skeletonCompareBar.vue'
+import Skeleton from '../functions/skeleton.vue'
 
 const props = defineProps({
   series: Object,
+  loader: Array,
 })
 
 
@@ -162,6 +165,7 @@ const chartOptions = computed(() => {
     },
   }
 })
+let deneme = 0;
 </script>
 
 <template>
@@ -175,11 +179,16 @@ const chartOptions = computed(() => {
           <h5 class="text-h5 mb-6">
             {{ series.title }}
           </h5>
+          <VCardText v-if="loader == 1">
           <VueApexCharts
             :options="chartOptions.bar"
             :series="series.bar"
             height="312"
           />
+        </VCardText>
+        <VCardText v-if="loader == 0">
+          <SkeletonCompareBarVue />
+        </VCardText>
         </VCardText>
       </VCol>
     </VRow>
