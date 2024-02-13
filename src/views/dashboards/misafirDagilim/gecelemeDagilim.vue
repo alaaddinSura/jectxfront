@@ -8,7 +8,8 @@ const statistic = computed(()=>{
   let chosenHotels = store.state.selectedHotels
 
   let nightScatter = JSON.parse(localStorage.getItem("gecelemeDagilim"))
-  let statData = store.state.gecelemeDagilim.length == 0 ? nightScatter.filter(item => chosenHotels.includes(item.hotelId)) : store.state.gecelemeDagilim
+  let statData = store.state.gecelemeDagilim.length == 0 ? nightScatter : store.state.gecelemeDagilim
+  statData = statData.filter(item=> chosenHotels.includes(item.hotelId))
   
   return [
   {

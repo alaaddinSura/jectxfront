@@ -40,7 +40,7 @@ let data = computed(() => {
   return {
     totalNight: totalCount,
     totalAmountNight: nightCount,
-    labels: ['Online', 'WH', 'AGT', 'IND'],
+    labels: ['Online', 'WH', 'AGT', 'IND','Ana Kanal Tanımsız'],
     series: kanallar.length > 0 ? kanallar : [25, 25, 25, 25],
     percentage: 6,
     name: 'Rezerv Miktarı',
