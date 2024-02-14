@@ -3,7 +3,14 @@ import { store } from '@/store/index'
 import * as countryName from '@/views/dashboards/functions/countries'
 import Loader from '../functions/loader.vue'
 
-
+function formatNumber(num) {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1) + 'M';
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(1) + 'K';
+  }
+  return num.toString();
+}
 
 const salesByCountries = computed(()=>{
   let chosenHotels = store.state.selectedHotels
@@ -12,7 +19,9 @@ const salesByCountries = computed(()=>{
   let rezData = store.state.ulkeDagilim == 0 ? JSON.parse(localStorage.getItem("countryDist")) : store.state.ulkeDagilim
 
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId) && item.nationality !== 'Tanımsız')
+  console.log(statData)
 
+  
   let countries = [...new Set(statData.map(item => item.nationality))]
 
   let countries_dist = countries.map(item => ({
@@ -37,13 +46,18 @@ const salesByCountries = computed(()=>{
 
   return country_dist_paroti
 })
+
+// salesByCountries dizisinin boş olup olmadığını kontrol eden computed property
+const isEmptySalesData = computed(() => {
+  return salesByCountries.value.length === 0
+})
 </script>
 
 <template>
   <VCard title="Ülkelere Göre Dağılım">
     <VCardText>
       <VList class="card-list">
-        <VListItem
+        <VListItem v-if="!isEmptySalesData"
           v-for="country in salesByCountries"
           :key="country.rezAdet"
         >
@@ -57,7 +71,7 @@ const salesByCountries = computed(()=>{
             </div>
           </template>
           <VListItemTitle class="font-weight-medium" v-if="store.state.ulkeDagilimLoader == 1">
-            {{ country.rezAdet }}
+            {{ formatNumber(country.rezAdet) }}
           </VListItemTitle>
           <VListItemTitle class="text-disabled" v-if="store.state.ulkeDagilimLoader == 1">
             {{ country.ulke }}
@@ -67,11 +81,19 @@ const salesByCountries = computed(()=>{
           </VListItemTitle>
 
           <template #append>
-            <VCol v-if="store.state.ulkeDagilimLoader == 1"><span> {{ country.geceleme }}</span></VCol>
+            <VCol v-if="store.state.ulkeDagilimLoader == 1"><span> {{ formatNumber(country.geceleme) }}</span></VCol>
             <VCol v-if="store.state.ulkeDagilimLoader == 1"><span> {{ country.oran }}</span></VCol>
             <VCol v-if="store.state.ulkeDagilimLoader == 1"><span> {{ Math.abs(country.adr) }}</span></VCol>
             <VCol v-if="store.state.ulkeDagilimLoader == 0"><Loader /></VCol>
           </template>
+        </VListItem>
+        <VListItem v-else >
+          <Loader class="my-5"/>
+          <Loader class="my-5"/>
+          <Loader class="my-5"/>
+          <Loader class="my-5"/>
+          <Loader class="my-5"/>
+          <Loader class="my-5"/>
         </VListItem>
       </VList>
     </VCardText>

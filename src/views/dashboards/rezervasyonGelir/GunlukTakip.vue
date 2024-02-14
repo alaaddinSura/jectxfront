@@ -3,6 +3,7 @@ import VueApexCharts from 'vue3-apexcharts'
 import { useTheme } from 'vuetify'
 import { hexToRgb } from '@layouts/utils'
 import { store } from '@/store/index'
+import Loader from '../functions/loader.vue'
 
 const vuetifyTheme = useTheme()
 const series = [36]
@@ -106,7 +107,7 @@ const supportTicket = computed(() => {
 const rezAdetDay = computed(() => {
   let chosenHotels = store.state.selectedHotels.length == 0 ? [22966, 22964] : store.state.selectedHotels
 
-  let rezData = store.state.rezervMiktar.length == 0 ? JSON.parse(localStorage.getItem('rezMiktar')) : store.state.rezervMiktar
+  let rezData = JSON.parse(localStorage.getItem('rezMiktar'))
 
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
 
@@ -137,8 +138,11 @@ function formatNumber(num) {
       <VRow>
         <VCol cols="12" md="5" sm="6" class="mt-auto">
           <div class="mb-6 mt-6">
-            <h4 class="text-h3">
+            <h4 class="text-h3" v-if="store.state.selectedHotels != 'No Hotel'">
               {{ formatNumber(rezAdetDay) }}
+            </h4>
+            <h4 class="text-h3" v-if="store.state.selectedHotels == 'No Hotel'">
+              <Loader />
             </h4>
             <p>
               Rezervasyon Miktarı
@@ -150,8 +154,11 @@ function formatNumber(num) {
               <VListItemTitle class="font-weight-medium">
                 {{ ticket.title }}
               </VListItemTitle>
-              <VListItemSubtitle class="text-disabled">
+              <VListItemSubtitle class="text-disabled" v-if="store.state.selectedHotels != 'No Hotel'">
                 {{ formatNumber(ticket.subtitle) }}
+              </VListItemSubtitle>
+              <VListItemSubtitle class="text-disabled" v-if="store.state.selectedHotels == 'No Hotel'">
+                <Loader />
               </VListItemSubtitle>
               <template #prepend>
                 <VAvatar rounded size="34" :color="ticket.avatarColor" variant="tonal">
@@ -162,7 +169,10 @@ function formatNumber(num) {
           </VList>
         </VCol>
         <VCol cols="12" md="7" sm="6">
-          <VueApexCharts :options="chartOptions" :series="series" height="340" />
+          <VueApexCharts :options="chartOptions" :series="series" height="340" v-if="store.state.selectedHotels != 'No Hotel'"/>
+          <VCardText v-if="store.state.selectedHotels == 'No Hotel'">
+            <Loader style="margin-left: auto; margin-right:auto; width:100px;height:100px;margin-top:20px;"/>
+          </VCardText>
         </VCol>
       </VRow>
     </VCardText>

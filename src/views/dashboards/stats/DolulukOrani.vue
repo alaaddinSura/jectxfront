@@ -3,6 +3,7 @@ import { hexToRgb } from '@layouts/utils'
 import VueApexCharts from 'vue3-apexcharts'
 import { useTheme } from 'vuetify'
 import Loader from '../functions/loader.vue'
+import { store } from '@/store'
 
 const props = defineProps({
   name: String,

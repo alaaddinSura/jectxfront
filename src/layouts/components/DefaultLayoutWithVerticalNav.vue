@@ -11,12 +11,24 @@ import NavbarLogOut from './NavbarLogOut.vue'
 
 // @layouts plugin
 import { VerticalNavLayout } from '@layouts'
+import { useRoute } from 'vue-router'
+
+const route = useRoute();
 
 const now = new Date()
 const dateRange = ref('')
 
 const { appRouteTransition, isLessThanOverlayNavBreakpoint } = useThemeConfig()
 const { width: windowWidth } = useWindowSize()
+
+const disabledDatePicker = () =>{
+  const disabledUrls = ['/dashboards/rezervasyon-gecmis', '/dashboards/rezervasyon-gelir'];
+  if (disabledUrls.includes(route.path)) {
+    return true; // NavbarDatePicker engellenir
+  } else {
+    return false; // NavbarDatePicker engellenmez
+  }
+}
 </script>
 
 <template>
@@ -39,7 +51,7 @@ const { width: windowWidth } = useWindowSize()
         <!-- Otel türleri -->
         <NavbarHotelTypes />
         <!-- date picker -->
-        <NavBarDatePicker />
+        <NavBarDatePicker v-if="!disabledDatePicker()"/>
 
         <VSpacer />
 

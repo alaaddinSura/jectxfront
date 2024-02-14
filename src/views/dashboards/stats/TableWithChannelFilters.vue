@@ -3,6 +3,7 @@ import { computed, ref } from "vue"
 //import { VDataTable } from '@/vuetify/labs/VDataTable'
 import VDataTable from "./VDataTable.vue"
 import Skeleton from '../functions/skeleton.vue'
+import Loader from "../functions/loader.vue"
 
 
 const props = defineProps({
@@ -82,9 +83,9 @@ let deneme = 1
       :items="tableData"
     />
   </VCardText>
-  <VCardText v-if="loader == 0">
-    <Skeleton />
-    <Skeleton />
+     <VCardText v-if="loader == 0">
+      <Loader style="width: 100px; height: 100px; margin-left:auto; margin-right: auto; margin-top: auto; margin-bottom: auto;"/>
   </VCardText>
+  
   </VCard>
 </template>

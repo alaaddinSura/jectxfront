@@ -3,6 +3,7 @@ import { hexToRgb } from "@layouts/utils";
 import VueApexCharts from "vue3-apexcharts";
 import { useTheme } from "vuetify";
 import { store } from "@/store/index";
+import SkeletonCompareBar from "../functions/skeletonCompareBar.vue";
 
 const vuetifyTheme = useTheme();
 const currentTab = ref(0);
@@ -557,7 +558,7 @@ const chartConfigs = computed(() => {
         </VSlideGroupItem>
       </VSlideGroup>
 
-      <VueApexCharts
+      <VueApexCharts v-if="store.state.selectedHotels != 'No Hotel'"
         ref="refVueApexChart"
         :key="currentTab"
         :options="chartConfigs[Number(currentTab)].chartOptions"
@@ -565,6 +566,9 @@ const chartConfigs = computed(() => {
         height="240"
         class="mt-3"
       />
+      <VCardText v-if="store.state.selectedHotels == 'No Hotel'">
+        <SkeletonCompareBar/>
+      </VCardText>
     </VCardText>
   </VCard>
 </template>

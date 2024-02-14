@@ -67,6 +67,8 @@ export const store = createStore({
     rezervMiktarLoader: [1],
     //Rezervasyon Analiz - Online Rezerv
     onlineRezMiktariLoader: [1],
+    //Rezervasyon Analiz - Rezerv Tablo
+    channelTableLoader: [1],
   },
   getters: {},
   mutations: {
@@ -199,7 +201,7 @@ export const store = createStore({
       state.haftaDolulukLoader = payload;
     },//Rezervasyon Analiz - Ay Doluluk
     changeAyDolulukLoader(state,payload){
-      state.haftaDolulukLoader = payload;
+      state.ayDolulukLoader = payload;
     },//Rezervasyon Analiz - Son Yedi Ay Doluluk
     changeSonYediAyDolulukLoader(state,payload){
       state.sonYediAyDolulukLoader = payload
@@ -212,6 +214,9 @@ export const store = createStore({
     },// Geçmiş Doluluk - Geçmiş Doluluk
     changeGecmisRezervasyonDagilimLoader(state,payload){
       state.gecmisRezervasyonDagilimLoader = payload;
+    },//Rezervasyon Analiz - Rezerv Tablo
+    changeChannelTableLoader(state,payload){
+      state.channelTableLoader = payload;
     }
   },
   actions: {},

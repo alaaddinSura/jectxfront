@@ -4,6 +4,7 @@ import { useTheme } from "vuetify";
 import { hexToRgb } from "@layouts/utils";
 import { store } from "@/store/index";
 import { computed } from "vue";
+import Loader from "../functions/loader.vue";
 
 const vuetifyTheme = useTheme();
 
@@ -187,7 +188,7 @@ function formatNumber(num) {
     <VCardText class="mt-sm-n6">
       <VRow>
         <VCol cols="12" sm="5" class="d-flex flex-column align-self-end">
-          <div class="d-flex align-center gap-2 mb-2 pb-1 flex-wrap">
+          <div class="d-flex align-center gap-2 mb-2 pb-1 flex-wrap" v-if="store.state.selectedHotels != 'No Hotel'">
             <h4 class="text-4xl font-weight-medium">
               {{ rezAdetMonth }}
             </h4>
@@ -195,18 +196,25 @@ function formatNumber(num) {
               {{ revenueChange.oran }}%
             </VChip>
           </div>
-
+          <div class="d-flex align-center gap-2 my-5 pb-1 flex-wrap" v-if="store.state.selectedHotels == 'No Hotel'">
+            <h4 class="text-4xl font-weight-medium">
+              <Loader />
+            </h4>
+          </div>
           <p class="text-sm">
             You informed of this month compared to last month
           </p>
         </VCol>
 
         <VCol cols="12" sm="7" class="pt-0">
-          <VueApexCharts
+          <VueApexCharts v-if="store.state.selectedHotels != 'No Hotel'"
             :options="chartOptions"
             :series="series"
             height="190"
           />
+          <VCardText v-if="store.state.selectedHotels == 'No Hotel'">
+            <Loader style="width: 80px; height: 80px; float:right;"/>
+          </VCardText>
         </VCol>
       </VRow>
 
@@ -233,8 +241,11 @@ function formatNumber(num) {
                 {{ report.title }}
               </h6>
             </div>
-            <h4 class="text-h5 my-3 d-flex text-center ml-5">
+            <h4 class="text-h5 my-3 d-flex text-center ml-5" v-if="store.state.selectedHotels != 'No Hotel'">
               {{ formatNumber(report.amount) }}
+            </h4>
+            <h4 class="text-h5 my-3 d-flex text-center ml-5" v-if="store.state.selectedHotels == 'No Hotel'">
+              <Loader />
             </h4>
           </VCol>
           <VCol cols="12" sm="12">

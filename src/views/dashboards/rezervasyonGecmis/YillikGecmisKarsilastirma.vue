@@ -2,6 +2,7 @@
 import { store } from '@/store/index'
 import GecmisKarsilastirma from '@/views/dashboards/stats/GecmisKarsilastirma.vue'
 import { _ } from 'lodash'
+import Loader from '../functions/loader.vue'
 
 
 const graphData = computed(() => {
@@ -71,8 +72,11 @@ const graphData = computed(() => {
                 </template>
             </VCardItem>
 
-            <VCardText>
+            <VCardText v-if="store.state.selectedHotels != 'No Hotel'">
                 <GecmisKarsilastirma :data="graphData" />
+            </VCardText>
+            <VCardText v-if="store.state.selectedHotels == 'No Hotel'">
+                <Loader style="margin: auto auto; width:100px; height: 100px; padding: 15px"/>
             </VCardText>
         </VCard>
     </VCol>

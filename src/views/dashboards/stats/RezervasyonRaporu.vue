@@ -11,6 +11,7 @@ const props = defineProps({
   data: Object,
   loader: Array,
 })
+import { store } from '@/store'
 
 const vuetifyTheme = useTheme()
 const display = useDisplay()

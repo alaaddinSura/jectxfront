@@ -26,8 +26,7 @@ const handleUpdateDate = (newValue) => {
   // D_range Uzunluk sayısı verilerin oranlarında kullanılıyor
   store.commit("changeDateCount", d_range.length);
 
-  let endDate = dateRange.value.split(" to ")[1];
-  console.log(endDate);
+  let endDate = d_range.sort()[d_range.length - 1]
 
   // Yatak Dağılım
   fetchData.callYatakDagilim(d_range, hotelids);

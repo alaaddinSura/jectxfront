@@ -85,11 +85,13 @@ let tableData = computed(() => {
 
   return returnData
 })
+
 </script>
 
 <template>
   <TableWithChannelFilters
     :header="tableHeaders"
     :data="tableData"
+    :loader="store.state.channelTableLoader"
   />
 </template>

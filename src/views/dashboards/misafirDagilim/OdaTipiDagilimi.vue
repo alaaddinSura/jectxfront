@@ -2,12 +2,19 @@
 import { store } from "@/store/index"
 import Loader from "../functions/loader.vue"
 
+const isEmptyRoomData = computed(() => {
+  return monthlyCampaignState.value.every(state => !state.title)
+})
+
 const monthlyCampaignState = computed(()=>{
   let chosenHotels = store.state.selectedHotels
   let rezData = store.state.odaTipiDagilim == 0 ? JSON.parse(localStorage.getItem("odaTipiDagilim")) : store.state.odaTipiDagilim
   let statData = rezData.filter(item=> chosenHotels.includes(item.hotelId))
+  console.log("-------Stat Data------");
+  console.log(statData);
   
   let roomsName = [...new Set(statData.map(item=> item.roomType))]
+  console.log(roomsName.length)
   let gecelemeHepsi = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
   let roomData = roomsName.map(item =>({
     roomName: item,
@@ -23,49 +30,49 @@ const monthlyCampaignState = computed(()=>{
   {
     avatarColor: 'success',
     avatarIcon: 'tabler-hotel-service',
-    title: roomData[0].roomName,
-    count: roomData[0].geceleme,
-    stats: roomData[0].oran + "%",
+    title: roomData[0]?.roomName,
+    count: roomData[0]?.geceleme,
+    stats: roomData[0]?.oran + "%",
     statsColor: 'success',
   },
   {
     avatarColor: 'success',
     avatarIcon: 'tabler-hotel-service',
-    title: roomData[1].roomName,
-    count: roomData[1].geceleme,
-    stats: roomData[1].oran + "%",
+    title: roomData[1]?.roomName,
+    count: roomData[1]?.geceleme,
+    stats: roomData[1]?.oran + "%",
     statsColor: 'success',
   },
   {
     avatarColor: 'success',
     avatarIcon: 'tabler-hotel-service',
-    title: roomData[2].roomName,
-    count: roomData[2].geceleme,
-    stats: roomData[2].oran + "%",
+    title: roomData[2]?.roomName,
+    count: roomData[2]?.geceleme,
+    stats: roomData[2]?.oran + "%",
     statsColor: 'success',
   },
   {
     avatarColor: 'success',
     avatarIcon: 'tabler-hotel-service',
-    title: roomData[3].roomName,
-    count: roomData[3].geceleme,
-    stats: roomData[3].oran + "%",
+    title: roomData[3]?.roomName,
+    count: roomData[3]?.geceleme,
+    stats: roomData[3]?.oran + "%",
     statsColor: 'success',
   },
   {
     avatarColor: 'secondary',
     avatarIcon: 'tabler-hotel-service',
-    title: roomData[4].roomName,
-    count: roomData[4].geceleme,
-    stats: roomData[4].oran + "%",
+    title: roomData[4]?.roomName,
+    count: roomData[4]?.geceleme,
+    stats: roomData[4]?.oran + "%",
     statsColor: 'success',
   },
   {
     avatarColor: 'error',
     avatarIcon: 'tabler-hotel-service',
-    title: roomData[5].roomName,
-    count: roomData[5].geceleme,
-    stats: roomData[5].oran + "%",
+    title: roomData[5]?.roomName,
+    count: roomData[5]?.geceleme,
+    stats: roomData[5]?.oran + "%",
     statsColor: 'success',
   },
 ]
@@ -76,7 +83,7 @@ const monthlyCampaignState = computed(()=>{
   <VCard title="Oda Tipi Dağılımı">
     <VCardText>
       <VList class="card-list">
-        <VListItem
+        <VListItem v-if="!isEmptyRoomData"
           v-for="state in monthlyCampaignState"
           :key="state.title"
         >
@@ -102,6 +109,24 @@ const monthlyCampaignState = computed(()=>{
               <span :class="`text-${state.statsColor}`">{{ state.stats }}</span>
             </span>
             <span class="font-weight-medium text-medium-emphasis me-3" v-if="store.state.odaTipiDagilimLoader == 0">
+              <Loader />
+            </span>
+          </template>
+        </VListItem>
+        <VListItem v-else  v-for="state in monthlyCampaignState">
+          <template #prepend>
+            <VAvatar
+              :color="state.avatarColor"
+              variant="tonal"
+              size="34"
+              rounded
+            >
+              <VIcon :icon="state.avatarIcon" />
+            </VAvatar>
+          </template>
+          <Loader />
+          <template #append>
+            <span class="font-weight-medium text-medium-emphasis me-3">
               <Loader />
             </span>
           </template>

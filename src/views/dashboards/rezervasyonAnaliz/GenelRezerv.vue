@@ -14,8 +14,9 @@ const display = useDisplay()
 
 let data = computed(() => {
   let chosenHotels = store.state.selectedHotels.length == 0 ? [22966,22964] : store.state.selectedHotels
+  console.log(store.state.selectedHotels)
   //let chosenHotels = [22966]
-  let anaKanallar = ['ONL','WH','AGT','IND']
+  let anaKanallar = ['ONL','WH','AGT','IND','Ana Kanal Tanımsız']
 
   let rezData = store.state.rezervMiktar.length == 0 ? JSON.parse(localStorage.getItem('rezMiktar')) : store.state.rezervMiktar
 
@@ -47,7 +48,9 @@ let data = computed(() => {
     colors: { series1: vuetifyTheme.current.value.colors.success,
       series2: '#28c76fb3',
       series3: '#28c76f80',
-      series4: `rgba(${ hexToRgb(vuetifyTheme.current.value.colors.success) },0.2)` },
+      series4: `rgba(${ hexToRgb(vuetifyTheme.current.value.colors.success) },0.2)`,
+      series5: '#28c76f60'
+    },
   }
 })
 </script>
