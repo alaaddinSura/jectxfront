@@ -38,7 +38,6 @@ const chartConfigs = computed(() => {
   let rezData = JSON.parse(localStorage.getItem("kanalDagilimGelirler"));
   let statData = rezData.filter((item) => chosenHotels.includes(item.HOTELID));
   statData = statData.filter((item) => item.BASARILI == "success");
-  console.log(statData)
 
   let dates = [...new Set(statData.map((item) => item.DATE))].sort();
 
@@ -74,7 +73,6 @@ const chartConfigs = computed(() => {
       .map((item) => item.TOTALREVENUE)
       .reduce((f, s) => f + s, 0)
   );
-  console.log(indDATA)
   return [
     {
       title: "Online",

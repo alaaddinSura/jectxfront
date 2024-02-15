@@ -26,11 +26,8 @@ const colorVariables = themeColors => {
 }
 
 const graphData = computed(() => {
-  console.log("veriye girdi")
 
   const lineData = props.data.data
-
-  console.log(lineData)
   let line= []
 
   const nokta = Object.keys(lineData).map(key=>{

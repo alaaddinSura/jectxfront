@@ -7,8 +7,6 @@ import { store } from '@/store/index'
 const statistic = computed(()=>{
 let chosenHotels = store.state.selectedHotels
 
-// console.log('yatak dağılım')
-// console.log(store.state.yatakDagilim)
 
 let bedScatter = store.state.yatakDagilim.length == 0 ? JSON.parse(localStorage.getItem("yatakDagilim")) : store.state.yatakDagilim
 let statData = bedScatter.filter(item => chosenHotels.includes(item.hotelId))

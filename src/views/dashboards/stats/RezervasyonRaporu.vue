@@ -25,7 +25,6 @@ function formatNumber(num) {
 
 
 const series = computed(() => {
-  console.log('asdasd --> ' ,props)
   return props.data.series
 })
 

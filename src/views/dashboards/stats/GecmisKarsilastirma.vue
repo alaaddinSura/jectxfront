@@ -35,7 +35,6 @@ const graphData = computed(() => {
 })
 
 const series = computed(() =>{
-  console.log(graphData)
   return [
     ...graphData.value.data,
   ]

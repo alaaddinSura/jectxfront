@@ -31,7 +31,6 @@ let rawTableHeaders = headers.map(item => ({
 
 let tableData = computed(() => {
   let rawDataApi = store.state.rawData
-  console.log(rawDataApi)
   let data = rawDataApi.length == 0 ? JSON.parse(localStorage.getItem('rawData')) : [...rawDataApi] 
 
   data = data.map(item => ({

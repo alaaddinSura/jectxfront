@@ -2,23 +2,25 @@ import axios from "@axios";
 import * as configs from "@/views/dashboards/functions/config"
 import { store } from '@/store/index'
 import * as dates from '@/views/dashboards/functions/dates'
+import * as request from "@/views/dashboards/functions/request"
 import _ from 'lodash'
 
 
 
 export const callYatakDagilim = (dateRange, hotelids, isLocal) => {
-    store.commit("changeYatakDagilimLoader",0)
-    axios.request(configs.yatakDagilimConfig(dateRange, hotelids)).then((r) => {
-        if (isLocal) {
-            localStorage.setItem("yatakDagilim", JSON.stringify(r.data))//bedScatter
-            store.state.selectedHotels != 'No Hotel' ? store.commit("changeYatakDagilimLoader",1) : store.commit("changeYatakDagilimLoader",0)
-        }
-        else {
-            store.commit('changeYatakDagilim', r.data)
-            store.state.selectedHotels != 'No Hotel' ? store.commit("changeYatakDagilimLoader",1) : store.commit("changeYatakDagilimLoader",0)
-        }
+    request.request(isLocal,"changeYatakDagilim","changeYatakDagilimLoader",configs.yatakDagilimConfig(dateRange, hotelids),"yatakDagilim")
+    //  store.commit("changeYatakDagilimLoader",0)
+    //  axios.request(configs.yatakDagilimConfig(dateRange, hotelids)).then((r) => {
+    //      if (isLocal) {
+    //          localStorage.setItem("yatakDagilim", JSON.stringify(r.data))//bedScatter
+    //          store.state.selectedHotels != 'No Hotel' ? store.commit("changeYatakDagilimLoader",1) : store.commit("changeYatakDagilimLoader",0)
+    //      }
+    //      else {
+    //          store.commit('changeYatakDagilim', r.data)
+    //          store.state.selectedHotels != 'No Hotel' ? store.commit("changeYatakDagilimLoader",1) : store.commit("changeYatakDagilimLoader",0)
+    //      }
 
-    }).catch(d => console.log(d))
+    //  }).catch(d => console.log(d))
     }
 
 export const callGecelemeDagilim = (dateRange, hotelids, isLocal) => {
@@ -122,6 +124,8 @@ export const callHaftaDoluluk = (endDate, hotelids, isLocal) => {
             store.commit("changeHaftaDoluluk", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeHaftaDolulukLoader",1) : store.commit("changeHaftaDolulukLoader",0)
         }
+    }).catch((d)=>{
+        console.log("Hafta Doluluk error ==> ", d)
     })
 }
 
@@ -138,20 +142,23 @@ export const callSonYediAyDoluluk = (endDate, hotelids, isLocal) => {
             store.commit("changesonYediAyDoluluk", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeSonYediAyDolulukLoader", 1) : store.commit("changeSonYediAyDolulukLoader", 0)
         }
+    }).catch((d)=>{
+    ("Son Yedi Ay Doluluk ==> ", d)
     })
 }
 
 export const callUlkeDagilim = (dateRange, hotelids, isLocal) => {
-    store.commit("changeUlkeDagilimLoader",0)
-    axios.request(configs.ulkeDagilimConfig(dateRange, hotelids)).then((r) => {
-        if (isLocal) {
-            localStorage.setItem("countryDist", JSON.stringify(r.data))
-            store.state.selectedHotels != 'No Hotel' ? store.commit("changeUlkeDagilimLoader",1) : store.commit("changeUlkeDagilimLoader",0)
-        } else {
-            store.commit("changeUlkeDagilim", r.data)
-            store.state.selectedHotels != 'No Hotel' ? store.commit("changeUlkeDagilimLoader",1) : store.commit("changeUlkeDagilimLoader",0)
-        }
-    }).catch(d => console.log(d));
+    //request.request(isLocal,"changeUlkeDagilim","changeUlkeDagilimLoader",configs.ulkeDagilimConfig(dateRange, hotelids),"countryDist")
+     store.commit("changeUlkeDagilimLoader",0)
+     axios.request(configs.ulkeDagilimConfig(dateRange, hotelids)).then((r) => {
+         if (isLocal) {
+             localStorage.setItem("countryDist", JSON.stringify(r.data))
+             store.state.selectedHotels != 'No Hotel' ? store.commit("changeUlkeDagilimLoader",1) : store.commit("changeUlkeDagilimLoader",0)
+         } else {
+             store.commit("changeUlkeDagilim", r.data)
+             store.state.selectedHotels != 'No Hotel' ? store.commit("changeUlkeDagilimLoader",1) : store.commit("changeUlkeDagilimLoader",0)
+         }
+     }).catch(d => console.log(d));
 }
 
 export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
@@ -213,6 +220,8 @@ export const callRezAnaliz = (dateRange, hotelids, isLocal) => {
             store.commit("changeRezAnaliz", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeRezAnalizLoader", 1) : store.commit("changeRezAnalizLoader", 0)
         }
+    }).catch((d)=>{
+        console.log("Rez Analiz ==> ",d)
     })
 }
 
@@ -226,6 +235,8 @@ export const callIptalAnaliz = (dateRange, hotelids, isLocal) => {
             store.commit("changeIptalAnaliz", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeIptalAnalizLoader", 1) : store.commit("changeIptalAnalizLoader", 0)
         }
+    }).catch((d)=>{
+        console.log("İptal Analiz ==> ",d)
     })
 }
 
@@ -240,6 +251,8 @@ export const callIptalEdebilirAnaliz = (dateRange, hotelids, isLocal) => {
             store.commit("changeiptalEdebilirAnaliz", r.data);
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeIptalEdebilirAnalizLoader",1) : store.commit("changeIptalEdebilirAnalizLoader",0)
         }
+    }).catch((d)=>{
+        console.log("İptal Edilebilir Analiz ==> ", d)
     })
 }
 
@@ -253,6 +266,8 @@ export const callIptalEdebilirAnalizGunluk = (dateRange, hotelids, isLocal) => {
             store.commit("changeiptalEdebilirAnalizGunluk", r.data);
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeIptalEdilebilirAnalizGunlukLoader",1) : store.commit("changeIptalEdilebilirAnalizGunlukLoader", 0)
         }
+    }).catch((d)=>{
+        console.log("İptal Edilebilir Analiz Günlük ==> ",d)
     })
 }
 
@@ -293,6 +308,8 @@ export const callGecmisRezervasyonDagilim = (endDate, dayCount, hotelids, isLoca
                 store.state.selectedHotels != 'No Hotel' ? store.commit("changeGecmisRezervasyonDagilimLoader",1) : store.commit("changeGecmisRezervasyonDagilimLoader", 0)
             }
         }
+    }).catch((d)=>{
+        console.log("Geçmiş Rezervasyon Dağılım ==> ", d)
     })
 }
 
@@ -315,6 +332,8 @@ export const callDolulukGelecekRez = (startDate, hotelids, isLocal) => {
             store.commit("changeGelecekDoluluk", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeGelecekDolulukLoader", 1) : store.commit("changeGelecekDolulukLoader",0)
         }
+    }).catch((d)=>{
+        console.log("Gelecek Doluluk Rezervasyon ==> ", d)
     })
 }
 
@@ -328,6 +347,8 @@ export const callOdatipiDagilim = (dateRange, hotelids, isLocal) => {
             store.commit("changeOdaTipiDagilim", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeodaTipiDagilimLoader",1) : store.commit("changeodaTipiDagilimLoader", 0)
         }
+    }).catch((d)=>{
+        console.log("Oda Tipi Dağılım", d)
     })
 }
 
@@ -398,21 +419,20 @@ export const callChannelTable = (dateRange, hotelids, isLocal) => {
             store.commit("changeChannelTable", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeChannelTableLoader",1) : store.commit("changeChannelTableLoader", 0)
         }
+    }).catch((d)=>{
+        console.log("Channel Table ==>", d)
     })
 }
 
 export const callRawData = (dateRange, hotelids, isLocal) => {
     store.commit("changeRawDataLoader", 0)
-    console.log("Raw Data içerisine girdi")
     axios.request(configs.callRawData(dateRange, hotelids))
         .then((r) => {
             if (isLocal) {
                 localStorage.setItem("rawData", JSON.stringify(r.data))
-                console.log("Raw Data localStoragede")
                 store.state.selectedHotels != 'No Hotel' ? store.commit("changeRawDataLoader", 1) : store.commit("changeRawDataLoader", 0)
             } else {
                 store.commit("changeRawData", r.data)
-                console.log("Raw Dataya store'den girdi girdi")
                 store.state.selectedHotels != 'No Hotel' ? store.commit("changeRawDataLoader", 1) : store.commit("changeRawDataLoader", 0)
             }
         })
@@ -485,7 +505,7 @@ export const callKazancDurumuRezMiktari = (dateRange, hotelids)=>{
     axios.request(configs.rezervMiktariConfig(dateRange,hotelids)).then((r)=>{
         localStorage.setItem("kazancDurumuRezMiktar", JSON.stringify(r.data))
     }).catch(error =>{
-        console.log("Kazanç Durumu Rezervasyon Miktarı error ==> ", e)
+        console.log("Kazanç Durumu Rezervasyon Miktarı error ==> ", error)
     })
 }
 
@@ -501,7 +521,6 @@ export const callKazancDurumu7AyGrafik = (dateRange, hotelids)=>{
 
 export const callKanalDagilimGelirler = (dateRange, hotelids)=>{
     dateRange = dates.find7MonthsWithOrigin(dateRange[0])
-    console.log(dateRange)
     axios.request(configs.kanalDagilimGelirlerconfig(dateRange,hotelids)).then((r)=>{
         localStorage.setItem("kanalDagilimGelirler", JSON.stringify(r.data))
     }).catch(error =>{

@@ -36,8 +36,6 @@ const tableData = computed(()=>{
 
   if(['ONL', 'AGT', 'IND', 'WH'].includes(selectedAnaKanal.value)){
     if(selectedAltKanallar.value.length > 0){
-      console.log(selectedAnaKanal.value)
-      console.log(selectedAltKanallar.value)
 
       return data.filter(item => item['ANA KANAL'] == selectedAnaKanal.value && selectedAltKanallar.value.includes(item['ALT KANAL']))
     }else{

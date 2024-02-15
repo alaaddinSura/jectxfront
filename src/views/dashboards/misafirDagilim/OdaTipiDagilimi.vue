@@ -10,11 +10,8 @@ const monthlyCampaignState = computed(()=>{
   let chosenHotels = store.state.selectedHotels
   let rezData = store.state.odaTipiDagilim == 0 ? JSON.parse(localStorage.getItem("odaTipiDagilim")) : store.state.odaTipiDagilim
   let statData = rezData.filter(item=> chosenHotels.includes(item.hotelId))
-  console.log("-------Stat Data------");
-  console.log(statData);
   
   let roomsName = [...new Set(statData.map(item=> item.roomType))]
-  console.log(roomsName.length)
   let gecelemeHepsi = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
   let roomData = roomsName.map(item =>({
     roomName: item,

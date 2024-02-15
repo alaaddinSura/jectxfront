@@ -19,9 +19,6 @@ const salesByCountries = computed(()=>{
   let rezData = store.state.ulkeDagilim == 0 ? JSON.parse(localStorage.getItem("countryDist")) : store.state.ulkeDagilim
 
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId) && item.nationality !== 'Tanımsız')
-  console.log(statData)
-
-  
   let countries = [...new Set(statData.map(item => item.nationality))]
 
   let countries_dist = countries.map(item => ({

@@ -114,6 +114,7 @@ const toggleDatePicker = () => {
       offset-y
       :persistent="isPersistent"
       v-model="datePickerOpen"
+      :nudge-top="true"
     >
       <template #activator="{ props }">
         <IconBtn v-bind="props">
@@ -135,3 +136,7 @@ const toggleDatePicker = () => {
     </VMenu>
   </div>
 </template>
+
+<style lang="scss" scoped>
+$datepicker-title-year-top-margin: 600px;
+</style>
