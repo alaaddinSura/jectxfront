@@ -3,6 +3,7 @@ import { store } from '@/store/index'
 import GecmisKarsilastirma from '@/views/dashboards/stats/GecmisKarsilastirma.vue'
 import { _ } from 'lodash'
 import Loader from '../functions/loader.vue'
+import * as dates from '@/views/dashboards/functions/dates'
 
 
 const graphData = computed(() => {
@@ -11,15 +12,18 @@ const graphData = computed(() => {
 
     let desiredData = JSON.parse(localStorage.getItem('rezervasyonGecmisAylik'))
 
-    let dates = desiredData.cats
+    let dateLabels = desiredData.cats
 
     let currentData = desiredData.data.filter(item => item.name == 'current')[0].data
     currentData = currentData.filter(item => chosenHotels.includes(item.hotelId))
-    currentData = Object.values(_.mapValues(_.groupBy(currentData, 'DATE'), items => _.sumBy(items, 'count')))
+    currentData = dateLabels.map(item => currentData.filter(j => j.DATE == item).map(j => Number(j.count)).reduce((f,s) => f+s, 0))
+   
+
+    const pastYearRange = dateLabels.map(item => dates.subtractYearFromDate(item))
 
     let lastData = desiredData.data.filter(item => item.name == 'previous')[0].data
     lastData = lastData.filter(item => chosenHotels.includes(item.hotelId))
-    lastData = Object.values(_.mapValues(_.groupBy(lastData, 'DATE'), items => _.sumBy(items, 'count')))
+    lastData = pastYearRange.map(item => lastData.filter(j => j.DATE == item).map(j => Number(j.count)).reduce((f,s) => f+s, 0))
 
     let percentage = ((currentData.reduce((f, s) => f + s, 0) - lastData.reduce((f, s) => f + s, 0)) / lastData.reduce((f, s) => f + s, 0) * 100)
     let color = percentage > 0 ? 'success' : '#F53107'
@@ -36,7 +40,7 @@ const graphData = computed(() => {
                 data: lastData
             }
         ],
-        cats: dates,
+        cats: dateLabels,
         currentData,
         lastData,
         percentage,

@@ -362,9 +362,8 @@ export const callRezervasyonGecmisGunluk = (hotelids, isLocal) => {
 
 export const callRezervasyonGecmisAylik = (hotelids, isLocal) => {
     let dateRange = dates.generatePreviousMonths(dates.findCurrentMonth(), 7)
-    dateRange.forEach(item => {
-        dateRange.push(dates.subtractYearFromDate(item))
-    })
+    const pastYearRange = dateRange.map(item => dates.subtractYearFromDate(item));
+    dateRange = dateRange.concat(pastYearRange);
     axios.request(configs.callRezervasyonGecmisAylik(dateRange, hotelids))
         .then(r => {
             let currentDates = dateRange.sort().slice(7, 14)
