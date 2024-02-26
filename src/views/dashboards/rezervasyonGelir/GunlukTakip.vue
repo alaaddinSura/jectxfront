@@ -79,27 +79,27 @@ const chartOptions = computed(() => {
 })
 
 const supportTicket = computed(() => {
-
   let data = JSON.parse(localStorage.getItem('gunlukTakip'))
-
+  let chosenHotels = store.state.selectedHotels.length == 0 ? [22966, 22964] : store.state.selectedHotels
+  data = data.filter(item => chosenHotels.includes(item.hotelId))
   return [
     {
       avatarColor: 'primary',
       avatarIcon: 'tabler-ticket',
       title: 'ADR',
-      subtitle: data.adr.toFixed(2),
+      subtitle: data.map(item => item.adr).reduce((f,s) => f+s, 0).toFixed(2),
     },
     {
       avatarColor: 'info',
       avatarIcon: 'tabler-circle-check',
       title: 'GELİR',
-      subtitle: data.gelir.toFixed(2),
+      subtitle: data.map(item => item.gelir).reduce((f, s) => f + s, 0).toFixed(2),
     },
     {
       avatarColor: 'error',
       avatarIcon: 'tabler-circle-check',
       title: 'KAYIP',
-      subtitle: data.kayip,
+      subtitle: data.map(item => item.kayip).reduce((f, s) => f + s, 0).toFixed(2),
     },
   ]
 })

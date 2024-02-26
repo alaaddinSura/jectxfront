@@ -19,7 +19,7 @@ const series = computed(() => {
   })
 
   let statData = rezData.filter((item) => chosenHotels.includes(item.HOTELID));
-  let dates = [...new Set(statData.map(item => item.DATE))]
+  let dates = [...new Set(statData.map(item => item.DATE))].sort()
   let data = dates.map(hotel => statData
   .filter(item => item.DATE == hotel)
   .map(item => item.TOTALREVENUE)
@@ -35,6 +35,8 @@ const series = computed(() => {
 const chartOptions = computed(() => {
   const currentTheme = vuetifyTheme.current.value.colors;
   const variableTheme = vuetifyTheme.current.value.variables;
+
+  let rezData = JSON.parse(localStorage.getItem("kazancDurumu7AyGrafik"));
 
   return {
     chart: {
@@ -71,10 +73,9 @@ const chartOptions = computed(() => {
       `rgba(${hexToRgb(currentTheme.primary)},${
         variableTheme["pressed-opacity"]
       })`,
-      `rgba(${hexToRgb(currentTheme.primary)},${
-        variableTheme["pressed-opacity"]
+      `rgba(${hexToRgb(currentTheme.primary)},1`,
+      `rgba(${hexToRgb(currentTheme.primary)}, ${variableTheme["pressed-opacity"]
       })`,
-      `rgba(${hexToRgb(currentTheme.primary)}, 1)`,
       `rgba(${hexToRgb(currentTheme.primary)},${
         variableTheme["pressed-opacity"]
       })`,
@@ -85,15 +86,7 @@ const chartOptions = computed(() => {
     dataLabels: { enabled: false },
     legend: { show: false },
     xaxis: {
-      categories: [
-        "2023-10",
-        "2023-11",
-        "2023-12",
-        "2024-01",
-        "2024-02",
-        "2024-03",
-        "2024-05",
-      ],
+      categories: [...new Set(rezData.map(item => item.DATE))].sort(),
       axisBorder: { show: false },
       axisTicks: { show: false },
       labels: {
@@ -119,6 +112,8 @@ const chartOptions = computed(() => {
 
 const earningsReports = computed(() => {
   let data = JSON.parse(localStorage.getItem("aylikTakip"));
+  let chosenHotels = store.state.selectedHotels.length == 0 ? [22966, 22964] : store.state.selectedHotels
+  data = data.filter(item => chosenHotels.includes(item.hotelId))
 
   return [
     {
@@ -132,14 +127,14 @@ const earningsReports = computed(() => {
       color: "info",
       icon: "tabler-currency-euro",
       title: "Kazanç",
-      amount: data.gelir.toFixed(2),
+      amount: data.map(item => item.gelir).reduce((f,s) => f+s, 0).toFixed(2),
       progress: "25",
     },
     {
       color: "error",
       icon: "tabler-currency-euro-off",
       title: "Kayıp",
-      amount: data.kayip.toFixed(2),
+      amount: data.map(item => item.kayip).reduce((f, s) => f + s, 0).toFixed(2),
       progress: "65",
     },
   ];

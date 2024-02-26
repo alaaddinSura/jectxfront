@@ -6,9 +6,10 @@ const statistics = computed(()=>{
   let chosenHotels = store.state.selectedHotels
 
   let rezData = store.state.iptalAnaliz == 0 ? JSON.parse(localStorage.getItem("iptalAnaliz")) : store.state.iptalAnaliz
-  let statData = rezData.filter(item=> chosenHotels.includes(item.HOTELID))
-  let rezAdet = [...new Set(statData.map(item => item.RESID))]
-  let toplam = statData.map(item => item.DAILYRATE != 'nan' ? Number(item.DAILYRATE): 0).reduce((f,s)=>f+s,0).toFixed(1)
+  let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
+  let rezAdet = [...new Set(statData.filter(item => item.NIGHT != 0).map(item => item.RESID))]
+  let dolulukAdet = statData.map(item => item.NIGHT).reduce((f, s) => f + s, 0)
+  let toplam = statData.map(item => item.DAILYRATE != 'nan' ? Number(item.DAILYRATE) : 0).reduce((f, s) => f + s, 0).toFixed(1)
   
   return [
   {
@@ -19,13 +20,13 @@ const statistics = computed(()=>{
   },
   {
     title: 'Geceleme',
-    stats: statData.length,
+    stats: dolulukAdet,
     icon: 'tabler-moon',
     color: 'error',
   },
   {
     title: 'Oran',
-    stats: Number(statData.length/rezAdet.length).toFixed(2),
+    stats: Number(dolulukAdet/rezAdet.length).toFixed(2),
     icon: 'tabler-divide',
     color: 'error',
   },

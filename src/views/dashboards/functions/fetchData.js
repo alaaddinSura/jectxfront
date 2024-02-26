@@ -211,6 +211,7 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
 }
 
 export const callRezAnaliz = (dateRange, hotelids, isLocal) => {
+    
     store.commit("changeRezAnalizLoader", 0)
     axios.request(configs.rezAnalizConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
@@ -219,6 +220,7 @@ export const callRezAnaliz = (dateRange, hotelids, isLocal) => {
         }else {
             store.commit("changeRezAnaliz", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeRezAnalizLoader", 1) : store.commit("changeRezAnalizLoader", 0)
+            console.log(r.data.filter(item => item.HOTELID == 22966).map(item => item.NIGHT).reduce((f,s) => f+s, 0))
         }
     }).catch((d)=>{
         console.log("Rez Analiz ==> ",d)
@@ -460,18 +462,24 @@ export const callKanalDagilimGelir = (dateRange, hotelids, isLocal) => {
 export const callGunlukTakip = (dateRange, hotelids, isLocal) => {
     axios.request(configs.callKazancTakip(dateRange, hotelids))
         .then((r) => {
-            let data = r.data
-            let geceleme = data.map(item => item.RESID).length
-            let gelir = data.filter(item => item.BASARILI == 'success')
-                .map(item => item.AVERAGENIGHTPRICE)
-                .reduce((f, s) => f + s, 0)
-            let kayip = data.filter(item => item.BASARILI != 'success')
-                .map(item => item.AVERAGENIGHTPRICE)
-                .reduce((f, s) => f + s, 0)
-            let adr = gelir / geceleme
-            localStorage.setItem('gunlukTakip', JSON.stringify({
-                gelir, kayip, adr
-            }))
+            let hotelIds = [22966, 22964]
+            let resultData = []
+            hotelIds.forEach(hotelId => {
+                let data = r.data.filter(item => item.HOTELID == hotelId)
+                let geceleme = data.map(item => item.RESID).length
+                let gelir = data.filter(item => item.BASARILI == 'success')
+                    .map(item => item.AVERAGENIGHTPRICE)
+                    .reduce((f, s) => f + s, 0)
+                let kayip = data.filter(item => item.BASARILI != 'success')
+                    .map(item => item.AVERAGENIGHTPRICE)
+                    .reduce((f, s) => f + s, 0)
+                let adr = gelir / geceleme
+                resultData.push({
+                    gelir, kayip, adr, hotelId
+                })
+            })
+            
+            localStorage.setItem('gunlukTakip', JSON.stringify(resultData))
         })
         .catch(e => {
             console.log('error in callGunlukTakip --> ', e)
@@ -482,18 +490,23 @@ export const callAylikTakip = (dateRange, hotelids, isLocal) => {
     dateRange = dates.findBetweenDates(dateRange[0].split('-')[0] + '-' + dateRange[0].split('-')[1] + '-01', dateRange[0]) 
     axios.request(configs.callKazancTakip(dateRange, hotelids))
         .then((r) => {
-            let data = r.data
-            let geceleme = data.map(item => item.RESID).length
-            let gelir = data.filter(item => item.BASARILI == 'success')
-                .map(item => item.AVERAGENIGHTPRICE)
-                .reduce((f, s) => f + s, 0)
-            let kayip = data.filter(item => item.BASARILI != 'success')
-                .map(item => item.AVERAGENIGHTPRICE)
-                .reduce((f, s) => f + s, 0)
-            let adr = gelir / geceleme
-            localStorage.setItem('aylikTakip', JSON.stringify({
-                gelir, kayip, adr
-            }))
+            let hotelIds = [22966, 22964]
+            let resultData = []
+            hotelIds.forEach(hotelId => {
+                let data = r.data.filter(item => item.HOTELID == hotelId)
+                let geceleme = data.map(item => item.RESID).length
+                let gelir = data.filter(item => item.BASARILI == 'success')
+                    .map(item => item.AVERAGENIGHTPRICE)
+                    .reduce((f, s) => f + s, 0)
+                let kayip = data.filter(item => item.BASARILI != 'success')
+                    .map(item => item.AVERAGENIGHTPRICE)
+                    .reduce((f, s) => f + s, 0)
+                let adr = gelir / geceleme
+                resultData.push({
+                    gelir, kayip, adr, hotelId
+                })
+            }) 
+            localStorage.setItem('aylikTakip', JSON.stringify(resultData))
         })
         .catch(e => {
             console.log('error in callGunlukTakip --> ', e)
