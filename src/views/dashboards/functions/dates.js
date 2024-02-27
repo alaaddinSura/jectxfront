@@ -73,16 +73,21 @@ function formatDate(date){
   return `${year}-${month}-${day}`
 }
 
-export function getLastDatesFromDate(startDate, dayCount){
-  let currentDate = new Date(startDate)
-  let lastDates = []
+export const compareDates = (a, b) => {
+  return new Date(a.DATE) - new Date(b.DATE);
+  };
 
-  for(let i = 0; i < dayCount; i++){
+export function getLastDatesFromDate(startDate, dayCount){
+  let currentDate = new Date(startDate);
+  currentDate.setDate(currentDate.getDate() - 1); // Başlangıç tarihini bir önceki güne ayarlayın
+  let lastDates = [];
+
+  for (let i = 0; i < dayCount; i++) {
     lastDates.unshift(formatDate(currentDate)); // Biçimlendirilmiş tarihleri dizinin başına ekleyin
     currentDate.setDate(currentDate.getDate() - 1); // Mevcut tarihi bir önceki güne ayarlayın
   }
 
-  return lastDates
+  return lastDates;
 }
 
 export function getNextDatesFromDate(startDate, dayCount){

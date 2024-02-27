@@ -8,19 +8,18 @@ import _ from 'lodash'
 
 
 export const callYatakDagilim = (dateRange, hotelids, isLocal) => {
-    request.request(isLocal,"changeYatakDagilim","changeYatakDagilimLoader",configs.yatakDagilimConfig(dateRange, hotelids),"yatakDagilim")
-    //  store.commit("changeYatakDagilimLoader",0)
-    //  axios.request(configs.yatakDagilimConfig(dateRange, hotelids)).then((r) => {
-    //      if (isLocal) {
-    //          localStorage.setItem("yatakDagilim", JSON.stringify(r.data))//bedScatter
-    //          store.state.selectedHotels != 'No Hotel' ? store.commit("changeYatakDagilimLoader",1) : store.commit("changeYatakDagilimLoader",0)
-    //      }
-    //      else {
-    //          store.commit('changeYatakDagilim', r.data)
-    //          store.state.selectedHotels != 'No Hotel' ? store.commit("changeYatakDagilimLoader",1) : store.commit("changeYatakDagilimLoader",0)
-    //      }
+      store.commit("changeYatakDagilimLoader",0)
+      axios.request(configs.yatakDagilimConfig(dateRange, hotelids)).then((r) => {
+          if (isLocal) {
+              localStorage.setItem("yatakDagilim", JSON.stringify(r.data))//bedScatter
+              store.state.selectedHotels != 'No Hotel' ? store.commit("changeYatakDagilimLoader",1) : store.commit("changeYatakDagilimLoader",0)
+          }
+          else {
+              store.commit('changeYatakDagilim', r.data)
+              store.state.selectedHotels != 'No Hotel' ? store.commit("changeYatakDagilimLoader",1) : store.commit("changeYatakDagilimLoader",0)
+          }
 
-    //  }).catch(d => console.log(d))
+      }).catch(d => console.log(d))
     }
 
 export const callGecelemeDagilim = (dateRange, hotelids, isLocal) => {
@@ -148,7 +147,6 @@ export const callSonYediAyDoluluk = (endDate, hotelids, isLocal) => {
 }
 
 export const callUlkeDagilim = (dateRange, hotelids, isLocal) => {
-    //request.request(isLocal,"changeUlkeDagilim","changeUlkeDagilimLoader",configs.ulkeDagilimConfig(dateRange, hotelids),"countryDist")
      store.commit("changeUlkeDagilimLoader",0)
      axios.request(configs.ulkeDagilimConfig(dateRange, hotelids)).then((r) => {
          if (isLocal) {

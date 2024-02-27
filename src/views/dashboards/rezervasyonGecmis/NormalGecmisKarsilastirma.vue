@@ -3,22 +3,26 @@ import { store } from '@/store/index'
 import GecmisKarsilastirma from '@/views/dashboards/stats/GecmisKarsilastirma.vue'
 import { _ } from 'lodash'
 import Loader from '../functions/loader.vue'
+import * as dates from '@/views/dashboards/functions/dates'
 
 const graphData = computed(() => {
+    
     
     let chosenHotels = store.state.selectedHotels
 
     let desiredData = JSON.parse(localStorage.getItem('rezervasyonGecmisGunluk'))
-
-    let dates = desiredData.cats
+    let dateSelect = desiredData.cats
 
     let currentData = desiredData.data.filter(item => item.name == 'current')[0].data
     currentData = currentData.filter(item => chosenHotels.includes(item.hotelId))
+    currentData.sort(dates.compareDates);
     currentData = Object.values(_.mapValues(_.groupBy(currentData, 'DATE'), items => _.sumBy(items, 'count')))
-        
     let lastData = desiredData.data.filter(item => item.name == 'previous')[0].data
     lastData = lastData.filter(item => chosenHotels.includes(item.hotelId))
-    lastData = Object.values(_.mapValues(_.groupBy(lastData, 'DATE'), items => _.sumBy(items, 'count')))    
+    lastData.sort(dates.compareDates);
+    lastData = Object.values(_.mapValues(_.groupBy(lastData, 'DATE'), items => _.sumBy(items, 'count')))
+    console.log("First lastData ==> ", lastData)
+    
 
 
     let percentage = ((currentData.reduce((f, s) => f + s, 0) - lastData.reduce((f, s) => f + s, 0)) / lastData.reduce((f, s) => f + s, 0) * 100)
@@ -36,7 +40,7 @@ const graphData = computed(() => {
                 data: lastData
             }
         ],
-        cats: dates,
+        cats: dateSelect,
         currentData,
         lastData,
         percentage,
