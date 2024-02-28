@@ -359,3 +359,13 @@ const result = monthYears.map(monthYear => {
 
 return result.flat();
 }
+
+export function oneDayIncrease(date) {
+  // Gelen tarihi alır ve bir gün ekler
+  var incomingDate = new Date(date);
+  incomingDate.setDate(incomingDate.getDate() + 1);
+
+  // Yeni tarihi string formatına dönüştürerek döndür
+  var yeniTarih = incomingDate.toISOString().slice(0,10);
+  return yeniTarih;
+}

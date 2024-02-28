@@ -162,15 +162,15 @@ export const callUlkeDagilim = (dateRange, hotelids, isLocal) => {
 export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
     let dateRange
     let date1 = new Date(endDate)
-    let yesterday = new Date(dates.findYesterdayDate())
+    console.log("end date ==> ", endDate)
     
-    if(date1 > yesterday){
-        endDate = dates.findYesterdayDate()
-    }
     
     store.commit("changeGecmisRezervasyonlarLoader", 0)
     if (dayCount <= 7) {
+        endDate = dates.oneDayIncrease(endDate)
+        console.log("7 yukarı endDate ==> ", endDate)
         dateRange = dates.getLastDatesFromDate(endDate, 7)
+        console.log("7 içerisindeki dateRange ==> ",dateRange)
     }
     else if (dayCount > 7 && dayCount <= 49) {
         dateRange = dates.getLastDatesFromDate(endDate, 49)
