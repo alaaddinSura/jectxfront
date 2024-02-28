@@ -2,9 +2,21 @@
 import { store } from "@/store/index";
 import Bar from "../stats/Bar.vue"
 
+
 const statistics = computed(()=>{
   let chosenHotels = store.state.selectedHotels
+  const today = new Date();
+
   let rezData = store.state.rezAnaliz == 0 ? JSON.parse(localStorage.getItem("rezAnaliz")) : store.state.rezAnaliz
+  
+  // bugün ve daha büyük tarihli veriler nigti 0 alınıyor çünkü folyoda yoktur. Average tutturmak amacı ile
+  
+  let previous = rezData.filter(item => (new Date(item.DATE)) <= today)
+  let current = rezData.filter(item => (new Date(item.DATE)) > today && item.NIGHT != 0)
+
+  rezData = previous.concat(current)
+  
+
   let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
   let rezAdet = [...new Set(statData.filter(item => item.NIGHT != 0).map(item => item.RESID))]
   let dolulukAdet = statData.map(item => item.NIGHT).reduce((f, s) => f + s, 0)

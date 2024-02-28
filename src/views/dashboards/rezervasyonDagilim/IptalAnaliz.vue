@@ -6,7 +6,7 @@ const statistics = computed(()=>{
   let chosenHotels = store.state.selectedHotels
 
   let rezData = store.state.iptalAnaliz == 0 ? JSON.parse(localStorage.getItem("iptalAnaliz")) : store.state.iptalAnaliz
-  let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
+  let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID) && item.NIGHT != 0)
   let rezAdet = [...new Set(statData.filter(item => item.NIGHT != 0).map(item => item.RESID))]
   let dolulukAdet = statData.map(item => item.NIGHT).reduce((f, s) => f + s, 0)
   let toplam = statData.map(item => item.DAILYRATE != 'nan' ? Number(item.DAILYRATE) : 0).reduce((f, s) => f + s, 0).toFixed(1)

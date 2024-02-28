@@ -468,7 +468,7 @@ export const callGunlukTakip = (dateRange, hotelids, isLocal) => {
                 let gelir = data.filter(item => item.BASARILI == 'success')
                     .map(item => item.AVERAGENIGHTPRICE)
                     .reduce((f, s) => f + s, 0)
-                let kayip = data.filter(item => item.BASARILI != 'success')
+                let kayip = data.filter(item => item.BASARILI != 'success' && item.NIGHT != 0)
                     .map(item => item.AVERAGENIGHTPRICE)
                     .reduce((f, s) => f + s, 0)
                 let adr = gelir / geceleme
@@ -496,7 +496,7 @@ export const callAylikTakip = (dateRange, hotelids, isLocal) => {
                 let gelir = data.filter(item => item.BASARILI == 'success')
                     .map(item => item.AVERAGENIGHTPRICE)
                     .reduce((f, s) => f + s, 0)
-                let kayip = data.filter(item => item.BASARILI != 'success')
+                let kayip = data.filter(item => item.BASARILI != 'success' && item.NIGHT != 0)
                     .map(item => item.AVERAGENIGHTPRICE)
                     .reduce((f, s) => f + s, 0)
                 let adr = gelir / geceleme
