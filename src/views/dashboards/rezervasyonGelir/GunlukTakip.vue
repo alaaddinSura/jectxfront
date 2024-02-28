@@ -87,7 +87,7 @@ const supportTicket = computed(() => {
       avatarColor: 'primary',
       avatarIcon: 'tabler-ticket',
       title: 'ADR',
-      subtitle: data.map(item => item.adr).reduce((f,s) => f+s, 0).toFixed(2),
+      subtitle: Number(data.map(item => item.gelir).reduce((f,s) => f+s, 0) / data.map(item => item.geceleme).reduce((f, s) => f + s, 0)).toFixed(2),
     },
     {
       avatarColor: 'info',

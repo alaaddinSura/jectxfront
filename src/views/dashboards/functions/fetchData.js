@@ -464,7 +464,7 @@ export const callGunlukTakip = (dateRange, hotelids, isLocal) => {
             let resultData = []
             hotelIds.forEach(hotelId => {
                 let data = r.data.filter(item => item.HOTELID == hotelId)
-                let geceleme = data.map(item => item.RESID).length
+                let geceleme = data.filter(item => item.BASARILI=='success').map(item => item.NIGHT).reduce((f,s) => f+s, 0)
                 let gelir = data.filter(item => item.BASARILI == 'success')
                     .map(item => item.AVERAGENIGHTPRICE)
                     .reduce((f, s) => f + s, 0)
@@ -473,7 +473,7 @@ export const callGunlukTakip = (dateRange, hotelids, isLocal) => {
                     .reduce((f, s) => f + s, 0)
                 let adr = gelir / geceleme
                 resultData.push({
-                    gelir, kayip, adr, hotelId
+                    gelir, kayip, adr, hotelId, geceleme
                 })
             })
             
