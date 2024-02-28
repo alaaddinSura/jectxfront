@@ -10,6 +10,7 @@ const datePickerOpen = ref(false);
 let dateRange = ref(
   dates.findYesterdayDate() + " to " + dates.findYesterdayDate()
 );
+
 let isPersistent = ref(true);
 
 const handleUpdateDate = (newValue) => {
@@ -22,6 +23,13 @@ const handleUpdateDate = (newValue) => {
         dateRange.value.split(" to ")[1]
       )
     : [newValue];
+console.log("dateRange ==>" , dateRange.value)
+
+    console.log(d_range)
+    console.log("newValue ==> ", newValue)
+    console.log("newValue to var mı yok mu ==> ", newValue.includes("to") ? true : false)
+
+    // let cont = d_range != 
 
   // D_range Uzunluk sayısı verilerin oranlarında kullanılıyor
   store.commit("changeDateCount", d_range.length);
@@ -87,6 +95,18 @@ const handleUpdateDate = (newValue) => {
 
   //raw data
   fetchData.callRawData(d_range, hotelids);
+
+  // if (!newValue.includes('to')) {
+  //   // dateRange'i iki kez aynı tarih olarak güncelle
+  //   dateRange.value = newValue + " to " + newValue;
+  //   newValue += " to " + newValue;
+  //   // d_range'i de güncelle, bu durumda bir dizi içinde aynı tarih olacak
+  //   d_range = [newValue, newValue];
+  //   console.log("Tek Seçili ==> ", d_range)
+  //   console.log("Tek Seçili newValue ==> ", newValue  )
+  // }
+  // console.log(d_range)
+  // console.log("Tek Seçili if dışı newValue ==> ", newValue  )
 };
 
 watch(dateRange, (newValue, oldValue) => {
