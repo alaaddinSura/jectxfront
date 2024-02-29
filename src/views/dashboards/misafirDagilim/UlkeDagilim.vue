@@ -12,7 +12,11 @@ function formatNumber(num) {
   return num.toString();
 }
 
+
+
+
 const salesByCountries = computed(()=>{
+  
   let chosenHotels = store.state.selectedHotels
 
   let nationData = store.state.guestNations
@@ -29,9 +33,8 @@ const salesByCountries = computed(()=>{
 
   let country_dist_paroti = []
   let index = 0
-
   country_dist_paroti = countries_dist.sort((a, b) => b.adetOran - a.adetOran).map(item => ({
-    flag: "flag-" + countryName.findCountry2Letter(item.country) + "-1x1",
+    flag: item.country === "USA" ?  "flagpack-us" :"flag-" + countryName.findCountry2Letter(item.country) + "-1x1",
     rezAdet: item.adet,
     ulke: item.country,
     adr: Number((item.gelir/item.geceleme).toFixed(1)),
