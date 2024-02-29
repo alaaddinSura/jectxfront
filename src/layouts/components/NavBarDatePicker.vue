@@ -23,11 +23,8 @@ const handleUpdateDate = (newValue) => {
         dateRange.value.split(" to ")[1]
       )
     : [newValue];
-console.log("dateRange ==>" , dateRange.value)
-
-    console.log(d_range)
-    console.log("newValue ==> ", newValue)
-    console.log("newValue to var mı yok mu ==> ", newValue.includes("to") ? true : false)
+  
+  console.log('handleUpdateDate --> ' ,d_range)
 
     // let cont = d_range != 
 
@@ -117,6 +114,7 @@ watch(dateRange, (newValue, oldValue) => {
         dateRange.value.split(" to ")[1]
       )
     : [newValue];
+  // console.log('watch --> ' ,dateRange)
 });
 
 const toggleDatePicker = () => {

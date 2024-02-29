@@ -52,7 +52,6 @@ const disabledDatePicker = () =>{
         <NavbarHotelTypes />
         <!-- date picker -->
         <NavBarDatePicker v-if="!disabledDatePicker()"/>
-
         <VSpacer />
 
         <NavbarThemeSwitcher class="me-1" />

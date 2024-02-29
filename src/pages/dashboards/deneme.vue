@@ -54,8 +54,6 @@ let items = [
 </script>
 
 <template>
-    <VDataTable
-     :headers="headers"
-     :items="items"
-    />
+    <VIcon :icon="'flag-ad-1x1'"/>
+    <VIcon :icon="'flag-us-4x3'"/>
 </template>

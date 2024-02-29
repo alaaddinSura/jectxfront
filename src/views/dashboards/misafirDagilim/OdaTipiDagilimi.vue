@@ -10,7 +10,6 @@ const monthlyCampaignState = computed(()=>{
   let chosenHotels = store.state.selectedHotels
   let rezData = store.state.odaTipiDagilim == 0 ? JSON.parse(localStorage.getItem("odaTipiDagilim")) : store.state.odaTipiDagilim
   let statData = rezData.filter(item=> chosenHotels.includes(item.hotelId))
-  
   let roomsName = [...new Set(statData.map(item=> item.roomType))]
   let gecelemeHepsi = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
   let roomData = roomsName.map(item =>({
@@ -20,59 +19,20 @@ const monthlyCampaignState = computed(()=>{
   }))
 
   roomData = roomData.sort((a, b) => b.geceleme - a.geceleme)
+  let maxRoomCount = roomData.length >= 6 ? 6 : roomData.length
+  roomData = roomData.slice(0, maxRoomCount)
+  roomData = roomData.map(item => ({
+    
+      avatarColor: 'success',
+      avatarIcon: 'tabler-hotel-service',
+      title: item?.roomName,
+      count: item?.geceleme,
+      stats: item?.oran + "%",
+      statsColor: 'success',
+    
+  }))
 
-  roomData = roomData.slice(0, 6)
-
-  return [
-  {
-    avatarColor: 'success',
-    avatarIcon: 'tabler-hotel-service',
-    title: roomData[0]?.roomName,
-    count: roomData[0]?.geceleme,
-    stats: roomData[0]?.oran + "%",
-    statsColor: 'success',
-  },
-  {
-    avatarColor: 'success',
-    avatarIcon: 'tabler-hotel-service',
-    title: roomData[1]?.roomName,
-    count: roomData[1]?.geceleme,
-    stats: roomData[1]?.oran + "%",
-    statsColor: 'success',
-  },
-  {
-    avatarColor: 'success',
-    avatarIcon: 'tabler-hotel-service',
-    title: roomData[2]?.roomName,
-    count: roomData[2]?.geceleme,
-    stats: roomData[2]?.oran + "%",
-    statsColor: 'success',
-  },
-  {
-    avatarColor: 'success',
-    avatarIcon: 'tabler-hotel-service',
-    title: roomData[3]?.roomName,
-    count: roomData[3]?.geceleme,
-    stats: roomData[3]?.oran + "%",
-    statsColor: 'success',
-  },
-  {
-    avatarColor: 'secondary',
-    avatarIcon: 'tabler-hotel-service',
-    title: roomData[4]?.roomName,
-    count: roomData[4]?.geceleme,
-    stats: roomData[4]?.oran + "%",
-    statsColor: 'success',
-  },
-  {
-    avatarColor: 'error',
-    avatarIcon: 'tabler-hotel-service',
-    title: roomData[5]?.roomName,
-    count: roomData[5]?.geceleme,
-    stats: roomData[5]?.oran + "%",
-    statsColor: 'success',
-  },
-]
+  return roomData
 })
 </script>
 
