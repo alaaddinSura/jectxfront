@@ -23,8 +23,6 @@ const handleUpdateDate = (newValue) => {
         dateRange.value.split(" to ")[1]
       )
     : [newValue];
-  
-  console.log('handleUpdateDate --> ' ,d_range)
 
     // let cont = d_range != 
 

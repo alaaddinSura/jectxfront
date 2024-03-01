@@ -6,7 +6,6 @@ import * as request from "@/views/dashboards/functions/request"
 import _ from 'lodash'
 
 
-
 export const callYatakDagilim = (dateRange, hotelids, isLocal) => {
       store.commit("changeYatakDagilimLoader",0)
       axios.request(configs.yatakDagilimConfig(dateRange, hotelids)).then((r) => {
@@ -54,10 +53,11 @@ export const callKanalRezDagilim = (dateRange, hotelids, isLocal) => {
     store.commit("changeKanalRezDagilimLoader", 0)
     axios.request(configs.kanallaraRezDagilimConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
-            localStorage.setItem("kanalRezDagilim", JSON.stringify(r.data))//canalRez
+            localStorage.setItem("kanalRezDagilim", JSON.stringify(r.data))
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeKanalRezDagilimLoader",1) : store.commit("changeKanalRezDagilimLoader", 0)
         }
         else {
+            console.log("fetchData KanalRezDağılım ==> ",r.data)
             store.commit("changeKanalRezDagilim", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeKanalRezDagilimLoader",1) : store.commit("changeKanalRezDagilimLoader", 0)
         }
@@ -162,15 +162,12 @@ export const callUlkeDagilim = (dateRange, hotelids, isLocal) => {
 export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
     let dateRange
     let date1 = new Date(endDate)
-    console.log("end date ==> ", endDate)
     
     
     store.commit("changeGecmisRezervasyonlarLoader", 0)
     if (dayCount <= 7) {
         endDate = dates.oneDayIncrease(endDate)
-        console.log("7 yukarı endDate ==> ", endDate)
         dateRange = dates.getLastDatesFromDate(endDate, 7)
-        console.log("7 içerisindeki dateRange ==> ",dateRange)
     }
     else if (dayCount > 7 && dayCount <= 49) {
         dateRange = dates.getLastDatesFromDate(endDate, 49)
@@ -218,7 +215,6 @@ export const callRezAnaliz = (dateRange, hotelids, isLocal) => {
         }else {
             store.commit("changeRezAnaliz", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeRezAnalizLoader", 1) : store.commit("changeRezAnalizLoader", 0)
-            console.log(r.data.filter(item => item.HOTELID == 22966).map(item => item.NIGHT).reduce((f,s) => f+s, 0))
         }
     }).catch((d)=>{
         console.log("Rez Analiz ==> ",d)

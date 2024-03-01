@@ -11,18 +11,26 @@ const graphData = computed(() => {
     let chosenHotels = store.state.selectedHotels
 
     let desiredData = JSON.parse(localStorage.getItem('rezervasyonGecmisGunluk'))
+    console.log("desiredData ==> ",desiredData)
     let dateSelect = desiredData.cats
 
     let currentData = desiredData.data.filter(item => item.name == 'current')[0].data
     currentData = currentData.filter(item => chosenHotels.includes(item.hotelId))
+    console.log("current Data ==> ", currentData)
+    let revperrez = currentData.map(item => item.REVPERREZ)
+    console.log(console.log("REVPERREZ ==> ", revperrez))
     currentData.sort(dates.compareDates);
+
+    let currentRevPerrez = Object.values(_.mapValues(_.groupBy(currentData, 'DATE'), items => _.sumBy(items, 'REVPERREZ')))
+
     currentData = Object.values(_.mapValues(_.groupBy(currentData, 'DATE'), items => _.sumBy(items, 'count')))
     let lastData = desiredData.data.filter(item => item.name == 'previous')[0].data
     lastData = lastData.filter(item => chosenHotels.includes(item.hotelId))
     lastData.sort(dates.compareDates);
+    let lastRevPerrez = Object.values(_.mapValues(_.groupBy(lastData, 'DATE'), items => _.sumBy(items, 'REVPERREZ')))
     lastData = Object.values(_.mapValues(_.groupBy(lastData, 'DATE'), items => _.sumBy(items, 'count')))
-    console.log("First lastData ==> ", lastData)
-    
+    console.log("lastData Son Hali ==> ",lastData)
+    console.log("current Data Son Hali ==> ",currentData)
 
 
     let percentage = ((currentData.reduce((f, s) => f + s, 0) - lastData.reduce((f, s) => f + s, 0)) / lastData.reduce((f, s) => f + s, 0) * 100)
@@ -33,11 +41,11 @@ const graphData = computed(() => {
         yaxisData: [
             {
                 name: "current",
-                data: currentData
+                data: currentData,
             },
             {
                 name: "previous",
-                data: lastData
+                data: lastData,
             }
         ],
         cats: dateSelect,
@@ -45,7 +53,9 @@ const graphData = computed(() => {
         lastData,
         percentage,
         color,
-        icon
+        icon,
+        currentRevPerrez,
+        lastRevPerrez
     }
 })
 </script>

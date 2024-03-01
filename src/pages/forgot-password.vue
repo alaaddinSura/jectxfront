@@ -51,7 +51,7 @@ const submit = () =>{
             <VRow>
 
               <VCol cols="12">
-                <AppTextField v-model="form.email" autofocus label="Email" type="email"/>
+                <VTextField v-model="form.email" autofocus label="Email" type="email"/>
               </VCol>
 
               <VCol cols="12">

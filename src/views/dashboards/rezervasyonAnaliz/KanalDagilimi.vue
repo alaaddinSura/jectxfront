@@ -6,9 +6,13 @@ import Bar from "../stats/Bar.vue";
 const statistics = computed(() => {
   let chosenHotels = store.state.selectedHotels;
 
-  let canalRez = store.state.kanalRezDagilim.length == 0 ? JSON.parse(localStorage.getItem("kanalRezDagilim")) : store.state.kanalRezDagilim;
+  let canalRez = store.state.kanalRezDagilim == 0 ? JSON.parse(localStorage.getItem("kanalRezDagilim")) : store.state.kanalRezDagilim;
+  console.log("store.state.KanalRezDagilim ==> ",store.state.kanalRezDagilim)
+  console.log("localStorage ==> ", JSON.parse(localStorage.getItem("kanalRezDagilim")))
+  console.log("canalRez ==> ", canalRez)
 
   let statData = canalRez.filter((item) => chosenHotels.includes(item.hotelId));
+  console.log("statData ==> ",statData)
 
   let anaKanallar = ["ONL", "WH", "AGT", "IND"];
 
@@ -23,25 +27,25 @@ const statistics = computed(() => {
   return [
     {
       title: "Online",
-      stats: scores[0],
+      stats: scores[0] != 'NaN' ? scores[0] : "0",
       icon: "tabler-world-dollar",
       color: "primary",
     },
     {
       title: "WH",
-      stats: scores[1],
+      stats: scores[1] != 'NaN' ? scores[1] : "0",
       icon: "tabler-world-www",
       color: "info",
     },
     {
       title: "AGT",
-      stats: scores[2],
+      stats: scores[2] != 'NaN' ? scores[2] : "0",
       icon: "tabler-windsock",
       color: "error",
     },
     {
       title: "IND",
-      stats: scores[3],
+      stats: scores[3] != 'NaN' ? scores[3] : "0",
       icon: "tabler-users",
       color: "success",
     },

@@ -72,7 +72,7 @@ let tableData = computed(() => {
         "ALT KANAL": alt,
         "REZ ADET": rezAdet,
         "GECELEME": geceleme,
-        "ADR": (revenue/geceleme).toFixed(2),
+        "ADR": !isNaN(revenue/geceleme) ? (revenue/geceleme).toFixed(2) : "0",
         "REVENUE": revenue,
       }
 
