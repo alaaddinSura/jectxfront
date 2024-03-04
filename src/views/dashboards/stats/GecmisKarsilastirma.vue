@@ -89,17 +89,24 @@ const getSubBalanceConfig = computed(() => {
       },
     },
      tooltip: {
-      custom({ series, seriesIndex, dataPointIndex }) {
-    const currentData = graphData.value.data[seriesIndex].data[dataPointIndex];
-    const currentREVPERREZ = graphData.value.currentREVPERREZ[dataPointIndex];
-    const lastREVPERREZ = graphData.value.lastREVPERREZ[dataPointIndex];
-    const currentLine = seriesIndex === 0 ? "current" : "previous";
+  //     custom({ series, seriesIndex, dataPointIndex }) {
+  //       const currentData = graphData.value.data[seriesIndex].data[dataPointIndex];
+  //   const currentREVPERREZ = graphData.value.currentREVPERREZ[dataPointIndex];
+  //   const lastREVPERREZ = graphData.value.lastREVPERREZ[dataPointIndex];
+  //   const currentLine = seriesIndex === 0 ? "current" : "previous";
     
-    return `<div class='bar-chart pa-2'>
-      <span style='color: blue'>${currentLine === "current" ? currentREVPERREZ.toFixed(0) : lastREVPERREZ.toFixed(0)}</span>
-    </div>`;
-  },
-  //enabled: false
+  //   if (currentLine === "current") {
+  //     return `<div class='bar-chart pa-2'>
+  //       <span style='color: blue'>${currentREVPERREZ.toFixed(0)}</span>
+  //     </div>`;
+  //   } else {
+  //     return `<div class='bar-chart pa-2'>
+  //       <span style='color: red'>${lastREVPERREZ.toFixed(0)}</span>
+  //     </div>`;
+    
+  //   }
+  // },
+  enabled: false
 },
     yaxis: {
       labels: {
