@@ -355,10 +355,32 @@ export const callRezervasyonGecmisGunluk = (hotelids, isLocal) => {
     })
     axios.request(configs.callRezervasyonGecmisGunluk(dateRange, hotelids))
         .then(r => {
+            let rData = r.data
             let currentDates = dateRange.sort().slice(7, 14)
             let previousDates = dateRange.sort().slice(0, 7)
-
-            let rData = r.data
+            console.log("prevvios date ==> ",previousDates)
+            let rDataDates =[...new Set(rData.map(item => item.DATE))]
+            dateRange.forEach(item =>{
+                if(!rDataDates.includes(item)){
+                    rData.push(
+                        {
+                            DATE: item,
+                            hotelId: 22966,
+                            REVPERREZ: 0,
+                            count: 0
+                        },
+                        {
+                            DATE: item,
+                            hotelId: 22964,
+                            REVPERREZ: 0,
+                            count: 0
+                        }
+                    )
+                    console.log()
+                    
+                }
+            })
+            console.log(rData)    
             let desiredData = {
                 cats: currentDates,
                 data: [
@@ -402,7 +424,7 @@ export const callRezervasyonGecmisAylik = (hotelids, isLocal) => {
             }
             localStorage.setItem('rezervasyonGecmisAylik', JSON.stringify(desiredData))
         })
-        .catch(e => console.log('callRezervasyonGecmisGunluk fonksiyonu hata verdi. hata --> ', e))
+        .catch(e => console.log('callRezervasyonGecmisAylik fonksiyonu hata verdi. hata --> ', e))
 }
 
 export const callChannelTable = (dateRange, hotelids, isLocal) => {

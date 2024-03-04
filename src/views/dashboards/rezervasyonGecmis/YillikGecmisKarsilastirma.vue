@@ -7,24 +7,18 @@ import * as dates from '@/views/dashboards/functions/dates'
 
 
 const graphData = computed(() => {
-
     let chosenHotels = store.state.selectedHotels
-
     let desiredData = JSON.parse(localStorage.getItem('rezervasyonGecmisAylik'))
-
     let dateLabels = desiredData.cats
-
     let currentData = desiredData.data.filter(item => item.name == 'current')[0].data
     currentData = currentData.filter(item => chosenHotels.includes(item.hotelId))
+    let currentRevPerrez = dateLabels.map(item => currentData.filter(j => j.DATE == item).map(k=> k.REVPERREZ).reduce((f,s)=>f+s,0))
     currentData = dateLabels.map(item => currentData.filter(j => j.DATE == item).map(j => Number(j.count)).reduce((f,s) => f+s, 0))
-   
-
     const pastYearRange = dateLabels.map(item => dates.subtractYearFromDate(item))
-
     let lastData = desiredData.data.filter(item => item.name == 'previous')[0].data
     lastData = lastData.filter(item => chosenHotels.includes(item.hotelId))
+    let lastRevPerrez = pastYearRange.map(item => lastData.filter(j => j.DATE == item).map(k=> k.REVPERREZ).reduce((f,s)=>f+s,0))
     lastData = pastYearRange.map(item => lastData.filter(j => j.DATE == item).map(j => Number(j.count)).reduce((f,s) => f+s, 0))
-
     let percentage = ((currentData.reduce((f, s) => f + s, 0) - lastData.reduce((f, s) => f + s, 0)) / lastData.reduce((f, s) => f + s, 0) * 100)
     let color = percentage > 0 ? 'success' : '#F53107'
     let icon = percentage > 0 ? 'tabler-arrow-up' : 'tabler-arrow-down'
@@ -45,7 +39,9 @@ const graphData = computed(() => {
         lastData,
         percentage,
         color,
-        icon
+        icon,
+        lastRevPerrez,
+        currentRevPerrez
     }
 })
 </script>
