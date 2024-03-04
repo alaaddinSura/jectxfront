@@ -25,11 +25,12 @@ const graphData = computed(() => {
 
     currentData = Object.values(_.mapValues(_.groupBy(currentData, 'DATE'), items => _.sumBy(items, 'count')))
     let lastData = desiredData.data.filter(item => item.name == 'previous')[0].data
+    console.log("last Data ==> ", lastData)
     lastData = lastData.filter(item => chosenHotels.includes(item.hotelId))
     lastData.sort(dates.compareDates);
     let lastRevPerrez = Object.values(_.mapValues(_.groupBy(lastData, 'DATE'), items => _.sumBy(items, 'REVPERREZ')))
     lastData = Object.values(_.mapValues(_.groupBy(lastData, 'DATE'), items => _.sumBy(items, 'count')))
-    console.log("lastData Son Hali ==> ",lastData)
+    
     console.log("current Data Son Hali ==> ",currentData)
 
 

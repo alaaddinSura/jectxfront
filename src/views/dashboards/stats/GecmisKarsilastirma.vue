@@ -13,7 +13,6 @@ const props = defineProps({
   },
 })
 
-console.log("props rev ==> ", props.data.currentData)
 
 const vuetifyTheme = useTheme()
 const balanceChartConfig = computed(() => getLineChartSimpleConfig(vuetifyTheme.current.value))
@@ -43,7 +42,7 @@ const series = computed(() =>{
   ]
 })
 
-console.log("series ==> ", series.value)
+console.log("Current props REVPERREZ ==> ",graphData.value.current)
 
 const getSubBalanceConfig = computed(() => {
   const themeColors = vuetifyTheme.current.value
@@ -91,12 +90,12 @@ const getSubBalanceConfig = computed(() => {
       },
     },
      tooltip: {
-      // custom() {
-      //   return `<div class='bar-chart pa-2'>
-      //     <span style='color: blue'>ASD</span> Alaattin Abi burası Hover olunca açılan yer
-      //   </div>`
-      // },
-        enabled: false
+       custom() {
+         return `<div class='bar-chart pa-2'>
+           <span style='color: blue'>${graphData.value.current}</span>
+         </div>`
+       },
+      //enabled: false
      },
     yaxis: {
       labels: {

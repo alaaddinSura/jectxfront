@@ -88,7 +88,7 @@ const reset = () => {
             <VRow>
               <!-- password -->
               <VCol cols="12">
-                <AppTextField
+                <VTextField
                   v-model="form.password"
                   autofocus
                   label="New Password"
@@ -98,7 +98,7 @@ const reset = () => {
               </VCol>
               <!-- password_2 -->
               <VCol cols="12">
-                <AppTextField
+                <VTextField
                   v-model="form.password2"
                   autofocus
                   label="Confirm Password"
