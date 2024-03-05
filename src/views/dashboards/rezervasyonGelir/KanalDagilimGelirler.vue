@@ -517,12 +517,13 @@ const chartConfigs = computed(() => {
     },
   ];
 });
+
 </script>
 
 <template>
   <VCard title="Kanal Dağılım Gelirler">
     <VCardText>
-      <VSlideGroup v-model="currentTab" show-arrows mandatory>
+      <VSlideGroup v-model="currentTab" show-arrows mandatory smooth="false">
         <VSlideGroupItem
           v-for="(report, index) in chartConfigs"
           :key="report.title"
@@ -538,14 +539,14 @@ const chartConfigs = computed(() => {
             "
             :class="isSelected ? 'border' : 'border border-dashed'"
             class="d-flex flex-column justify-center align-center cursor-pointer rounded px-5 py-2 me-6"
-            @click="toggle"
+            @click="toggle" 
           >
             <VAvatar
               rounded
               size="38"
               :color="isSelected ? 'primary' : 'secondary'"
               variant="tonal"
-              class="mb-2"
+              class="mb-2" 
             >
               <VIcon :icon="report.icon" />
             </VAvatar>
@@ -570,3 +571,7 @@ const chartConfigs = computed(() => {
     </VCardText>
   </VCard>
 </template>
+
+<style scoped>
+
+</style>

@@ -13,7 +13,7 @@ const chartOptions = computed(() => {
   const variableTheme = vuetifyTheme.current.value.variables
 
   return {
-    labels: ['Completed Task'],
+    labels: ['Tamamlanan Görev'],
     chart: { type: 'radialBar' },
     plotOptions: {
       radialBar: {
@@ -136,7 +136,7 @@ function formatNumber(num) {
 
     <VCardText>
       <VRow>
-        <VCol cols="12" md="5" sm="6" class="mt-auto">
+        <VCol cols="12" md="4" sm="6" class="mt-auto">
           <div class="mb-6 mt-6">
             <h4 class="text-h3" v-if="store.state.selectedHotels != 'No Hotel'">
               {{ formatNumber(rezAdetDay) }}
@@ -168,8 +168,8 @@ function formatNumber(num) {
             </VListItem>
           </VList>
         </VCol>
-        <VCol cols="12" md="7" sm="6">
-          <VueApexCharts :options="chartOptions" :series="series" height="340" v-if="store.state.selectedHotels != 'No Hotel'"/>
+        <VCol cols="12" md="8" sm="6">
+          <VueApexCharts :options="chartOptions" :series="series"  height="340" v-if="store.state.selectedHotels != 'No Hotel'"/>
           <VCardText v-if="store.state.selectedHotels == 'No Hotel'">
             <Loader style="margin-left: auto; margin-right:auto; width:100px;height:100px;margin-top:20px;"/>
           </VCardText>

@@ -27,7 +27,7 @@ import RezAnaliz from "@/views/dashboards/rezervasyonDagilim/RezAnaliz.vue"
     <!-- iptal Edilebilir Analiz -->
     <VCol
       cols="12"
-      md="6"
+      md="5"
       lg="4"
     >
       <IptalEdebilirAnaliz  />
@@ -36,7 +36,7 @@ import RezAnaliz from "@/views/dashboards/rezervasyonDagilim/RezAnaliz.vue"
     <VCol
       cols="12"
       lg="8"
-      md="6"
+      md="7"
     >
       <GecmisRezervasyonlar class="h-100" />
     </VCol>

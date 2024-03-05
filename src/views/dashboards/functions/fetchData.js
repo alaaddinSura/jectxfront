@@ -537,6 +537,17 @@ export const callKazancDurumuRezMiktari = (dateRange, hotelids)=>{
         console.log("Kazanç Durumu Rezervasyon Miktarı error ==> ", error)
     })
 }
+//dates.findLastMonth()
+export const callKazancDurumuOran = (dateRange, hotelids) =>{
+    let getMonths = dates.findLastMonth(dateRange[0].split('-')[0] + '-' + dateRange[0].split('-')[1])
+    dateRange = dates.getAllDaysOfMonth(getMonths) 
+    console.log("Date Range ==>> ", dateRange)
+    axios.request(configs.rezervMiktariConfig(dateRange,hotelids)).then((r)=>{
+        localStorage.setItem("kazancDurumuOran", JSON.stringify(r.data))
+    }).catch(error =>{
+        console.log("Kazanç Durumu Rezervasyon Oranı error ==> ", error)
+    })
+} 
 
 export const callKazancDurumu7AyGrafik = (dateRange, hotelids)=>{
     dateRange = dates.find7MonthsWithOrigin(dateRange[0])

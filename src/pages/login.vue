@@ -51,7 +51,7 @@ const login = () => {
         //Rezerv Miktarı        
         fetchData.callRezervMiktari(dateRange,hotelids,true)
 
-          //Kanalara rezervasyon Dağılım
+        //Kanalara rezervasyon Dağılım
         fetchData.callKanalRezDagilim(dateRange, hotelids, true)
 
         //Online Rezervasyon Miktarı
@@ -105,22 +105,22 @@ const login = () => {
         // Geçmiş Rezervasyon Karşılaştırma gunluk
         fetchData.callRezervasyonGecmisGunluk(hotelids, true)
         
-        // Geçmiş Rezervasyon Karşılaştırma Aylik
+        //Geçmiş Rezervasyon Karşılaştırma Aylik
         fetchData.callRezervasyonGecmisAylik(hotelids, true)
 
-        // channel table
+        //Channel table
         fetchData.callChannelTable(dateRange, hotelids, true)
         
-        // call raw data
+        //Call raw data
         fetchData.callRawData(dateRange, hotelids, true)
 
-        // call kanal dağılım gelirler
+        //Call kanal dağılım gelirler
         fetchData.callKanalDagilimGelir(dateRange, hotelids, true)
 
-        //call günlük takip
+        //Call günlük takip
         fetchData.callGunlukTakip(dateRange, hotelids, true)
 
-        //call aylik takip
+        //Call aylik takip
         fetchData.callAylikTakip(dateRange, hotelids, true)
 
         //Aylık Kazanç Durumu Rezervasyon Miktarı
@@ -131,6 +131,9 @@ const login = () => {
 
         //Kanal Dağılım Gelirler
         fetchData.callKanalDagilimGelirler(dateRange,hotelids)
+
+        //Kazanç Durumu Oran
+        fetchData.callKazancDurumuOran(dateRange,hotelids)
 
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";

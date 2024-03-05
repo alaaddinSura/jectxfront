@@ -17,7 +17,7 @@ import RawTablo from "@/views/dashboards/rezervasyonAnaliz/RawTablo.vue"
     <VCol
       cols="12"
       lg="6"
-      md="5"
+      md="6" class=""
     >
       <GenelRezerv />
     </VCol>
@@ -25,7 +25,7 @@ import RawTablo from "@/views/dashboards/rezervasyonAnaliz/RawTablo.vue"
     <!-- Kanal Dağılımı -->
     <VCol
       cols="12"
-      md="7"
+      md="6"
       lg="6"
     >
       <KanalDagilimi class="h-100"/>
@@ -33,7 +33,7 @@ import RawTablo from "@/views/dashboards/rezervasyonAnaliz/RawTablo.vue"
 
     <VCol
       cols="12"
-      md="5"
+      md="6"
       lg="4"
     >
       <OnlineRezerv />
@@ -54,14 +54,14 @@ import RawTablo from "@/views/dashboards/rezervasyonAnaliz/RawTablo.vue"
     </VCol>
     <VCol
       cols="12"
-      md="3"
+      md="6"
       lg="2"
     >
       <AyDoluluk />
     </VCol>
     <VCol
       cols="12"
-      md="3"
+      md="6"
       lg="2"
     >
       <YediAyDoluluk />

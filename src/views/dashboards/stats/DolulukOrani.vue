@@ -101,9 +101,9 @@ const chartOptions = computed(() => {
         },
       },
       {
-        breakpoint: 960,
+        breakpoint: 968,
         options: {
-          chart: { height: 250 },
+          chart: { height: 180 },
           plotOptions: {
             radialBar: {
               hollow: { size: '70%' },

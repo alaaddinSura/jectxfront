@@ -136,6 +136,18 @@ const chartOptions = computed(() => {
         },
       },
       {
+        breakpoint: 968,
+        options: {
+          chart: { height: 282 },
+          plotOptions: {
+            bar: {
+              borderRadius: 8,
+              columnWidth: '26%',
+            },
+          },
+        },
+      },
+      {
         breakpoint: 783,
         options: {
           chart: { height: 232 },

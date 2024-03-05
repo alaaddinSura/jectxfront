@@ -33,7 +33,8 @@ const text = computed(()=>props.subtitle ? "Toplam Miktar " + String(props.data.
           v-for="item in statistic"
           :key="item.title"
           cols="6"
-          md="3"
+          md="5"
+          lg="5"
         >
           <div class="d-flex align-center gap-4">
             <VAvatar
@@ -47,7 +48,7 @@ const text = computed(()=>props.subtitle ? "Toplam Miktar " + String(props.data.
               <Loader />
             </div> -->
             <div class="d-flex flex-column">
-              <span class="text-h6 font-weight-medium" v-if="loader == 1">{{ formatNumber(item.stats) }}</span>
+              <span class="text-h6 font-weight-medium text-lg-h5 title text-md-h5" v-if="loader == 1">{{ formatNumber(item.stats) }}</span>
               <span class="text-h6 font-weight-medium" v-if="loader == 0"><Loader /></span>
               <span class="text-sm">
                 {{ item.title }}
@@ -59,3 +60,7 @@ const text = computed(()=>props.subtitle ? "Toplam Miktar " + String(props.data.
     </VCardText>
   </VCard>
 </template>
+
+<style scoped>
+
+</style>

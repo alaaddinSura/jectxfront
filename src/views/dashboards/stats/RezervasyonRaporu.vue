@@ -105,7 +105,34 @@ const chartOptions = computed(() => {
         options: {
           chart: {
             width: 200,
-            height: 160,
+            height: 200,
+          },
+        },
+      },
+      {
+        breakpoint: 2500,
+        options: {
+          chart: {
+            width: 200,
+            height: 200,
+          },
+        },
+      },
+      {
+        breakpoint: 1268,
+        options: {
+          chart: {
+            width: 200,
+            height: 200,
+          },
+        },
+      },
+      {
+        breakpoint: 968,
+        options: {
+          chart: {
+            width: 200,
+            height: 200,
           },
         },
       },
@@ -113,8 +140,8 @@ const chartOptions = computed(() => {
         breakpoint: 420,
         options: {
           chart: {
-            width: 150,
-            height: 120,
+            width: 200,
+            height: 180,
           },
         },
       },
@@ -129,7 +156,7 @@ let deneme = 0
     <VCardText class="d-flex justify-space-between">
       <div class="d-flex flex-column">
         <div class="mb-auto">
-          <h6 class="text-h5 text-no-wrap">
+          <h6 class="text-h5 text-lg-sm text-no-wrap">
             {{ data.name }}
           </h6>
         </div>
@@ -157,7 +184,7 @@ let deneme = 0
         <VueApexCharts v-if="loader == 1"
           :options="chartOptions"
           :series="props.data.series"
-          :height="147"
+          :height="150"
         />
         <VCardText v-if="loader == 0">
           <Loader style="height: 100px; width: 100px"/>

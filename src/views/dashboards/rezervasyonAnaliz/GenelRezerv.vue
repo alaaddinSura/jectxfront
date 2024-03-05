@@ -13,7 +13,7 @@ const vuetifyTheme = useTheme()
 const display = useDisplay()
 
 let data = computed(() => {
-  let chosenHotels = store.state.selectedHotels.length == 0 ? [22966,22964] : store.state.selectedHotels
+  let chosenHotels = store.state.selectedHotels
   let anaKanallar = ['ONL','WH','AGT','IND','Ana Kanal Tanımsız']
   let rezData = store.state.rezervMiktar.length == 0 ? JSON.parse(localStorage.getItem('rezMiktar')) : store.state.rezervMiktar
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))

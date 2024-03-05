@@ -369,3 +369,15 @@ export function oneDayIncrease(date) {
   var yeniTarih = incomingDate.toISOString().slice(0,10);
   return yeniTarih;
 }
+
+export function getAllDaysOfMonth(yearMonth) {
+  const [year, month] = yearMonth.split('-');
+  const numDays = new Date(year, month, 0).getDate(); // Ayın gün sayısını al
+  const days = [];
+  
+  for (let i = 1; i <= numDays; i++) {
+    days.push(`${year}-${month.padStart(2, '0')}-${String(i).padStart(2, '0')}`);
+  }
+  
+  return days;
+}

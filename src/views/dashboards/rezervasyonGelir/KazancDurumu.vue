@@ -149,11 +149,19 @@ const rezAdetMonth = computed(() => {
 });
 
 const revenueChange = computed(() => {
-  let changeRevenue = 5.6;
+  
+  let chosenHotels = store.state.selectedHotels;
+  let rezData = JSON.parse(localStorage.getItem("kazancDurumuOran"))
+  let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
+  let totalCount = statData.map(item => item.count).reduce((f,s)=> f+s,0)
+  let thisMonths = rezAdetMonth.value
+  let changeRevenue = (thisMonths - totalCount) *100 / totalCount
+  console.log("Bu Ay ==> ", thisMonths)
+  console.log("rezzzDataaa ==> ", totalCount)
 
   return {
-    oran: changeRevenue,
-    statu: changeRevenue > 0 ? "success" : "error",
+    oran: changeRevenue.toFixed(2),
+    statu: changeRevenue > 0.99 ? "success" : "error",
   };
 });
 
@@ -197,7 +205,7 @@ function formatNumber(num) {
             </h4>
           </div>
           <p class="text-sm">
-            You informed of this month compared to last month
+            Geçen aya kıyasla bu ay verileri
           </p>
         </VCol>
 
