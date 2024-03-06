@@ -127,8 +127,12 @@ const chartOptions = computed(() => {
           options: { plotOptions: { bar: { columnWidth: '52%' } } },
         },
         {
-          breakpoint: 1280,
-          options: { plotOptions: { bar: { columnWidth: '38%' } } },
+          breakpoint: 1300,
+          options: { 
+          plotOptions: { bar: { columnWidth: '52%' } },
+          xaxis: { labels: { 
+          } }
+        },
         },
         {
           breakpoint: 1025,

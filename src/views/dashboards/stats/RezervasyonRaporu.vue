@@ -162,7 +162,7 @@ let deneme = 0
         </div>
 
         <div>
-          <h5 class="text-h3 mb-1" v-if="loader == 1">
+          <h5 class="text-h3 text-md-h4 mb-1" v-if="loader == 1">
             {{ formatNumber(data.totalNight) }}
           </h5>
           <h5 class="text-h3 mb-1" v-if="loader == 0">
