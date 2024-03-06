@@ -8,12 +8,12 @@ import { store } from "@/store/index";
 const datePickerOpen = ref(false);
 
 let dateRange = ref(
-  dates.findYesterdayDate() + " to " + dates.findYesterdayDate()
+  store.state.dateCount >= 1 ? store.state.dateRange : dates.findYesterdayDate() + " to " + dates.findYesterdayDate()
 );
-
 let isPersistent = ref(true);
 
 const handleUpdateDate = (newValue) => {
+  
   datePickerOpen.value = false;
 
   let hotelids = [22964, 22966];
@@ -27,7 +27,8 @@ const handleUpdateDate = (newValue) => {
     // let cont = d_range != 
 
   // D_range Uzunluk sayısı verilerin oranlarında kullanılıyor
-  store.commit("changeDateCount", d_range.length);
+  store.commit("changeDateRange", dateRange.value)
+  store.commit("changeDateCount", d_range.length)
 
   let endDate = d_range.sort()[d_range.length - 1]
 

@@ -91,7 +91,7 @@ const chartOptions = computed(() => {
       {
         breakpoint: 1280,
         options: {
-          chart: { height: 150 },
+          chart: { height: 100 },
           plotOptions: {
             radialBar: {
               dataLabels: { value: { fontSize: '18px' } },
@@ -115,13 +115,15 @@ const chartOptions = computed(() => {
     ],
   }
 })
+
+
 </script>
 
 <template>
   <VCard>
     <VCardText>
-      <div class="mb-n2">
-        <h5 class="text-h5" v-if="dataRange.loader == 1">
+      <div class="">
+        <h5 class="text-xl" v-if="dataRange.loader == 1">
           {{ formatNumber(dataRange.nightCount) }}
         </h5>
         <h5 v-if="dataRange.loader == 0">

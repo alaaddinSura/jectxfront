@@ -5,21 +5,12 @@ import Bar from "../stats/Bar.vue";
 
 const statistics = computed(() => {
   let chosenHotels = store.state.selectedHotels;
-
   let canalRez = store.state.kanalRezDagilim == 0 ? JSON.parse(localStorage.getItem("kanalRezDagilim")) : store.state.kanalRezDagilim;
-  console.log("store.state.KanalRezDagilim ==> ",store.state.kanalRezDagilim)
-  console.log("localStorage ==> ", JSON.parse(localStorage.getItem("kanalRezDagilim")))
-  console.log("canalRez ==> ", canalRez)
-
   let statData = canalRez.filter((item) => chosenHotels.includes(item.hotelId));
-  console.log("statData ==> ",statData)
-
   let anaKanallar = ["ONL", "WH", "AGT", "IND"];
-
   let kanalData = anaKanallar.map((kanal) =>
     statData.filter((item) => item.anaKanal == kanal)
   );
-
   kanalData = kanalData.map((item) =>
     item.map((kanal) => (kanal.count != "nan" ? Number(kanal.count) : 0))
   );

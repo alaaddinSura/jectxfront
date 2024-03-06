@@ -57,7 +57,6 @@ export const callKanalRezDagilim = (dateRange, hotelids, isLocal) => {
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeKanalRezDagilimLoader",1) : store.commit("changeKanalRezDagilimLoader", 0)
         }
         else {
-            console.log("fetchData KanalRezDağılım ==> ",r.data)
             store.commit("changeKanalRezDagilim", r.data)
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeKanalRezDagilimLoader",1) : store.commit("changeKanalRezDagilimLoader", 0)
         }

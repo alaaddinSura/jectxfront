@@ -156,8 +156,6 @@ const revenueChange = computed(() => {
   let totalCount = statData.map(item => item.count).reduce((f,s)=> f+s,0)
   let thisMonths = rezAdetMonth.value
   let changeRevenue = (thisMonths - totalCount) *100 / totalCount
-  console.log("Bu Ay ==> ", thisMonths)
-  console.log("rezzzDataaa ==> ", totalCount)
 
   return {
     oran: changeRevenue.toFixed(2),

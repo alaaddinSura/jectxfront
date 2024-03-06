@@ -120,18 +120,23 @@ const chartOptions = computed(() => {
       responsive: [
         {
           breakpoint: 1700,
-          options: { plotOptions: { bar: { columnWidth: '43%' } } },
+          options: { plotOptions: { bar: { columnWidth: '43%' } } 
+        },
         },
         {
           breakpoint: 1441,
-          options: { plotOptions: { bar: { columnWidth: '52%' } } },
+          options: { plotOptions: { bar: { columnWidth: '52%' } },
+          xaxis: { labels: {
+            rotate: -45,
+            rotateAlways: true,
+          } }
+        },
         },
         {
           breakpoint: 1300,
           options: { 
           plotOptions: { bar: { columnWidth: '52%' } },
-          xaxis: { labels: { 
-          } }
+          
         },
         },
         {
