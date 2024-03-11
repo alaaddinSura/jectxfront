@@ -251,3 +251,13 @@ export const kanalDagilimGelirlerconfig = (dateRange, hotelidArray) => {
   })
   return config(url, data)
 }
+
+
+export const callHaftalikGecmisKarsilastirma = (dateRange, hotelidArray) => {
+  const url = 'https://jectxbackend-672789bf3678.herokuapp.com/rezervasyonkarsilastirmaHaftalik';
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}

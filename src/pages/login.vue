@@ -104,6 +104,9 @@ const login = () => {
 
         // Geçmiş Rezervasyon Karşılaştırma gunluk
         fetchData.callRezervasyonGecmisGunluk(hotelids, true)
+
+        // Geçmiş Rezervasyon Karşılaştırma Haftalık
+        fetchData.rezervasyonGecmisHaftalik(hotelids,true)
         
         //Geçmiş Rezervasyon Karşılaştırma Aylik
         fetchData.callRezervasyonGecmisAylik(hotelids, true)

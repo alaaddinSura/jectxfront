@@ -19,13 +19,25 @@ function formatNumber(num) {
   }
   return num.toString();
 }
-const text = computed(()=>props.subtitle ? "Toplam Miktar " + String(props.data.map(item=>item.stats).reduce((f, s)=>f+s, 0)): "")
+// statistic.map(item => item.stats).filter(k => yuzde.includes(k)) ? 'Yüzdeli' : 'Yüzdeli Değil'
+
+let statDataSearch = statistic.value.map(item => item.stats);
+let result = 'Yüzdeli Değil';
+
+for (let i = 0; i < statDataSearch.length; i++) {
+  if (String(statDataSearch[i]).includes('%')) {
+    result = 'Yüzdeli';
+    break;
+  }
+}
+
+const text = computed(()=>props.subtitle ?  result === 'Yüzdeli' ?  String(statistic.value.map(item => item.count).reduce((f,s)=> f+s,0)) : String(props.data.map(item=>item.stats).reduce((f, s)=>f+s, 0)): "")
 </script>
 
 <template>
   <VCard :title="props.title">
     <template #append>
-      <span class="text-sm text-disabled">{{ text }}</span>
+      <span class="text-sm text-disabled items-center">{{ "Toplam Miktar " + text }}</span>
     </template>
     <VCardText class="pt-6">
       <VRow>
@@ -48,11 +60,22 @@ const text = computed(()=>props.subtitle ? "Toplam Miktar " + String(props.data.
               <Loader />
             </div> -->
             <div class="d-flex flex-column">
-              <span class="text-h6 font-weight-medium text-lg-h5 title text-md-h5" v-if="loader == 1">{{ formatNumber(item.stats) }}</span>
+              <span class="items-center" v-if="loader == 1"><span class="text-h6 font-weight-medium text-lg-h5 title text-md-h5 mr-2" v-if="result === 'Yüzdeli'">{{ formatNumber(item.count) }}</span>
+              <span class="text-h6 font-weight-medium text-lg-h5 title text-md-h5 mr-2" v-if="result != 'Yüzdeli'">{{ formatNumber(item.stats) }}</span>
+                <span v-if="result === 'Yüzdeli'">
+                  <VChip label :color="item.color" class="font-weight-bold">
+                    <span>
+                        {{ item.stats }}
+                    </span>
+                </VChip>
+                </span>
+
+              </span>
               <span class="text-h6 font-weight-medium" v-if="loader == 0"><Loader /></span>
               <span class="text-sm">
                 {{ item.title }}
               </span>
+              
             </div>
           </div>
         </VCol>

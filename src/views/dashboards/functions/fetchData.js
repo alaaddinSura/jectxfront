@@ -347,6 +347,19 @@ export const callOdatipiDagilim = (dateRange, hotelids, isLocal) => {
     })
 }
 
+
+
+export const rezervasyonGecmisHaftalik = (hotelids, isLocal) => {
+    let dateRange = dates.findWeek(dates.findYesterdayDate())
+    console.log("dateRangeee ==> ", dateRange)
+    axios.request(configs.callHaftalikGecmisKarsilastirma(dateRange, hotelids)).then((r)=>{
+        localStorage.setItem('rezervasyonGecmisHaftalik', JSON.stringify(r.data))
+        console.log("r.data verileri ==> ",r.data)
+    }).catch(error => console.log("Haftalık Rezervasyon Karşılaştırma Hata vermiştir ==> ", error))
+}
+
+
+
 export const callRezervasyonGecmisGunluk = (hotelids, isLocal) => {
     let dateRange = dates.getLastDatesFromDate(dates.findtodayDate(), 7)
     dateRange.forEach(item => {
@@ -357,7 +370,6 @@ export const callRezervasyonGecmisGunluk = (hotelids, isLocal) => {
             let rData = r.data
             let currentDates = dateRange.sort().slice(7, 14)
             let previousDates = dateRange.sort().slice(0, 7)
-            console.log("prevvios date ==> ",previousDates)
             let rDataDates =[...new Set(rData.map(item => item.DATE))]
             dateRange.forEach(item =>{
                 if(!rDataDates.includes(item)){
@@ -375,11 +387,8 @@ export const callRezervasyonGecmisGunluk = (hotelids, isLocal) => {
                             count: 0
                         }
                     )
-                    console.log()
-                    
                 }
             })
-            console.log(rData)    
             let desiredData = {
                 cats: currentDates,
                 data: [
@@ -399,13 +408,13 @@ export const callRezervasyonGecmisGunluk = (hotelids, isLocal) => {
 }
 
 export const callRezervasyonGecmisAylik = (hotelids, isLocal) => {
-    let dateRange = dates.generatePreviousMonths(dates.findCurrentMonth(), 7)
+    let dateRange = dates.generatePreviousMonths(dates.findCurrentMonth(), 12)
     const pastYearRange = dateRange.map(item => dates.subtractYearFromDate(item));
     dateRange = dateRange.concat(pastYearRange);
     axios.request(configs.callRezervasyonGecmisAylik(dateRange, hotelids))
         .then(r => {
-            let currentDates = dateRange.sort().slice(7, 14)
-            let previousDates = dateRange.sort().slice(0, 7)
+            let currentDates = dateRange.sort().slice(12, 24)
+            let previousDates = dateRange.sort().slice(0, 12)
 
             let rData = r.data
             let desiredData = {
@@ -539,8 +548,7 @@ export const callKazancDurumuRezMiktari = (dateRange, hotelids)=>{
 //dates.findLastMonth()
 export const callKazancDurumuOran = (dateRange, hotelids) =>{
     let getMonths = dates.findLastMonth(dateRange[0].split('-')[0] + '-' + dateRange[0].split('-')[1])
-    dateRange = dates.getAllDaysOfMonth(getMonths) 
-    console.log("Date Range ==>> ", dateRange)
+    dateRange = dates.getAllDaysOfMonth(getMonths)
     axios.request(configs.rezervMiktariConfig(dateRange,hotelids)).then((r)=>{
         localStorage.setItem("kazancDurumuOran", JSON.stringify(r.data))
     }).catch(error =>{
