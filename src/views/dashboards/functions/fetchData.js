@@ -351,11 +351,31 @@ export const callOdatipiDagilim = (dateRange, hotelids, isLocal) => {
 
 export const rezervasyonGecmisHaftalik = (hotelids, isLocal) => {
     let dateRange = dates.findWeek(dates.findYesterdayDate())
-    console.log("dateRangeee ==> ", dateRange)
-    axios.request(configs.callHaftalikGecmisKarsilastirma(dateRange, hotelids)).then((r)=>{
-        localStorage.setItem('rezervasyonGecmisHaftalik', JSON.stringify(r.data))
-        console.log("r.data verileri ==> ",r.data)
-    }).catch(error => console.log("Haftalık Rezervasyon Karşılaştırma Hata vermiştir ==> ", error))
+    dateRange = dates.findPreviousWeeks(dateRange)
+    const pastYearRange = dateRange.map(item => dates.subtractYearFromDate(item));
+    dateRange = dateRange.concat(pastYearRange);
+    axios.request(configs.callHaftalikGecmisKarsilastirma(dateRange, hotelids))
+        .then(r => {
+            let currentDates = dateRange.sort().slice(12, 24)
+            let previousDates = dateRange.sort().slice(0, 12)
+
+            let rData = r.data
+            let desiredData = {
+                cats: currentDates,
+                data: [
+                    {
+                        name: "current",
+                        data: rData.filter(item => currentDates.includes(item.WEEK))
+                    },
+                    {
+                        name: "previous",
+                        data: rData.filter(item => previousDates.includes(item.WEEK))
+                    },
+                ]
+            }
+            localStorage.setItem('rezervasyonGecmisHaftalik', JSON.stringify(desiredData))
+        })
+        .catch(e => console.log('callRezervasyonGecmisHaftalik fonksiyonu hata verdi. hata --> ', e))
 }
 
 

@@ -5,46 +5,41 @@ import { _ } from 'lodash'
 import Loader from '../functions/loader.vue'
 import * as dates from '@/views/dashboards/functions/dates'
 
-const graphData = computed(() => {
-    
-    
-    let chosenHotels = store.state.selectedHotels
 
+
+
+const graphData = computed(() => {
+    let chosenHotels = store.state.selectedHotels
     let desiredData = JSON.parse(localStorage.getItem('rezervasyonGecmisHaftalik'))
-    let dateSelect = desiredData.cats
+    let dateLabels = desiredData.cats
     let currentData = desiredData.data.filter(item => item.name == 'current')[0].data
     currentData = currentData.filter(item => chosenHotels.includes(item.hotelId))
-    currentData.sort(dates.compareDates);
-    let currentRevPerrez = Object.values(_.mapValues(_.groupBy(currentData, 'DATE'), items => _.sumBy(items, 'REVPERREZ')))
-    currentData = Object.values(_.mapValues(_.groupBy(currentData, 'DATE'), items => _.sumBy(items, 'count')))
+    currentData = dateLabels.map(item => currentData.filter(j => j.WEEK == item).map(j => Number(j.count)).reduce((f,s) => f+s, 0))
+    const pastYearRange = dateLabels.map(item => dates.subtractYearFromDate(item))
     let lastData = desiredData.data.filter(item => item.name == 'previous')[0].data
     lastData = lastData.filter(item => chosenHotels.includes(item.hotelId))
-    lastData.sort(dates.compareDates);
-    let lastRevPerrez = Object.values(_.mapValues(_.groupBy(lastData, 'DATE'), items => _.sumBy(items, 'REVPERREZ')))
-    lastData = Object.values(_.mapValues(_.groupBy(lastData, 'DATE'), items => _.sumBy(items, 'count')))
+    lastData = pastYearRange.map(item => lastData.filter(j => j.WEEK == item).map(j => Number(j.count)).reduce((f,s) => f+s, 0))
     let percentage = ((currentData.reduce((f, s) => f + s, 0) - lastData.reduce((f, s) => f + s, 0)) / lastData.reduce((f, s) => f + s, 0) * 100)
     let color = percentage > 0 ? 'success' : '#F53107'
-    let icon = percentage > 0 ? 'tabler-arrow-up': 'tabler-arrow-down'
+    let icon = percentage > 0 ? 'tabler-arrow-up' : 'tabler-arrow-down'
 
     return {
         yaxisData: [
             {
                 name: "current",
-                data: currentData,
+                data: currentData
             },
             {
                 name: "previous",
-                data: lastData,
+                data: lastData
             }
         ],
-        cats: dateSelect,
+        cats: dateLabels,
         currentData,
         lastData,
         percentage,
         color,
         icon,
-        currentRevPerrez,
-        lastRevPerrez
     }
 })
 </script>

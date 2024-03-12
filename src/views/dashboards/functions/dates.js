@@ -121,6 +121,47 @@ export function findWeek(day){
   return 'no week'
 }
 
+export function findPreviousWeeks(inputDate) {
+  // Verilen tarihin yıl, ay ve hafta bilgisini ayrıştırma
+  const [year, month, week] = inputDate.split('-').map(Number);
+  
+  // Önceki son 7 haftayı tutacak olan dizi
+  const previousWeeks = [];
+
+  // inputDate'den önceki son 7 haftayı hesaplama
+  let currentYear = year;
+  let currentMonth = month;
+  let currentWeek = week;
+
+  for (let i = 0; i < 12; i++) {
+    // Hafta sayısını azaltma
+    currentWeek--;
+
+    // Eğer hafta sayısı 0'a düşerse bir önceki aya geç
+    if (currentWeek === 0) {
+      currentMonth--;
+
+      // Eğer ay 0'a düşerse bir önceki yıla geç
+      if (currentMonth === 0) {
+        currentYear--;
+        currentMonth = 12; // Aralık
+      }
+
+      // Geçilen ayın toplam hafta sayısını bulma
+      const daysInMonth = new Date(currentYear, currentMonth, 0).getDate();
+      const weeksInMonth = Math.ceil((daysInMonth + new Date(currentYear, currentMonth - 1, 1).getDay()) / 7);
+
+      // Hafta sayısını ayın toplam hafta sayısına ayarlama
+      currentWeek = 4;
+    }
+
+    // Yıl, ay ve hafta bilgisini diziye ekleme
+    previousWeeks.unshift(`${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(currentWeek).padStart(2, '0')}`);
+  }
+
+  return previousWeeks;
+}
+
 export function finLast7months(currentDate){
   let currentYear = Number(currentDate.split('-')[0])
   let currentMonth = Number(currentDate.split('-')[1])

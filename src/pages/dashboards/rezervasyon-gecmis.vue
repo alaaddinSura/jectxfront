@@ -9,9 +9,9 @@ import YillikGecmisKarsilastirma from '@/views/dashboards/rezervasyonGecmis/Yill
         <VCol cols="12">
             <NormalGecmisKarsilastirma/>
         </VCol>
-        <!-- <VCol cols="12">
+        <VCol cols="12">
             <HaftalikGecmisKarsilastirma />
-        </VCol> -->
+        </VCol> 
         <VCol cols="12">
             <YillikGecmisKarsilastirma/>
         </VCol>
