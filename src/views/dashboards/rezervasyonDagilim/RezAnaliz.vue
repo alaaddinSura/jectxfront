@@ -20,7 +20,7 @@ const statistics = computed(()=>{
   let statData = rezData.filter(item => chosenHotels.includes(item.HOTELID))
   let rezAdet = [...new Set(statData.filter(item => item.NIGHT != 0).map(item => item.RESID))]
   let dolulukAdet = statData.map(item => item.NIGHT).reduce((f, s) => f + s, 0)
-  let toplam = statData.map(item => item.DAILYRATE != 'nan' ? Number(item.DAILYRATE): 0).reduce((f,s)=>f+s,0).toFixed(1)
+  let toplam = statData.map(item => item.DAILYRATE != 'nan' ? Number(item.DAILYRATE): 0).reduce((f,s)=>f+s,0).toFixed(0)
   return [
   {
     title: 'Adet',
@@ -55,6 +55,7 @@ const statistics = computed(()=>{
   <Bar
     :data="statistics"
     title="Rez Analiz"
+    subtitle
     :loader="store.state.rezAnalizLoader"
   />
 </template>

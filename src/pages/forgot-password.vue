@@ -7,8 +7,18 @@ import axios from "axios"
 
 const form = ref({email: '',message: '',showMessage: false })
 
+const route = useRoute();
+const router = useRouter();
+
 const submit = () =>{
+  if (!form.value.email.trim()) {
+    form.value.message = 'Mail Giriniz';
+    form.value.showMessage = true;
+    return; // Boş e-posta gönderisini işleme gerek yok
+  }
+
   axios.post('https://suraanaliz-05a6f1924519.herokuapp.com/forgot-password?mail='+form.value.email).then(r=>{
+    console.log(r.data)
     const status = r.data.status
     if(status == 'Token sent'){
       form.value.message = 'Email gönderildi'
@@ -18,6 +28,10 @@ const submit = () =>{
   })
   form.value.email = ''
   form.value.showMessage = true
+}
+
+function clickHandler(){
+  //router.replace(route.query.to ? String(route.query.to) : "/login");
 }
 </script>
 
@@ -56,7 +70,7 @@ const submit = () =>{
 
               <VCol cols="12">
                 <span v-if="form.showMessage">{{ form.message }}</span>
-                <VBtn block type="submit">
+                <VBtn block @click="clickHandler()" type="submit">
                   Resetleme Linkini Yolla
                 </VBtn>
               </VCol>

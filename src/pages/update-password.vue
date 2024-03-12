@@ -12,6 +12,9 @@ import {
 
 const form = ref({ email: '', password: '', password2: '', message: '', showMessage: false })
 
+const route = useRoute();
+const router = useRouter();
+
 const reset = () => {
 
   const token = location.href.split('?')[1]
@@ -24,7 +27,7 @@ const reset = () => {
         form.value.password2 = ''
         form.value.message = r.data.status != 'error' ? 'Şifre Oluşturuldu' : 'Şifre Oluşturulamadı'
         form.value.showMessage = true
-
+        router.replace(route.query.to ? String(route.query.to) : "/login");
       })
       .catch(e => {
         form.value.email= ''
@@ -40,6 +43,8 @@ const reset = () => {
     form.value.message = 'Şifreler Uyuşmuyor'
   }
 }
+
+
 </script>
 
 <template>
@@ -94,6 +99,7 @@ const reset = () => {
                   label="New Password"
                   type="password"
                   :rules="[requiredValidator, passwordValidator]"
+                  @input="checkPasswordFormat"
                 />
               </VCol>
               <!-- password_2 -->
@@ -104,6 +110,7 @@ const reset = () => {
                   label="Confirm Password"
                   type="password"
                   :rules="[requiredValidator, passwordValidator]"
+                  @change="checkPasswordFormat"
                 />
               </VCol>
               <!-- reset password -->

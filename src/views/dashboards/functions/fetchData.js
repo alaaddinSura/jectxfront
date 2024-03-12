@@ -93,6 +93,7 @@ export const callGecelemeMiktari = (dateRange, hotelids, isLocal) => {
 
 export const callAyDoluluk = (endDate, hotelids, isLocal) => {
     const dayCount = 30
+    endDate = dates.findNextDay(endDate)
     let dateRange = [...new Set(dates.getLastDatesFromDate(endDate, dayCount))]
     store.commit("changeAyDolulukLoader",0)
     axios.request(configs.ayDolulukConfig(dateRange, hotelids)).then((r) => {
@@ -109,11 +110,12 @@ export const callAyDoluluk = (endDate, hotelids, isLocal) => {
     })
 }
 
-export const callHaftaDoluluk = (endDate, hotelids, isLocal) => {
+export const callHaftaDoluluk = (dateRange, hotelids, isLocal) => {
     const dayCount = 7
-    let dateRange = [...new Set(dates.getLastDatesFromDate(endDate, dayCount))]
+    dateRange = dates.findNextDay(dateRange[0])
+    let endDate = [...new Set(dates.getLastDatesFromDate(dateRange, dayCount))]
     store.commit("changeHaftaDolulukLoader",0)
-    axios.request(configs.haftaDolulukConfig(dateRange, hotelids)).then((r) => {
+    axios.request(configs.haftaDolulukConfig(endDate, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("gecelemeDagilimSonHafta", JSON.stringify(r.data))
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeHaftaDolulukLoader",1) : store.commit("changeHaftaDolulukLoader",0)
@@ -129,6 +131,7 @@ export const callHaftaDoluluk = (endDate, hotelids, isLocal) => {
 
 export const callSonYediAyDoluluk = (endDate, hotelids, isLocal) => {
     const dayCount = 210
+    endDate = dates.findNextDay(endDate)
     let dateRange = [...new Set(dates.getLastDatesFromDate(endDate, dayCount))]
     store.commit("changeSonYediAyDolulukLoader", 0)
     axios.request(configs.sonYediAyDolulukConfig(dateRange, hotelids)).then((r) => {

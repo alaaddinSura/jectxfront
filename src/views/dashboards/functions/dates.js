@@ -422,3 +422,20 @@ export function getAllDaysOfMonth(yearMonth) {
   
   return days;
 }
+
+export function findNextDay(currentDate) {
+  // Verilen tarih bilgisini 'YYYY-MM-DD' formatında alın
+  let [year, month, day] = currentDate.split('-').map(Number);
+  
+  // Yeni bir Date nesnesi oluşturun
+  let date = new Date(year, month - 1, day);
+
+  // Bir gün ekleyerek bir sonraki günü bulun
+  date.setDate(date.getDate() + 1);
+
+
+  // Sonraki günün tarihini 'YYYY-MM-DD' formatında döndürün
+  let nextDay = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+  return nextDay;
+}

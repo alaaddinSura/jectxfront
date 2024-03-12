@@ -20,6 +20,7 @@ const dateRange = ref('')
 
 const { appRouteTransition, isLessThanOverlayNavBreakpoint } = useThemeConfig()
 const { width: windowWidth } = useWindowSize()
+import { useRouter } from 'vue-router'
 
 const disabledDatePicker = () =>{
   const disabledUrls = ['/dashboards/rezervasyon-gecmis', '/dashboards/rezervasyon-gelir'];
@@ -29,6 +30,38 @@ const disabledDatePicker = () =>{
     return false; // NavbarDatePicker engellenmez
   }
 }
+const router = useRouter()
+const logOut = () => {
+  localStorage.removeItem('userData')
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('userAbilities')
+  router.replace('/')
+}
+
+let lastActiveTime = new Date();
+let logoutTimeThreshold = 15 * 60 * 1000; // 15 dakika * 60 saniye * 1000 milisaniye
+
+function handleVisibilityChange() {
+    if (document.visibilityState === 'hidden') {
+        lastActiveTime = new Date();
+    } else {
+        const currentTime = new Date();
+        const inactiveTimeInMillis = currentTime - lastActiveTime;
+        if (inactiveTimeInMillis >= logoutTimeThreshold) {
+            console.log('Kullanıcı oturumu kapattı.'); // 15 dakikadan fazla süre ayrı kaldığında
+            // Oturumu kapatma işlemini burada gerçekleştirebilirsiniz.
+            logOut();
+        } else {
+            const inactiveTimeInSeconds = inactiveTimeInMillis / 1000;
+            const inactiveTimeInMinutes = Math.floor(inactiveTimeInSeconds / 60);
+            const remainingSeconds = Math.floor(inactiveTimeInSeconds % 60);
+            console.log(`Kullanıcı ${inactiveTimeInMinutes} dakika ${remainingSeconds} saniye ayrı kaldı.`);
+        }
+    }
+}
+
+document.addEventListener('visibilitychange', handleVisibilityChange);
+
 </script>
 
 <template>
@@ -53,7 +86,6 @@ const disabledDatePicker = () =>{
         <!-- date picker -->
         <NavBarDatePicker v-if="!disabledDatePicker()"/>
         <VSpacer />
-
         <NavbarThemeSwitcher class="me-1" />
         <NavbarLogOut />
       </div>

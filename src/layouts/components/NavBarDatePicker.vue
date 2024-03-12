@@ -54,7 +54,7 @@ const handleUpdateDate = (newValue) => {
   fetchData.callAyDoluluk(endDate, hotelids);
 
   //Hafta Doluluk
-  fetchData.callHaftaDoluluk(endDate, hotelids);
+  fetchData.callHaftaDoluluk(d_range, hotelids);
 
   //Son 7 ay doluluk
   fetchData.callSonYediAyDoluluk(endDate, hotelids);
