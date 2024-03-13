@@ -30,6 +30,9 @@ export const store = createStore({
     channelTable: [],
     rawData: [],
     kanalDagilimGelir: [],
+    rezMiktarAnaliz: [],
+    rezMiktarIptalAnaliz: [],
+    //Loaderlar
     yatakDagilimLoader: [1],
     //Misafir Dağılım - Oda Tipi Dağılım
     odaTipiDagilimLoader: [1],
@@ -69,6 +72,10 @@ export const store = createStore({
     onlineRezMiktariLoader: [1],
     //Rezervasyon Analiz - Rezerv Tablo
     channelTableLoader: [1],
+    //Rezervasyon Analiz - Rez Analiz
+    rezMiktarAnalizLoader: [1],
+    //Rezervasyon Analiz - İptal Analiz
+    rezMiktarIptalAnalizLoader: [1],
   },
   getters: {},
   mutations: {
@@ -153,6 +160,12 @@ export const store = createStore({
     changeKanalDagilimGelir(state, payload){
       state.kanalDagilimGelir = payload;
     },
+    changeRezMiktarAnaliz(state,payload){
+      state.rezMiktarAnaliz = payload;
+    },
+    changeRezMiktarIptalAnaliz(state,payload){
+      state.rezMiktarIptalAnaliz = payload;
+    },
     //Loaderlar
     //Misafir Dağılım - Yatak Dağılım
     changeYatakDagilimLoader(state, payload){
@@ -181,16 +194,13 @@ export const store = createStore({
     },//Doluluk Dağılım - İptal Edilebilir Analiz (İstatistik)
     changeIptalEdebilirAnalizLoader(state,payload){
       state.iptalEdebilirAnalizLoader = payload
-    },
-    //Rezervasyon Analiz - Raw Tablo
+    },//Rezervasyon Analiz - Raw Tablo
     changeRawDataLoader(state, payload){
       state.rawDataLoader = payload;
-    },
-    //Rezervasyon Analiz - Geçmiş Rezervasyonlar
+    },//Rezervasyon Analiz - Geçmiş Rezervasyonlar
     changeGecmisRezervasyonlarLoader(state, payload){
       state.gecmisRezervasyonlarLoader = payload;
-    },
-    //Rezervasyon Analiz - Kanallara Göre Dağılım
+    },//Rezervasyon Analiz - Kanallara Göre Dağılım
     changeKanalRezDagilimLoader(state,payload){
       state.kanalRezDagilimLoader = payload;
     },//Rezervasyon Analiz - Doluluk
@@ -217,7 +227,13 @@ export const store = createStore({
     },//Rezervasyon Analiz - Rezerv Tablo
     changeChannelTableLoader(state,payload){
       state.channelTableLoader = payload;
-    }
+    },//Rezervasyon Analiz - Rez Analiz
+    changeRezMiktarAnalizLoader(state,payload){
+      state.rezMiktarAnalizLoader = payload;
+    },//Rezervasyon Analiz - İptal Analiz
+    changeRezMiktarIptalAnalizLoader(state,payload){
+      state.rezMiktarIptalAnalizLoader = payload;
+    },
   },
   actions: {},
 })

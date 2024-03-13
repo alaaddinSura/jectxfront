@@ -99,53 +99,7 @@ const chartOptions = computed(() => {
         },
       },
     },
-    responsive: [
-      {
-        breakpoint: display.thresholds.value.lg,
-        options: {
-          chart: {
-            width: 200,
-            height: 200,
-          },
-        },
-      },
-      {
-        breakpoint: 2500,
-        options: {
-          chart: {
-            width: 220,
-            height: 200,
-          },
-        },
-      },
-      {
-        breakpoint: 1268,
-        options: {
-          chart: {
-            width: 200,
-            height: 200,
-          },
-        },
-      },
-      {
-        breakpoint: 968,
-        options: {
-          chart: {
-            width: 200,
-            height: 200,
-          },
-        },
-      },
-      {
-        breakpoint: 420,
-        options: {
-          chart: {
-            width: 200,
-            height: 180,
-          },
-        },
-      },
-    ],
+    
   }
 })
 let deneme = 0
@@ -156,13 +110,13 @@ let deneme = 0
     <VCardText class="d-flex justify-space-between">
       <div class="d-flex flex-column">
         <div class="mb-auto">
-          <h6 class="text-h5 text-lg-sm text-no-wrap">
+          <h6 class="text-h6 text-no-wrap">
             {{ data.name }}
           </h6>
         </div>
 
         <div>
-          <h5 class="text-h3 text-lg-h4 mb-1" v-if="loader == 1">
+          <h5 class="text-h5  mb-1" v-if="loader == 1">
             {{ formatNumber(data.totalNight) }}
           </h5>
           <h5 class="text-h3 mb-1" v-if="loader == 0">
@@ -171,6 +125,7 @@ let deneme = 0
           <div class="text-sm">
             <VIcon
               icon="tabler-chevron-up"
+              size="24"
               color="success"
               class="me-1"
             />
@@ -184,7 +139,7 @@ let deneme = 0
         <VueApexCharts v-if="loader == 1"
           :options="chartOptions"
           :series="props.data.series"
-          :height="150"
+          :height="147"
         />
         <VCardText v-if="loader == 0">
           <Loader style="height: 100px; width: 100px"/>

@@ -17,36 +17,37 @@ const statistics = computed(() => {
   kanalData = kanalData.map((item) =>
     item.map((kanal) => (kanal.count != "nan" ? Number(kanal.count) : 0))
   );
+  //Örnek: (scores[0] / totalScores * 100).toFixed(0)
   let scores = kanalData.map((item) => item.reduce((f, s) => f + s, 0));
   let totalScores = scores.reduce((f,s)=>f+s,0)
   return [
     {
       title: "Online",
-      stats: scores[0] != 'NaN' ?  (scores[0] / totalScores * 100).toFixed(0) + ' %' : "0",
+      stats: scores[0] != 'NaN' ?  scores[0] : "0",
       icon: "tabler-world-dollar",
       color: "primary",
-      count: scores[0] != 'NaN' ? scores[0] : '0'
+      percentage: (scores[0] / totalScores * 100) .toFixed(0) + '%'
     },
     {
       title: "WH",
-      stats: scores[1] != 'NaN' ? (scores[1] / totalScores * 100).toFixed(0) + ' %' : "0",
+      stats: scores[1] != 'NaN' ? scores[1] : "0",
       icon: "tabler-world-www",
       color: "info",
-      count: scores[1] != 'NaN' ? scores[1] : '0'
+      percentage: (scores[1] / totalScores * 100).toFixed(0) + '%'
     },
     {
       title: "AGT",
-      stats: scores[2] != 'NaN' ? (scores[2] / totalScores * 100).toFixed(0) + ' %' : "0",
+      stats: scores[2] != 'NaN' ? scores[2] : "0",
       icon: "tabler-windsock",
       color: "error",
-      count: scores[2] != 'NaN' ? scores[2] : '0'
+      percentage: (scores[2] / totalScores * 100).toFixed(0) + '%'
     },
     {
       title: "IND",
-      stats: scores[3] != 'NaN' ? (scores[3] / totalScores * 100).toFixed(0) + ' %' : "0",
+      stats: scores[3] != 'NaN' ? scores[3]  : "0",
       icon: "tabler-users",
       color: "success",
-      count: scores[3] != 'NaN' ? scores[3] : '0'
+      percentage: (scores[3] / totalScores * 100).toFixed(0) + '%'
     },
   ];
 });

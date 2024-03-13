@@ -9,6 +9,9 @@ import OnlineRezerv from "@/views/dashboards/rezervasyonAnaliz/OnlineRezerv.vue"
 import RezervTablo from "@/views/dashboards/rezervasyonAnaliz/RezervTablo.vue"
 import YediAyDoluluk from "@/views/dashboards/rezervasyonAnaliz/YediAyDoluluk.vue"
 import RawTablo from "@/views/dashboards/rezervasyonAnaliz/RawTablo.vue"
+import RezAnaliz from "@/views/dashboards/rezervasyonAnaliz/RezAnaliz.vue"
+import IptalAnaliz from "@/views/dashboards/rezervasyonAnaliz/IptalAnaliz.vue"
+
 </script>
 
 <template>
@@ -16,55 +19,61 @@ import RawTablo from "@/views/dashboards/rezervasyonAnaliz/RawTablo.vue"
     <!-- Rezervasyon Raporu -->
     <VCol
       cols="12"
-      lg="6"
-      md="6" class=""
+      md="6"
+      lg="4"
     >
       <GenelRezerv />
     </VCol>
 
-    <!-- Kanal Dağılımı -->
     <VCol
       cols="12"
       md="6"
-      lg="6"
+      lg="8"
     >
-      <KanalDagilimi class="h-100"/>
+      <KanalDagilimi/>
     </VCol>
 
     <VCol
       cols="12"
-      md="6"
-      lg="4"
+      md="4"
     >
       <OnlineRezerv />
     </VCol>
+    <!-- Kanal Dağılımı -->
+    
     <VCol
       cols="12"
-      md="3"
+      md="2"
       lg="2"
     >
       <Doluluk />
     </VCol>
     <VCol
       cols="12"
-      md="3"
+      md="2"
       lg="2"
     >
       <HaftaDoluluk />
     </VCol>
     <VCol
       cols="12"
-      md="6"
+      md="2"
       lg="2"
     >
       <AyDoluluk />
     </VCol>
     <VCol
       cols="12"
-      md="6"
+      md="2"
       lg="2"
     >
       <YediAyDoluluk />
+    </VCol>
+    <VCol cols="12" md="6">
+      <RezAnaliz />
+    </VCol>
+    <VCol cols="12" md="6">
+      <IptalAnaliz />
     </VCol>
     <!-- 12 Aylık ay bazında -->
     <VCol

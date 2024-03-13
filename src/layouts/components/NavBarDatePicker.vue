@@ -92,6 +92,12 @@ const handleUpdateDate = (newValue) => {
   //raw data
   fetchData.callRawData(d_range, hotelids);
 
+  //Rezervasyon Analiz - Rez Analiz
+  fetchData.rezMiktarAnaliz(d_range,hotelids)
+
+  //Rezervasyon Analiz - İptal Analiz
+  fetchData.rezMiktarIptalAnaliz(d_range,hotelids)
+
   // if (!newValue.includes('to')) {
   //   // dateRange'i iki kez aynı tarih olarak güncelle
   //   dateRange.value = newValue + " to " + newValue;

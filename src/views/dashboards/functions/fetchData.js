@@ -597,3 +597,32 @@ export const callKanalDagilimGelirler = (dateRange, hotelids)=>{
         console.log("Kanal Dağılım Gelirler Dağılım", error)
     })
 }
+
+export const rezMiktarAnaliz = (dateRange, hotelids, isLocal)=>{
+    store.commit("changeRezMiktarAnalizLoader", 0)
+    axios.request(configs.rezervMiktariConfig(dateRange,hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("rezMiktarAnaliz",JSON.stringify(r.data))
+            store.state.selectedHotels != 'No Hotel' ? store.commit("changeRezMiktarAnalizLoader",1) : store.commit("changeRezMiktarAnalizLoader", 0)
+        }else{
+            store.commit("changeRezMiktarAnaliz",r.data)
+            store.state.selectedHotels != 'No Hotel' ? store.commit("changeRezMiktarAnalizLoader",1) : store.commit("changeRezMiktarAnalizLoader", 0)
+        }
+        
+    }).catch(error=>{
+        console.log("Rezervasyon Miktar Analiz", error)
+    })
+}
+
+export const rezMiktarIptalAnaliz= (dateRange, hotelids, isLocal) =>{
+    store.commit("changeRezMiktarIptalAnalizLoader",0)
+    axios.request(configs.callrezIptalAnaliz(dateRange,hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("rezMiktarIptalAnaliz", JSON.stringify(r.data))
+            store.state.selectedHotels != 'No Hotel' ? store.commit("changeRezMiktarIptalAnalizLoader", 1) : store.commit("changeRezMiktarIptalAnalizLoader", 0)
+        }else{
+            store.commit("changeRezMiktarIptalAnaliz", r.data)
+            store.state.selectedHotels != 'No Hotel' ? store.commit("changeRezMiktarIptalAnalizLoader", 1) : store.commit("changeRezMiktarIptalAnalizLoader", 0)
+        }
+    })
+}

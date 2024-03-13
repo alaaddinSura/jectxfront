@@ -138,6 +138,12 @@ const login = () => {
         //Kazanç Durumu Oran
         fetchData.callKazancDurumuOran(dateRange,hotelids)
 
+        //Rezervasyon Analiz - Rez Analiz
+        fetchData.rezMiktarAnaliz(dateRange,hotelids,true)
+
+        //Rezervasyon Analiz - İptal Analiz
+        fetchData.rezMiktarIptalAnaliz(dateRange,hotelids,true)
+
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {

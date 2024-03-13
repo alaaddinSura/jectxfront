@@ -30,14 +30,15 @@ for (let i = 0; i < statDataSearch.length; i++) {
     break;
   }
 }
-
-const text = computed(()=>props.subtitle ?  result === 'Yüzdeli' ?  String(statistic.value.map(item => item.count).reduce((f,s)=> f+s,0)) : String(props.data.map(item=>item.stats).reduce((f, s)=>f+s, 0)): "")
+let percentageControl = props.data.some(item => 'percentage' in item)
+//const text = computed(()=>props.subtitle ?  result === 'Yüzdeli' ?  String(statistic.value.map(item => item.count).reduce((f,s)=> f+s,0)) : String(props.data.map(item=>item.stats).reduce((f, s)=>f+s, 0)): "")
+const text = computed(()=>props.subtitle ?  String(props.data.map(item=>item.stats).reduce((f, s)=>f+s, 0)): "")
 </script>
 
 <template>
   <VCard :title="props.title">
     <template #append>
-      <span class="text-sm text-disabled items-center">{{ props.subtitle ?  "Toplam Miktar " + text : '' }}</span>
+      <span class="text-body-2">{{ props.subtitle ?  "Toplam Miktar " + text : '' }}</span>
     </template>
     <VCardText class="pt-6">
       <VRow>
@@ -45,36 +46,34 @@ const text = computed(()=>props.subtitle ?  result === 'Yüzdeli' ?  String(stat
           v-for="item in statistic"
           :key="item.title"
           cols="6"
-          md="5"
-          lg="5"
+          md="3"
         >
-          <div class="d-flex align-center gap-4">
+          <div class="d-flex items-center">
             <VAvatar
               :color="item.color"
               variant="tonal"
               size="42"
+              class="me-3"
             >
-              <VIcon :icon="item.icon" />
+              <VIcon :icon="item.icon" size="24"/>
             </VAvatar>
             <!-- <div v-if="store.state.yatakDagilimLoader == 0">
               <Loader />
             </div> -->
             <div class="d-flex flex-column">
-              <span class="items-center" v-if="loader == 1"><span class="text-h6 font-weight-medium text-lg-h5 title text-md-h5 mr-2" v-if="result === 'Yüzdeli'">{{ formatNumber(item.count) }}</span>
-              <span class="text-h6 font-weight-medium text-lg-h5 title text-md-h5 mr-2" v-if="result != 'Yüzdeli'">{{ formatNumber(item.stats) }}</span>
-                <span v-if="result === 'Yüzdeli'">
-                  <VChip label :color="item.color" class="font-weight-bold">
-                    <span>
-                        {{ item.stats }}
-                    </span>
-                </VChip>
-                </span>
-
+              <span class="items-center" v-if="loader == 1">
+              <span class="text-md">{{ formatNumber(item.stats) }}</span>
               </span>
               <span class="text-h6 font-weight-medium" v-if="loader == 0"><Loader /></span>
               <span class="text-sm">
                 {{ item.title }}
               </span>
+              <VChip label :color="item.color" class="font-weight-bold " v-if="percentageControl">
+                <span v-if="loader == 1">
+                    {{ item.percentage }}
+                </span>
+                <span class="text-sm font-weight-medium" v-if="loader == 0"><Loader /></span>
+            </VChip>
               
             </div>
           </div>

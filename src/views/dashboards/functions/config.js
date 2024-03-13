@@ -261,3 +261,12 @@ export const callHaftalikGecmisKarsilastirma = (dateRange, hotelidArray) => {
   })
   return config(url, data)
 }
+
+export const callrezIptalAnaliz = (dateRange, hotelidArray) => {
+  const url = 'https://jectxbackend-672789bf3678.herokuapp.com/iptalAnalizz';
+  let data = JSON.stringify({
+    "dateRange": dateRange,
+    "hotelidArray": hotelidArray
+  })
+  return config(url, data)
+}
