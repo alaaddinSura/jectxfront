@@ -31,11 +31,7 @@ for (let i = 0; i < statDataSearch.length; i++) {
   }
 }
 
-console.log("props Data ==> ", String(props.data.map(item=>item.stats).reduce((f, s)=>f+s, 0)))
-console.log("result ==> ", result)
-console.log("Yüzeli Takılma ==> ",result === 'Yüzdeli' ?  String(statistic.value.map(item => item.count).reduce((f,s)=> f+s,0)) : String(props.data.map(item=>item.stats).reduce((f, s)=>f+s, 0)))
 const text = computed(()=>props.subtitle ?  result === 'Yüzdeli' ?  String(statistic.value.map(item => item.count).reduce((f,s)=> f+s,0)) : String(props.data.map(item=>item.stats).reduce((f, s)=>f+s, 0)): "")
-console.log("text ==>>> ",text)
 </script>
 
 <template>
