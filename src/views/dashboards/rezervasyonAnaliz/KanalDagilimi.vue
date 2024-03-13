@@ -19,7 +19,6 @@ const statistics = computed(() => {
   );
   let scores = kanalData.map((item) => item.reduce((f, s) => f + s, 0));
   let totalScores = scores.reduce((f,s)=>f+s,0)
-  console.log("scores 0 ==> ", scores[0])
   return [
     {
       title: "Online",

@@ -26,7 +26,7 @@ import DolulukOrani from '../stats/DolulukOrani.vue'
    roomCounts = roomCounts.map(item => item.count).reduce((f,s) => f+s, 0)
 
    let nightCount = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
-   let oran = [(nightCount / roomCounts * 100).toFixed(0)]
+   let oran = [(nightCount / roomCounts * 100).toFixed(2)]
   
   return {
     nightCount, oran,

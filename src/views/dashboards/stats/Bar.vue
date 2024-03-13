@@ -37,7 +37,7 @@ const text = computed(()=>props.subtitle ?  result === 'Yüzdeli' ?  String(stat
 <template>
   <VCard :title="props.title">
     <template #append>
-      <span class="text-sm text-disabled items-center">{{ "Toplam Miktar " + text }}</span>
+      <span class="text-sm text-disabled items-center">{{ props.subtitle ?  "Toplam Miktar " + text : '' }}</span>
     </template>
     <VCardText class="pt-6">
       <VRow>

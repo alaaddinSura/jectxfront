@@ -110,12 +110,12 @@ export const callAyDoluluk = (endDate, hotelids, isLocal) => {
     })
 }
 
-export const callHaftaDoluluk = (dateRange, hotelids, isLocal) => {
+export const callHaftaDoluluk = (endDate, hotelids, isLocal) => {
     const dayCount = 7
-    dateRange = dates.findNextDay(dateRange[0])
-    let endDate = [...new Set(dates.getLastDatesFromDate(dateRange, dayCount))]
+    endDate = dates.findNextDay(endDate)
+    let dateRange = [...new Set(dates.getLastDatesFromDate(endDate, dayCount))]
     store.commit("changeHaftaDolulukLoader",0)
-    axios.request(configs.haftaDolulukConfig(endDate, hotelids)).then((r) => {
+    axios.request(configs.haftaDolulukConfig(dateRange, hotelids)).then((r) => {
         if (isLocal) {
             localStorage.setItem("gecelemeDagilimSonHafta", JSON.stringify(r.data))
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeHaftaDolulukLoader",1) : store.commit("changeHaftaDolulukLoader",0)

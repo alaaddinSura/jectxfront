@@ -3,7 +3,7 @@ import { store } from "@/store/index.js";
 import { ref } from "vue";
 import DolulukOrani from "../stats/DolulukOrani.vue";
 
-let name = ref("Son Ay");
+let name = ref("Son 30 gün");
 let color = ref("#C2185B");
 let nightcount = computed(() => {
   let chosenHotels = store.state.selectedHotels;

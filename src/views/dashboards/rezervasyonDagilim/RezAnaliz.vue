@@ -55,7 +55,6 @@ const statistics = computed(()=>{
   <Bar
     :data="statistics"
     title="Rez Analiz"
-    subtitle
     :loader="store.state.rezAnalizLoader"
   />
 </template>
