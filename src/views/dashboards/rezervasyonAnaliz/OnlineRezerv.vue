@@ -25,7 +25,7 @@ let digerData = statData.filter(item => item.altKanal == 'ONLDIGER').map(item=>i
   let rezPercentData = store.state.lastMonthOnlineRez.length == 0 ? JSON.parse(localStorage.getItem('lastMonthOnlineRez')) : store.state.lastMonthOnlineRez
    let statPercentData = rezPercentData.filter(item => chosenHotels.includes(item.hotelId))
    let totalPercent = statPercentData.map(item => item.count).reduce((f,s)=>f+s,0)
-   let lastMonthPercent = (totalPercent - rezAdet) / totalPercent
+   let lastMonthPercent = ( rezAdet - totalPercent ) / totalPercent
   return {
     totalNight: rezAdet,
     percentage: Math.round(lastMonthPercent *100),

@@ -53,14 +53,11 @@ function handleVisibilityChange() {
         const currentTime = new Date();
         const inactiveTimeInMillis = currentTime - lastActiveTime;
         if (inactiveTimeInMillis >= logoutTimeThreshold) {
-            console.log('Kullanıcı oturumu kapattı.'); // 15 dakikadan fazla süre ayrı kaldığında
-            // Oturumu kapatma işlemini burada gerçekleştirebilirsiniz.
             logOut();
         } else {
             const inactiveTimeInSeconds = inactiveTimeInMillis / 1000;
             const inactiveTimeInMinutes = Math.floor(inactiveTimeInSeconds / 60);
             const remainingSeconds = Math.floor(inactiveTimeInSeconds % 60);
-            console.log(`Kullanıcı ${inactiveTimeInMinutes} dakika ${remainingSeconds} saniye ayrı kaldı.`);
         }
     }
 }

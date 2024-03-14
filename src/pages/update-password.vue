@@ -19,6 +19,7 @@ const reset = () => {
 
   const token = location.href.split('?')[1]
   if(form.value.password == form.value.password2){
+    console.log('Form is valid, sending request...');
     axios.post(' https://suraanaliz-05a6f1924519.herokuapp.com/updatepassword?email=' + form.value.email + '&password=' + form.value.password + '&' + token)
       .then(r => {
       
@@ -43,8 +44,8 @@ const reset = () => {
     form.value.message = 'Şifreler Uyuşmuyor'
   }
 }
-
-
+let isPassword = ref('')
+console.log("form value password ==> ", isPassword.value)
 </script>
 
 <template>
@@ -99,7 +100,6 @@ const reset = () => {
                   label="New Password"
                   type="password"
                   :rules="[requiredValidator, passwordValidator]"
-                  @input="checkPasswordFormat"
                 />
               </VCol>
               <!-- password_2 -->
@@ -110,7 +110,6 @@ const reset = () => {
                   label="Confirm Password"
                   type="password"
                   :rules="[requiredValidator, passwordValidator]"
-                  @change="checkPasswordFormat"
                 />
               </VCol>
               <!-- reset password -->
@@ -121,7 +120,7 @@ const reset = () => {
                 <VBtn
                   block
                   type="submit"
-                >
+                  >
                   Şifreyi Kaydet
                 </VBtn>
               </VCol>
