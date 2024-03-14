@@ -32,6 +32,8 @@ export const store = createStore({
     kanalDagilimGelir: [],
     rezMiktarAnaliz: [],
     rezMiktarIptalAnaliz: [],
+    lastMonthRezervMiktarOran: [],
+    lastMonthOnlineRez: [],
     //Loaderlar
     yatakDagilimLoader: [1],
     //Misafir Dağılım - Oda Tipi Dağılım
@@ -165,6 +167,12 @@ export const store = createStore({
     },
     changeRezMiktarIptalAnaliz(state,payload){
       state.rezMiktarIptalAnaliz = payload;
+    },
+    changeLastMonthRezervMiktarOran(state,payload){
+      state.lastMonthRezervMiktarOran = payload;
+    },
+    changeLastMonthOnlineRez(state,payload){
+      state.lastMonthOnlineRez = payload;
     },
     //Loaderlar
     //Misafir Dağılım - Yatak Dağılım

@@ -122,7 +122,15 @@ let deneme = 0
           <h5 class="text-h3 mb-1" v-if="loader == 0">
             <Loader />
           </h5>
-          
+          <div class="text-sm">
+            <VIcon
+              :icon="data.percentage > 0 ? 'tabler-chevron-up' : 'tabler-chevron-down'"
+              size="24"
+              :color="data.percentage > 0 ? 'success' : 'error'"
+              class="me-1"
+            />
+            <span :class="data.percentage > 0 ? 'text-success font-weight-medium' : 'text-error font-weight-medium'">{{ data.percentage }} % </span>
+          </div>
         </div>
       </div>
       <div>

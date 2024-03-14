@@ -22,12 +22,17 @@ let data = computed(() => {
   kanallar = kanallar.map(item => item.map(n=> n.night != 'NaN' ? Number(n.night) : 0))
   kanallar = kanallar.map(item=> item.reduce((f,s)=>f+s,0))
   let nightCount = statData.map(item => item.count != 'nan' ? Number(item.night): 0).reduce((f,s)=> f+s,0)
+
+  let rezPercent = store.state.lastMonthRezervMiktarOran.length == 0 ? JSON.parse(localStorage.getItem('lastMonthRezMiktar')) : store.state.lastMonthRezervMiktarOran
+  let statPercent = rezPercent.filter(item => chosenHotels.includes(item.hotelId))
+  let totalPercent =  statPercent.map(item => item.count).reduce((f,s)=>f+s,0)
+  let lastMonthPercent = (totalPercent - totalCount) / totalPercent
   return {
     totalNight: totalCount,
+    percentage: Math.round(lastMonthPercent *100),
     totalAmountNight: nightCount,
     labels: ['Online', 'WH', 'AGT', 'IND','Ana Kanal Tanımsız'],
     series: kanallar.length > 0 ? kanallar : [25, 25, 25, 25],
-    percentage: 6,
     name: 'Rezerv Miktarı',
     colors: { series1: vuetifyTheme.current.value.colors.success,
       series2: '#28c76fb3',

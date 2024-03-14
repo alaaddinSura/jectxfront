@@ -62,18 +62,18 @@ const text = computed(()=>props.subtitle ?  String(props.data.map(item=>item.sta
             </div> -->
             <div class="d-flex flex-column">
               <span class="items-center" v-if="loader == 1">
-              <span class="text-md">{{ formatNumber(item.stats) }}</span>
+              <span class="text-md">{{ formatNumber(item.stats) }} <VChip label :color="item.color" class="font-weight-bold ml-2" v-if="percentageControl">
+                <span v-if="loader == 1">
+                    {{ item.percentage }}
+                </span>
+                <span class="text-sm font-weight-medium" v-if="loader == 0"><Loader /></span>
+            </VChip></span>
               </span>
               <span class="text-h6 font-weight-medium" v-if="loader == 0"><Loader /></span>
               <span class="text-sm">
                 {{ item.title }}
               </span>
-              <VChip label :color="item.color" class="font-weight-bold " v-if="percentageControl">
-                <span v-if="loader == 1">
-                    {{ item.percentage }}
-                </span>
-                <span class="text-sm font-weight-medium" v-if="loader == 0"><Loader /></span>
-            </VChip>
+              
               
             </div>
           </div>

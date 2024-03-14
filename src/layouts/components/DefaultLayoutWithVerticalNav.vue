@@ -30,6 +30,11 @@ const disabledDatePicker = () =>{
     return false; // NavbarDatePicker engellenmez
   }
 }
+
+const disabledNextDate = () =>{
+  const disabledUrls = ['/dashboards/rezervasyon-analiz'];
+  return disabledUrls.includes(route.path);
+}
 const router = useRouter()
 const logOut = () => {
   localStorage.removeItem('userData')
@@ -84,7 +89,7 @@ document.addEventListener('visibilitychange', handleVisibilityChange);
         <!-- Otel türleri -->
         <NavbarHotelTypes />
         <!-- date picker -->
-        <NavBarDatePicker v-if="!disabledDatePicker()"/>
+        <NavBarDatePicker v-if="!disabledDatePicker()" :nextDate="disabledNextDate()"/>
         <VSpacer />
         <NavbarThemeSwitcher class="me-1" />
         <NavbarLogOut />

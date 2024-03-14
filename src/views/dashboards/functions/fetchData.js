@@ -49,6 +49,17 @@ export const callRezervMiktari = (dateRange, hotelids, isLocal) => {
     }).catch(d => console.log(d));
 }
 
+export const rezervMikariOran = (dateRange, hotelids, isLocal) => {
+    dateRange = dates.findLastMonthArray(dateRange)
+    axios.request(configs.rezervMiktariConfig(dateRange, hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem("lastMonthRezMiktar", JSON.stringify(r.data))
+        }else{
+            store.commit("changeLastMonthRezervMiktarOran", r.data)
+        }
+    })
+}
+
 export const callKanalRezDagilim = (dateRange, hotelids, isLocal) => {
     store.commit("changeKanalRezDagilimLoader", 0)
     axios.request(configs.kanallaraRezDagilimConfig(dateRange, hotelids)).then((r) => {
@@ -61,6 +72,17 @@ export const callKanalRezDagilim = (dateRange, hotelids, isLocal) => {
             store.state.selectedHotels != 'No Hotel' ? store.commit("changeKanalRezDagilimLoader",1) : store.commit("changeKanalRezDagilimLoader", 0)
         }
     }).catch(d => console.log(d));
+}
+
+export const lastMonthOnlineRezMiktari = (dateRange, hotelids, isLocal) => {
+    dateRange = dates.findLastMonthArray(dateRange)
+    axios.request(configs.onlineRezervMiktariConfig(dateRange, hotelids)).then((r)=>{
+        if(isLocal){
+            localStorage.setItem('lastMonthOnlineRez', JSON.stringify(r.data))
+        }else{
+            store.commit("changeLastMonthOnlineRez", r.data)
+        }
+    })
 }
 
 export const callOnlineRezMiktari = (dateRange, hotelids, isLocal) => {

@@ -5,17 +5,26 @@ import { ref, watch } from "vue";
 import * as fetchData from "@/views/dashboards/functions/fetchData";
 import { store } from "@/store/index";
 
+const props = defineProps({
+  nextDate: Boolean,
+})
+
+
+
 const datePickerOpen = ref(false);
 
 let dateRange = ref(
-  store.state.dateCount >= 1 ? store.state.dateRange : dates.findYesterdayDate() + " to " + dates.findYesterdayDate()
+  props.nextDate ? dates.findYesterdayDate() + " to " + dates.findYesterdayDate() : store.state.dateCount >= 1 ? store.state.dateRange : dates.findYesterdayDate() + " to " + dates.findYesterdayDate()
 );
 let isPersistent = ref(true);
 
-const handleUpdateDate = (newValue) => {
-  
-  datePickerOpen.value = false;
+let today = dates.findYesterdayDate();
+const minAllowedDate = today;
+const maxAllowedDate = today;
 
+const handleUpdateDate = (newValue) => {
+  //console.log("props değer ==> ", props.nextDate)
+  datePickerOpen.value = false;
   let hotelids = [22964, 22966];
   let d_range = newValue.includes("to")
     ? dates.findBetweenDates(
@@ -23,9 +32,6 @@ const handleUpdateDate = (newValue) => {
         dateRange.value.split(" to ")[1]
       )
     : [newValue];
-
-    // let cont = d_range != 
-
   // D_range Uzunluk sayısı verilerin oranlarında kullanılıyor
   store.commit("changeDateRange", dateRange.value)
   store.commit("changeDateCount", d_range.length)
@@ -41,11 +47,17 @@ const handleUpdateDate = (newValue) => {
   // Genel Rezerv (Rezerv Miktarı)
   fetchData.callRezervMiktari(d_range, hotelids);
 
+  //Rezervasyon Analiz - Genel Rezerv (Rezerv Miktarı) Oran
+  fetchData.rezervMikariOran(d_range, hotelids)
+
   // Kanallara Rezervasyon Dağılımı
   fetchData.callKanalRezDagilim(d_range, hotelids);
 
   // Online Rezerv Miktarı
   fetchData.callOnlineRezMiktari(d_range, hotelids);
+
+  //Rezervasyon Analiz - Online Rezerv Miktarı Yüzdelik oran
+  fetchData.lastMonthOnlineRezMiktari(d_range,hotelids)
 
   // Doluluk
   fetchData.callGecelemeMiktari(d_range, hotelids);
@@ -151,7 +163,7 @@ const toggleDatePicker = () => {
           </VBtn>
           <AppDateTimePicker
             v-model="dateRange"
-            :config="{ mode: 'range' }"
+            :config="{ mode: 'range', maxDate: props.nextDate ? maxAllowedDate : '' }"
             placeholder="Tarih Seçiniz"
           />
         </VCardText>

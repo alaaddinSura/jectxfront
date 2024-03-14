@@ -309,6 +309,29 @@ export function findLastMonth(currentDate){
   return year + '-' + month
 }
 
+export function findLastMonthArray(currentDateArray){
+  if (!Array.isArray(currentDateArray)) {
+    console.error('currentDateArray is not an array!');
+    return [];
+  }
+
+  const lastMonthArray = currentDateArray.map(currentDate => {
+    const [year, month, day] = currentDate.split('-');
+  
+    let previousYear = year;
+    let previousMonth = Number(month) - 1;
+  
+    if (previousMonth === 0) {
+      previousYear--;
+      previousMonth = 12;
+    }
+
+    return `${previousYear}-${String(previousMonth).padStart(2, '0')}-${day}`;
+  });
+
+  return lastMonthArray;
+}
+
 export function findBetweenDates(startDate, endDate){
     let tarih1 = startDate
     let tarih2 = endDate

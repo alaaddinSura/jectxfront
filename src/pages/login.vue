@@ -51,11 +51,17 @@ const login = () => {
         //Rezerv Miktarı        
         fetchData.callRezervMiktari(dateRange,hotelids,true)
 
+        //Rezervasyon Analiz Rezerv Miktarı Oran
+        fetchData.rezervMikariOran(dateRange,hotelids,true)
+
         //Kanalara rezervasyon Dağılım
         fetchData.callKanalRezDagilim(dateRange, hotelids, true)
 
         //Online Rezervasyon Miktarı
         fetchData.callOnlineRezMiktari(dateRange, hotelids, true)
+
+        //Rezervasyon Analiz - Online Rezervasyon Miktarı Yüzdelik Oran
+        fetchData.lastMonthOnlineRezMiktari(dateRange, hotelids, true)
 
         //Geceleme Miktarı (Doluluk)
         fetchData.callGecelemeMiktari(dateRange, hotelids, true)
