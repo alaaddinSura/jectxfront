@@ -23,11 +23,25 @@ export const emailValidator = value => {
 export const passwordValidator = password => {
   const regExp = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_!?@#$%&*()]).{8,}/
   const validPassword = regExp.test(password)
-  
+  //console.log("ValidePassword ==> ", validPassword)
   return (
     // eslint-disable-next-line operator-linebreak
     validPassword ||
         'Field must contain at least one uppercase, lowercase, special character and digit with min 8 chars')
+}
+
+export const customPasswordValidator = password => {
+  // Şifre, en az bir rakam, bir küçük harf, bir büyük harf ve bir özel karakter içermelidir.
+  const hasLowerCase = /[a-z]/.test(password);
+  const hasUpperCase = /[A-Z]/.test(password);
+  const hasNumber = /\d/.test(password);
+  const hasSpecialChar = /[-_!?@#$%&*()]/.test(password);
+
+  // Tüm koşulların sağlanıp sağlanmadığı kontrol edilir.
+  const isValid = hasLowerCase && hasUpperCase && hasNumber && hasSpecialChar && password.length >= 8;
+
+  // isValid true ise şifre uyumludur, değilse uyumsuzdur.
+  return isValid || 'Field must contain at least one uppercase, lowercase, special character, and digit with min 8 chars';
 }
 
 // 👉 Confirm Password Validator

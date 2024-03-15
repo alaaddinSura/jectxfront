@@ -8,6 +8,7 @@ import {
   emailValidator,
   passwordValidator,
   requiredValidator,
+  customPasswordValidator,
 } from '@validators'
 
 const form = ref({ email: '', password: '', password2: '', message: '', showMessage: false })
@@ -17,35 +18,62 @@ const router = useRouter();
 
 const reset = () => {
 
-  const token = location.href.split('?')[1]
-  if(form.value.password == form.value.password2){
-    console.log('Form is valid, sending request...');
-    axios.post(' https://suraanaliz-05a6f1924519.herokuapp.com/updatepassword?email=' + form.value.email + '&password=' + form.value.password + '&' + token)
-      .then(r => {
+  console.log("Beni kullanıyorsun")
+   const token = location.href.split('?')[1]
+   if(form.value.password == form.value.password2){
+     axios.post(' https://suraanaliz-05a6f1924519.herokuapp.com/updatepassword?email=' + form.value.email + '&password=' + form.value.password + '&' + token)
+       .then(r => {
       
-        form.value.email = ''
-        form.value.password = ''
-        form.value.password2 = ''
-        form.value.message = r.data.status != 'error' ? 'Şifre Oluşturuldu' : 'Şifre Oluşturulamadı'
-        form.value.showMessage = true
-        router.replace(route.query.to ? String(route.query.to) : "/login");
-      })
-      .catch(e => {
-        form.value.email= ''
-        form.value.password = ''
-        form.value.password2 = ''
-        form.value.message = 'Şifre Oluşturulamadı'
-        form.value.showMessage = true
-        console.log(e)
-      })
-  }
-  else{
-    form.value.showMessage = true
-    form.value.message = 'Şifreler Uyuşmuyor'
-  }
+         form.value.email = ''
+         form.value.password = ''
+         form.value.password2 = ''
+         form.value.message = r.data.status != 'error' ? 'Şifre Oluşturuldu' : 'Şifre Oluşturulamadı'
+         form.value.showMessage = true
+         console.log("Şifre Oluşturuldu")
+         router.replace(route.query.to ? String(route.query.to) : "/login");
+       })
+       .catch(e => {
+         form.value.email= ''
+         form.value.password = ''
+         form.value.password2 = ''
+         form.value.message = 'Şifre Oluşturulamadı'
+         console.log(form.value.message)
+         form.value.showMessage = true
+         console.log(e)
+       })
+   }
+   else{
+     form.value.showMessage = true
+     form.value.message = 'Şifreler Uyuşmuyor'
+   }
 }
-let isPassword = ref('')
-console.log("form value password ==> ", isPassword.value)
+
+// let buttonDisabled = computed(()=>{
+//   let password1 = form.value.password
+//   let password2 = form.value.password2
+//   if(password1 === password2){
+//     return false
+//   }
+//   return true
+// })
+// const handleInput = (field, event) => {
+//   form.value[field] = event.target.value;
+//   //console.log(`${field} değeri:`, form.value[field]);
+
+// const isPasswordValid = passwordValidator(form.value.password);
+// const isPassword2Valid = passwordValidator(form.value.password2);
+// const isRequiredValid = requiredValidator(form.value[field]);
+
+// //console.log(isPasswordValid && isPassword2Valid ? true : false);
+// }
+
+// if (form.value.password === form.value.password2) {
+//       buttonDisabled.value = false;
+//       console.log('Şifreler birbirine eşit.');
+//     } else {
+//       buttonDisabled.value = true;
+//       console.log('Şifreler birbirine eşit değil.');
+//     }
 </script>
 
 <template>
@@ -110,6 +138,7 @@ console.log("form value password ==> ", isPassword.value)
                   label="Confirm Password"
                   type="password"
                   :rules="[requiredValidator, passwordValidator]"
+                  
                 />
               </VCol>
               <!-- reset password -->

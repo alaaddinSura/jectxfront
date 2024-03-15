@@ -162,6 +162,7 @@ const toggleDatePicker = () => {
             Raporla
           </VBtn>
           <AppDateTimePicker
+            label="Range"
             v-model="dateRange"
             :config="{ mode: 'range', maxDate: props.nextDate ? maxAllowedDate : '' }"
             placeholder="Tarih Seçiniz"

@@ -227,11 +227,11 @@ const totalEarnings = computed(() => {
 
 <template>
   <VCard>
-    <VCardItem class="pb-0">
+    <VCardItem class="">
       <VCardTitle>İptal Edilebilir Analiz</VCardTitle>
 
       <div class="d-flex align-center mt-2">
-        <h4 class="text-h3 me-2" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 1">
+        <h4 class="text-4xl me-2" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 1">
           {{ NRFORAN.ORAN }}%
         </h4>
         <h4 class="text-h3 me-2" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 0">
@@ -258,7 +258,7 @@ const totalEarnings = computed(() => {
           <VListItemTitle class="font-weight-medium">
             {{ earning.title }}
           </VListItemTitle>
-          <VListItemSubtitle class="text-disabled">
+          <VListItemSubtitle class="opacity-100 text-disabled">
             {{ earning.subtitle }}
           </VListItemSubtitle>
 
@@ -273,8 +273,8 @@ const totalEarnings = computed(() => {
           </template>
 
           <template #append>
-            <span class="text-success font-weight-medium" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 1">{{ earning.earning }}</span>
-            <span class="text-success font-weight-medium" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 0"><Loader style="margin-left: 60px"/></span>
+            <span :class="'text-'+earning.avatarColor" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 1">{{ earning.earning }}</span>
+            <span class="text-success" v-if="store.state.iptalEdilebilirAnalizGunlukLoader == 0"><Loader style="margin-left: 60px"/></span>
           </template>
         </VListItem>
       </VList>

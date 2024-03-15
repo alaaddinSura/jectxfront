@@ -22,6 +22,26 @@ const { appRouteTransition, isLessThanOverlayNavBreakpoint } = useThemeConfig()
 const { width: windowWidth } = useWindowSize()
 import { useRouter } from 'vue-router'
 
+let userData = JSON.parse(localStorage.getItem("userData"));
+console.log("Kim bu ==> ", JSON.parse(localStorage.getItem("userAbilities")))
+console.log("Kim bu2 ==> ", JSON.parse(localStorage.getItem("userData")))
+console.log("Kim bu3 ==> ", JSON.parse(localStorage.getItem("accessToken")))
+
+let isAdmin = 'admin'
+//let adminRole = userData.filter(item => isAdmin.includes(item.role))
+// const hasRole = (role) => {userData && userData.includes(role)}
+// let admin = hasRole('admin')
+//console.log("hasRole => ", adminRole)
+console.log("role => ", userData.role === 'admin' ? "Evet Bu Bir Admin" : "Hayır bu köylü")
+
+const filteredNavItems = navItems.filter(item => {
+  if (item.roles && item.roles.includes('admin')) {
+    return hasRole('admin');
+  }
+  return true;
+});
+
+
 const disabledDatePicker = () =>{
   const disabledUrls = ['/dashboards/rezervasyon-gecmis', '/dashboards/rezervasyon-gelir'];
   if (disabledUrls.includes(route.path)) {
@@ -67,7 +87,7 @@ document.addEventListener('visibilitychange', handleVisibilityChange);
 </script>
 
 <template>
-  <VerticalNavLayout :nav-items="navItems">
+  <VerticalNavLayout :nav-items="filteredNavItems">
     <!-- 👉 navbar -->
     <template #navbar="{ toggleVerticalOverlayNavActive }">
       <div class="d-flex h-100 align-center">
