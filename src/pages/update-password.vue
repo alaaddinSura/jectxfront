@@ -16,68 +16,58 @@ const form = ref({ email: '', password: '', password2: '', message: '', showMess
 const route = useRoute();
 const router = useRouter();
 
-const reset = () => {
+let routeLogin = ref(true)
 
-  console.log("Beni kullanıyorsun")
-   const token = location.href.split('?')[1]
-   if(form.value.password == form.value.password2){
-     axios.post(' https://suraanaliz-05a6f1924519.herokuapp.com/updatepassword?email=' + form.value.email + '&password=' + form.value.password + '&' + token)
-       .then(r => {
-      
-         form.value.email = ''
-         form.value.password = ''
-         form.value.password2 = ''
-         form.value.message = r.data.status != 'error' ? 'Şifre Oluşturuldu' : 'Şifre Oluşturulamadı'
-         form.value.showMessage = true
-         console.log("Şifre Oluşturuldu")
-         router.replace(route.query.to ? String(route.query.to) : "/login");
-       })
-       .catch(e => {
-         form.value.email= ''
-         form.value.password = ''
-         form.value.password2 = ''
-         form.value.message = 'Şifre Oluşturulamadı'
-         console.log(form.value.message)
-         form.value.showMessage = true
-         console.log(e)
-       })
-   }
-   else{
-     form.value.showMessage = true
-     form.value.message = 'Şifreler Uyuşmuyor'
-   }
+const reset = () => {
+    const token = location.href.split('?')[1]
+    if(form.value.password == form.value.password2){
+      axios.post(' https://suraanaliz-05a6f1924519.herokuapp.com/updatepassword?email=' + form.value.email + '&password=' + form.value.password + '&' + token)
+        .then(r => {
+  
+          form.value.email = ''
+          form.value.password = ''
+          form.value.password2 = ''
+          form.value.message = r.data.status != 'error' ? 'Şifre Oluşturuldu' : 'Şifre Oluşturulamadı'
+          form.value.showMessage = true
+          routeLogin.value = false
+          console.log("routeLogin ==> ", routeLogin.value)
+          console.log("Şifre Oluşturulmuştur.")
+          //router.replace(route.query.to ? String(route.query.to) : "/login");
+        })
+        .catch(e => {
+          form.value.email= ''
+          form.value.password = ''
+          form.value.password2 = ''
+          form.value.message = 'Şifre Oluşturulamadı'
+          form.value.showMessage = true
+          console.log("routeLogin ==> ", routeLogin.value)
+        })
+    }
+    else{
+      form.value.showMessage = true
+      form.value.message = 'Şifreler Uyuşmuyor'
+    } 
 }
 
-// let buttonDisabled = computed(()=>{
-//   let password1 = form.value.password
-//   let password2 = form.value.password2
-//   if(password1 === password2){
-//     return false
-//   }
-//   return true
-// })
-// const handleInput = (field, event) => {
-//   form.value[field] = event.target.value;
-//   //console.log(`${field} değeri:`, form.value[field]);
 
-// const isPasswordValid = passwordValidator(form.value.password);
-// const isPassword2Valid = passwordValidator(form.value.password2);
-// const isRequiredValid = requiredValidator(form.value[field]);
 
-// //console.log(isPasswordValid && isPassword2Valid ? true : false);
-// }
+ let buttonDisabled = computed(()=>{
+   let password1 = form.value.password
+   let password2 = form.value.password2
+   if(password1 === password2){
+     if(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_!?@#$%&*()]).{8,}$/.test(password1) && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[-_!?@#$%&*()]).{8,}$/.test(password2)){
+      
+      return false
+     }
+   }
+   return true
+ })
 
-// if (form.value.password === form.value.password2) {
-//       buttonDisabled.value = false;
-//       console.log('Şifreler birbirine eşit.');
-//     } else {
-//       buttonDisabled.value = true;
-//       console.log('Şifreler birbirine eşit değil.');
-//     }
+ console.log("routeLogin Gösterme ==> ",routeLogin.value)
 </script>
 
 <template>
-  <div class="auth-wrapper d-flex align-center justify-center pa-4">
+  <div class="auth-wrapper d-flex align-center justify-center pa-4" v-if="routeLogin">
     <div class="position-relative my-sm-16">
       <!-- 👉 Top shape -->
       <VNodeRenderer
@@ -149,6 +139,7 @@ const reset = () => {
                 <VBtn
                   block
                   type="submit"
+                  :disabled="buttonDisabled"
                   >
                   Şifreyi Kaydet
                 </VBtn>
@@ -173,10 +164,74 @@ const reset = () => {
       </VCard>
     </div>
   </div>
+
+  <div v-else>
+   <div class="auth-wrapper d-flex align-center justify-center pa-4">
+    <div class="position-relative my-sm-16">
+      <!-- 👉 Top shape -->
+      <VNodeRenderer
+        :nodes="h('div', { innerHTML: authV1TopShape })"
+        class="text-primary auth-v1-top-shape d-none d-sm-block"
+      />
+
+      <!-- 👉 Bottom shape -->
+      <VNodeRenderer
+        :nodes="h('div', { innerHTML: authV1BottomShape })"
+        class="text-primary auth-v1-bottom-shape d-none d-sm-block"
+      />
+
+      <!-- 👉 Auth card -->
+      <VCard
+        class="auth-card pa-4"
+        max-width="448"
+      >
+        <VCardItem class="justify-center">
+          <template #prepend>
+            <div class="d-flex">
+              <VNodeRenderer :nodes="themeConfig.app.logo" />
+            </div>
+          </template>
+
+          <VCardTitle class="font-weight-bold text-capitalize text-h5 py-1">
+            {{ themeConfig.app.title }}
+          </VCardTitle>
+        </VCardItem>
+
+        <VCardText class="pt-2">
+          <h5 class="text-h5 mb-3">
+            Şifreniz Başarıyla Yenilenmiştir
+          </h5>
+          <p class="mb-0">
+            Şifreniz yenilenmiştir. Devam etmek için aşağıdaki Giriş Sayfası tuşuna basarak yeni şifreniz ile giriş sağlayabilirsiniz
+          </p>
+        </VCardText>
+
+        <VCardText>
+            <VRow>
+              <VCol cols="12">
+                
+                <RouterLink
+                  class="d-flex align-center justify-center"
+                  :to="{ name: 'login' }"
+                >
+                <VBtn
+                  block
+                  >
+                  Giriş Sayfası
+                </VBtn>
+              </RouterLink>
+              </VCol>
+            </VRow>
+        </VCardText>
+      </VCard>
+    </div>
+   </div>
+  </div>
 </template>
 
 <style lang="scss">
 @use "@core/scss/template/pages/page-auth.scss";
+
 </style>
 
 <route lang="yaml">

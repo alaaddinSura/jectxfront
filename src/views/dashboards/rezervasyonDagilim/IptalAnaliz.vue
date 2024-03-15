@@ -44,7 +44,7 @@ const statistics = computed(()=>{
 <template>
   <Bar
     :data="statistics"
-    title="İptal Analiz"
+    title="Doluluk İptal Analiz"
     :loader="store.state.iptalAnalizLoader"
   />
 </template>
