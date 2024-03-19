@@ -33,15 +33,16 @@ const errors = ref({
 const isPasswordVisible = ref(false);
 
 const login = () => {
-  axios
-    .post(
-      "https://suraanaliz-05a6f1924519.herokuapp.com/login?email=" +
-        form.value.email +
-        "&password=" +
-        form.value.password
-    )
+  const url = 'https://jectxbackend-672789bf3678.herokuapp.com/login';
+  const data = {
+  email: form.value.email,
+  password: form.value.password
+};
+  axios.post(url, data)
     .then((r) => {
-      form.value.isValid = r.data.isValid;
+      form.value.showMessage = true;
+      form.value.isValid = true;
+      
       if (form.value.isValid) {
         form.value.showMessage = false;
 
@@ -171,9 +172,11 @@ const login = () => {
         router.replace(route.query.to ? String(route.query.to) : "/");
       } else {
         form._value.showMessage = true;
+        console.log("Buraya Giriyor")
       }
     })
     .catch((e) => {
+      form.value.showMessage = true
       console.log(e);
     });
 };
@@ -268,7 +271,7 @@ const onSubmit = () => {
                 </div>
 
                 <!-- login button -->
-                <div v-if="form.showMessage">
+                <div v-if="form.showMessage" class="text-error">
                   Kullanıcı Adı ya da Şifresi Hatalı/Mevcut Değil
                 </div>
                 <VBtn block type="submit"> Login </VBtn>

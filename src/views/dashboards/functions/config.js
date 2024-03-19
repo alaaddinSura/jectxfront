@@ -270,3 +270,20 @@ export const callrezIptalAnaliz = (dateRange, hotelidArray) => {
   })
   return config(url, data)
 }
+
+export const callUpdatePassword = (token, password) =>{
+  const url = 'https://jectxbackend-672789bf3678.herokuapp.com/updatepassword';
+  let data = JSON.stringify({
+    "token": token,
+    "password": password
+  })
+  return config(url, data)
+}
+
+export const callForgotPassword = (email) => {
+  const url = 'https://jectxbackend-672789bf3678.herokuapp.com/forgetPassword'
+  let data = JSON.stringify({
+    "mail": email,
+  })
+  return config(url,data)
+}

@@ -1,59 +1,35 @@
 <script setup>
-import VDataTable from '@/views/dashboards/stats/VDataTable.vue';
+import VDataTable from "@/views/dashboards/stats/VDataTable.vue";
+import { ref } from "vue";
 
-let headers = ['Name', 'Calories', 'Cats']
+const menu = ref(false);
+const date = ref(null);
 
-let items = [
-    {
-        name: 'Frozen Yogurt',
-        calories: 159,
-        cats: 'diet',
-    },
-    {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        cats: 'dies'
-    },
-    {
-        name: 'Eclair',
-        calories: 262,
-        cats: 'asd'
-    },
-    {
-        name: 'Frozen Yogurt',
-        calories: 159,
-        cats: 'diet',
-    },
-    {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        cats: 'dies'
-    },
-    {
-        name: 'Eclair',
-        calories: 262,
-        cats: 'asd'
-    },
-    {
-        name: 'Frozen Yogurt',
-        calories: 159,
-        cats: 'diet',
-    },
-    {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        cats: 'dies'
-    },
-    {
-        name: 'Eclair',
-        calories: 262,
-        cats: 'asd'
-    },
-]
+console.log("date ==> ", date);
 
+let isPersistent = ref(true);
+const datePickerOpen = ref(false);
 </script>
 
 <template>
-    <VIcon :icon="'flag-ad-1x1'"/>
-    <VIcon :icon="'flag-us-4x3'"/>
+  <VMenu
+    :close-on-content-click="false"
+    :persistent="isPersistent"
+    v-model="datePickerOpen"
+  >
+    <template #activator="{ props }">
+      <IconBtn v-bind="props">
+        <VIcon icon="tabler-calendar-down" />
+      </IconBtn>
+    </template>
+    <VCard width="300" v-show="datePickerOpen">
+        <VCardText>
+      <AppDateTimePicker
+        v-model="date"
+        :config="{ mode: 'range' }"
+        placeholder="Select date"
+      />
+    </VCardText>
+    </VCard>
+  </VMenu>
 </template>

@@ -648,3 +648,17 @@ export const rezMiktarIptalAnaliz= (dateRange, hotelids, isLocal) =>{
         }
     })
 }
+
+export const updatePassword = (token, password) =>{
+    axios.request(configs.callUpdatePassword(token,password)).then((r)=>{
+    }).catch((error)=>{
+        console.log("Update Password ==> ", error);
+    })
+}
+
+export const forgotPassword = (email) => {
+    axios.request(configs.callForgotPassword(email)).then((r)=>{
+    }).catch((error) =>{
+        console.log("Forgot Password ==> ", error)
+    })
+}

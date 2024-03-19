@@ -10,43 +10,24 @@ import {
   requiredValidator,
   customPasswordValidator,
 } from '@validators'
+import { useRoute, useRouter } from 'vue-router'
+import * as fetchData from "@/views/dashboards/functions/fetchData"
 
-const form = ref({ email: '', password: '', password2: '', message: '', showMessage: false })
-
+const router = useRouter()
 const route = useRoute();
-const router = useRouter();
+const queryParams = route.query
 
+if(!queryParams.hasOwnProperty('token')){
+  router.replace('/login')
+}
+const form = ref({ email: '', password: '', password2: '', message: '', showMessage: false })
 let routeLogin = ref(true)
-
 const reset = () => {
-    const token = location.href.split('?')[1]
-    if(form.value.password == form.value.password2){
-      axios.post(' https://suraanaliz-05a6f1924519.herokuapp.com/updatepassword?email=' + form.value.email + '&password=' + form.value.password + '&' + token)
-        .then(r => {
-  
-          form.value.email = ''
-          form.value.password = ''
-          form.value.password2 = ''
-          form.value.message = r.data.status != 'error' ? 'Şifre Oluşturuldu' : 'Şifre Oluşturulamadı'
-          form.value.showMessage = true
-          routeLogin.value = false
-          console.log("routeLogin ==> ", routeLogin.value)
-          console.log("Şifre Oluşturulmuştur.")
-          //router.replace(route.query.to ? String(route.query.to) : "/login");
-        })
-        .catch(e => {
-          form.value.email= ''
-          form.value.password = ''
-          form.value.password2 = ''
-          form.value.message = 'Şifre Oluşturulamadı'
-          form.value.showMessage = true
-          console.log("routeLogin ==> ", routeLogin.value)
-        })
-    }
-    else{
-      form.value.showMessage = true
-      form.value.message = 'Şifreler Uyuşmuyor'
-    } 
+    let token = location.href.split('?')[1]
+    let tokenData = String(token.split('token=')[1])
+    let password = form.value.password
+    fetchData.updatePassword(tokenData,password)
+    routeLogin.value = false
 }
 
 
@@ -62,8 +43,6 @@ const reset = () => {
    }
    return true
  })
-
- console.log("routeLogin Gösterme ==> ",routeLogin.value)
 </script>
 
 <template>

@@ -27,7 +27,7 @@ export const passwordValidator = password => {
   return (
     // eslint-disable-next-line operator-linebreak
     validPassword ||
-        'Field must contain at least one uppercase, lowercase, special character and digit with min 8 chars')
+        'Alana en az bir büyük harf, küçük harf, özel karakter ve en az 8 karakterden oluşan rakam içermelidir')
 }
 
 export const customPasswordValidator = password => {

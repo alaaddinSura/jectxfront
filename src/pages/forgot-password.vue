@@ -7,6 +7,7 @@ import axios from "axios"
 import {
   emailValidator
 } from '@validators'
+import * as fetchData from "@/views/dashboards/functions/fetchData"
 
 const form = ref({email: '',message: '',showMessage: false })
 
@@ -21,20 +22,11 @@ const submit = () =>{
     form.value.showMessage = true;
     return; // Boş e-posta gönderisini işleme gerek yok
   }
-
-  axios.post('https://suraanaliz-05a6f1924519.herokuapp.com/forgot-password?mail='+form.value.email).then(r=>{
-    console.log(r.data)
-    const status = r.data.status
-    if(status == 'Token sent'){
-      form.value.message = 'Email gönderildi'
-      routeLogin.value = false
-    }else if(status == 'Kayıtsız Mail'){
-      routeLogin.value = false
-      form.value.message = "Kayıtsız Mail"
-    }
-  })
+  let email = form.value.email
+  fetchData.forgotPassword(email);
   form.value.email = ''
-  form.value.showMessage = true
+  form.value.showMessage = false
+  routeLogin.value = false
 }
 
 let buttonDisabled = computed(()=>{

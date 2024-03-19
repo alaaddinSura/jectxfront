@@ -14,7 +14,7 @@ import { VerticalNavLayout } from '@layouts'
 import { useRoute } from 'vue-router'
 
 const route = useRoute();
-
+console.log("route ==> ", route.path)
 const now = new Date()
 const dateRange = ref('')
 
@@ -43,7 +43,7 @@ const filteredNavItems = navItems.filter(item => {
 
 
 const disabledDatePicker = () =>{
-  const disabledUrls = ['/dashboards/rezervasyon-gecmis', '/dashboards/rezervasyon-gelir'];
+  const disabledUrls = ['/dashboards/rezervasyon-gecmis', '/dashboards/rezervasyon-gelir','/dashboards/deneme'];
   if (disabledUrls.includes(route.path)) {
     return true; // NavbarDatePicker engellenir
   } else {
