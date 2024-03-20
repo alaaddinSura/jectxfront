@@ -9,6 +9,7 @@ import {
   passwordValidator,
   requiredValidator,
   customPasswordValidator,
+  confirmedValidator
 } from '@validators'
 import { useRoute, useRouter } from 'vue-router'
 import * as fetchData from "@/views/dashboards/functions/fetchData"
@@ -24,6 +25,9 @@ if(!queryParams.hasOwnProperty('token')){
 }
 const form = ref({ email: '', password: '', password2: '', message: '', showMessage: false })
 let routeLogin = ref(true)
+const isPasswordVisible = ref(false);
+const isPasswordVisibleSecond = ref(false);
+
 const reset = () => {
     let token = location.href.split('?')[1]
     let tokenData = String(token.split('token=')[1])
@@ -94,8 +98,12 @@ const reset = () => {
                   v-model="form.password"
                   autofocus
                   label="New Password"
-                  type="password"
-                  :rules="[requiredValidator, passwordValidator]"
+                  :type="isPasswordVisible ? 'text' : 'password'"
+                  :rules="[ requiredValidator, passwordValidator]"
+                  :append-inner-icon="
+                    isPasswordVisible ? 'tabler-eye' : 'tabler-eye-off'  
+                  "
+                  @click:append-inner="isPasswordVisible = !isPasswordVisible"
                 />
               </VCol>
               <!-- password_2 -->
@@ -104,9 +112,12 @@ const reset = () => {
                   v-model="form.password2"
                   autofocus
                   label="Confirm Password"
-                  type="password"
-                  :rules="[requiredValidator, passwordValidator]"
-                  
+                  :type="isPasswordVisibleSecond ? 'text' : 'password'"
+                  :rules="[confirmedValidator(form.password2, form.password)]"
+                  :append-inner-icon="
+                  isPasswordVisibleSecond ? 'tabler-eye' : 'tabler-eye-off'  
+                  "
+                  @click:append-inner="isPasswordVisibleSecond = !isPasswordVisibleSecond"
                 />
               </VCol>
               <!-- reset password -->

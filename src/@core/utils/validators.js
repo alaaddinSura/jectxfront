@@ -45,7 +45,7 @@ export const customPasswordValidator = password => {
 }
 
 // 👉 Confirm Password Validator
-export const confirmedValidator = (value, target) => value === target || 'The Confirm Password field confirmation does not match'
+export const confirmedValidator = (value, target) => value === target || 'Parolanız Eşleşmiyor'
 
 // 👉 Between Validator
 export const betweenValidator = (value, min, max) => {

@@ -136,7 +136,7 @@ function clickHandler(){
             Lütfen Kayıtlı Mail Adresi Giriniz
            </h5>
            <p class="mb-0">
-            Bu mail adresi sistemimizde kayıtlı değildir. Lütfen yöneticiniz ile konuşup bu durumu yöneticinize bildirin.
+            Bu mail adresi sistemimizde kayıtlı değildir.
            </p>
          </VCardText>
 
