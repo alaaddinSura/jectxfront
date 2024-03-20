@@ -78,6 +78,14 @@ export const store = createStore({
     rezMiktarAnalizLoader: [1],
     //Rezervasyon Analiz - İptal Analiz
     rezMiktarIptalAnalizLoader: [1],
+    //Forgot Password
+    isForgotMailWrongLoader: [1],
+    //Update Password
+    isUpdatePasswordTokenActiveLoader: [1],
+    //Hatalar
+    //Forgot Password Hata
+    isForgotMailWrong: true,
+    isUpdatePasswordTokenActive: true,
   },
   getters: {},
   mutations: {
@@ -241,7 +249,21 @@ export const store = createStore({
     },//Rezervasyon Analiz - İptal Analiz
     changeRezMiktarIptalAnalizLoader(state,payload){
       state.rezMiktarIptalAnalizLoader = payload;
+    },// Forgot Password
+    changeisForgotMailWrongLoader(state,payload){
+      state.isForgotMailWrongLoader = payload
+    },//Update Password
+    changeisUpdatePasswordTokenActiveLoader(state,payload){
+      state.isUpdatePasswordTokenActiveLoader = payload;
     },
+     //Hatalar
+     //Forgot Password
+     changeisForgotMailrong(state,payload){
+       state.isForgotMailWrong = payload;
+     },//Update Password Token Active
+     changeisUpdatePasswordTokenActive(state,payload){
+      state.isUpdatePasswordTokenActive = payload;
+     }
   },
   actions: {},
 })

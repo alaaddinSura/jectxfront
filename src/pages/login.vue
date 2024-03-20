@@ -172,7 +172,6 @@ const login = () => {
         router.replace(route.query.to ? String(route.query.to) : "/");
       } else {
         form._value.showMessage = true;
-        console.log("Buraya Giriyor")
       }
     })
     .catch((e) => {

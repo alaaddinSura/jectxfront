@@ -650,15 +650,29 @@ export const rezMiktarIptalAnaliz= (dateRange, hotelids, isLocal) =>{
 }
 
 export const updatePassword = (token, password) =>{
+    store.commit("changeisUpdatePasswordTokenActiveLoader",0)
     axios.request(configs.callUpdatePassword(token,password)).then((r)=>{
+        let rData = r.data
+        let message = rData.message === 'Password updated successfully' ? false : true
+        store.commit("changeisUpdatePasswordTokenActive",message)
+        store.commit("changeisUpdatePasswordTokenActiveLoader",1)
     }).catch((error)=>{
-        console.log("Update Password ==> ", error);
+        let message = error.message === 'Mail sent successfully' ? false : true
+        store.commit("changeisUpdatePasswordTokenActive",message)
+        store.commit("changeisUpdatePasswordTokenActiveLoader",1)
     })
 }
 
 export const forgotPassword = (email) => {
+    store.commit("changeisForgotMailWrongLoader",0)
     axios.request(configs.callForgotPassword(email)).then((r)=>{
+        let rData = r.data
+        let message = rData.message === 'Mail sent successfully' ? false : true
+        store.commit("changeisForgotMailrong",message)
+        store.commit("changeisForgotMailWrongLoader",1)
     }).catch((error) =>{
-        console.log("Forgot Password ==> ", error)
+        let message = error.message === 'Mail sent successfully' ? false : true
+        store.commit("changeisForgotMailrong",message)
+        store.commit("changeisForgotMailWrongLoader",1)
     })
 }

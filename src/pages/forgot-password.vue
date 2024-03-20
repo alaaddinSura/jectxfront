@@ -8,6 +8,8 @@ import {
   emailValidator
 } from '@validators'
 import * as fetchData from "@/views/dashboards/functions/fetchData"
+import { store } from '@/store/index'
+import Loader from "@/views/dashboards/functions/loader.vue"
 
 const form = ref({email: '',message: '',showMessage: false })
 
@@ -16,16 +18,18 @@ const router = useRouter();
 
 let routeLogin = ref(true)
 
+
 const submit = () =>{
-  if (!form.value.email.trim()) {
-    form.value.message = 'Mail Giriniz';
-    form.value.showMessage = true;
-    return; // Boş e-posta gönderisini işleme gerek yok
-  }
-  let email = form.value.email
-  fetchData.forgotPassword(email);
+  // if (!form.value.email.trim()) {
+  //   form.value.message = 'Mail Giriniz';
+  //   form.value.showMessage = true;
+  //   return; // Boş e-posta gönderisini işleme gerek yok
+  // }
+  const email = form.value.email
+  fetchData.forgotPassword(email)
   form.value.email = ''
   form.value.showMessage = false
+  console.log("store state forgot mail Container ==> ", store.state.isForgotMailWrong)
   routeLogin.value = false
 }
 
@@ -113,7 +117,7 @@ function clickHandler(){
        <!-- 👉 Auth card -->
        <VCard
          class="auth-card pa-4"
-         max-width="448"
+         max-width="448" v-if="store.state.isForgotMailWrongLoader == 1"
        >
          <VCardItem class="justify-center">
            <template #prepend>
@@ -127,7 +131,16 @@ function clickHandler(){
            </VCardTitle>
          </VCardItem>
  
-         <VCardText class="pt-2">
+         <VCardText class="pt-2" v-if="store.state.isForgotMailWrong">
+          <h5 class="text-h5 mb-3">
+            Lütfen Kayıtlı Mail Adresi Giriniz
+           </h5>
+           <p class="mb-0">
+            Bu mail adresi sistemimizde kayıtlı değildir. Lütfen yöneticiniz ile konuşup bu durumu yöneticinize bildirin.
+           </p>
+         </VCardText>
+
+         <VCardText class="pt-2" v-else>
            <h5 class="text-h5 mb-3">
              Şifre Yenileme Maili Gönderilmiştir
            </h5>
@@ -153,6 +166,11 @@ function clickHandler(){
                </VCol>
              </VRow>
          </VCardText>
+       </VCard>
+
+       <VCard class="auth-card pa-4"
+       max-width="448" v-else>
+       <Loader style="width: 100px; height: 100px; margin-left:auto; margin-right: auto; margin-top: auto; margin-bottom: auto;"/>
        </VCard>
      </div>
     </div>

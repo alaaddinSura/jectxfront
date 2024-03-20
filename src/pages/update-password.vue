@@ -12,6 +12,8 @@ import {
 } from '@validators'
 import { useRoute, useRouter } from 'vue-router'
 import * as fetchData from "@/views/dashboards/functions/fetchData"
+import { store } from '@/store/index'
+import Loader from "@/views/dashboards/functions/loader.vue"
 
 const router = useRouter()
 const route = useRoute();
@@ -29,9 +31,6 @@ const reset = () => {
     fetchData.updatePassword(tokenData,password)
     routeLogin.value = false
 }
-
-
-
  let buttonDisabled = computed(()=>{
    let password1 = form.value.password
    let password2 = form.value.password2
@@ -162,7 +161,7 @@ const reset = () => {
       <!-- 👉 Auth card -->
       <VCard
         class="auth-card pa-4"
-        max-width="448"
+        max-width="448" v-if="store.state.isUpdatePasswordTokenActiveLoader == 1"
       >
         <VCardItem class="justify-center">
           <template #prepend>
@@ -176,7 +175,16 @@ const reset = () => {
           </VCardTitle>
         </VCardItem>
 
-        <VCardText class="pt-2">
+        <VCardText class="pt-2" v-if="store.state.isUpdatePasswordTokenActive">
+          <h5 class="text-h5 mb-3">
+            Şifre Yenileme Süreniz Bitmiştir
+          </h5>
+          <p class="mb-0">
+            Şifre yenileme süreniz bitmiştir. Tekrarda şifremi unuttum kısmından kendinize mail göndererek tekrardan deneyiniz
+          </p>
+        </VCardText>
+
+        <VCardText class="pt-2" v-else>
           <h5 class="text-h5 mb-3">
             Şifreniz Başarıyla Yenilenmiştir
           </h5>
@@ -191,17 +199,34 @@ const reset = () => {
                 
                 <RouterLink
                   class="d-flex align-center justify-center"
-                  :to="{ name: 'login' }"
+                  :to="{ name: 'forgot-password' }" v-if="store.state.isUpdatePasswordTokenActive"
                 >
                 <VBtn
                   block
                   >
-                  Giriş Sayfası
+                  Şifremi Unuttum
                 </VBtn>
               </RouterLink>
+
+              <RouterLink
+              class="d-flex align-center justify-center"
+              :to="{ name: 'login' }" v-else
+            >
+            <VBtn
+              block
+              >
+              Giriş Sayfası
+            </VBtn>
+          </RouterLink>
+
+
               </VCol>
             </VRow>
         </VCardText>
+      </VCard>
+      <VCard class="auth-card pa-4"
+      max-width="448" v-else>
+      <Loader style="width: 100px; height: 100px; margin-left:auto; margin-right: auto; margin-top: auto; margin-bottom: auto;"/>
       </VCard>
     </div>
    </div>
