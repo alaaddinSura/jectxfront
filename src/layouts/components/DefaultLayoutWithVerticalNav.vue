@@ -79,54 +79,54 @@ function handleVisibilityChange() {
 document.addEventListener("visibilitychange", handleVisibilityChange);
 
 
-function oneHoursPopup() {
-  const loginDate = new Date(JSON.parse(localStorage.getItem("loginTime")));
-  store.commit("changeOpenPopup", true);
-}
+// function oneHoursPopup() {
+//   const loginDate = new Date(JSON.parse(localStorage.getItem("loginTime")));
+//   store.commit("changeOpenPopup", true);
+// }
 
-// store.state.openPopup değeri değiştiğinde tetiklenecek olan watch fonksiyonu
-watch(
-  () => store.state.openPopup,
-  (newValue) => {
-    if (!newValue) {
-      // Eğer store.state.openPopup false ise, 30 saniyede bir oneHoursPopup fonksiyonunu çağır
-      const intervalId = setInterval(oneHoursPopup, 30000);
+// // store.state.openPopup değeri değiştiğinde tetiklenecek olan watch fonksiyonu
+// watch(
+//   () => store.state.openPopup,
+//   (newValue) => {
+//     if (!newValue) {
+//       // Eğer store.state.openPopup false ise, 30 saniyede bir oneHoursPopup fonksiyonunu çağır
+//       const intervalId = setInterval(oneHoursPopup, 30000);
 
-      // store.state.openPopup true olduğunda setInterval'ı durdur
-      watch(
-        () => store.state.openPopup,
-        (newValue) => {
-          if (newValue) {
-            clearInterval(intervalId);
-          }
-        }
-      );
-    }
-  }
-);
+//       // store.state.openPopup true olduğunda setInterval'ı durdur
+//       watch(
+//         () => store.state.openPopup,
+//         (newValue) => {
+//           if (newValue) {
+//             clearInterval(intervalId);
+//           }
+//         }
+//       );
+//     }
+//   }
+// );
 
-// Başlangıçta store.state.openPopup değeri false ise oneHoursPopup fonksiyonunu çağır
-if (!store.state.openPopup) {
-  oneHoursPopup();
-}
+// // Başlangıçta store.state.openPopup değeri false ise oneHoursPopup fonksiyonunu çağır
+// if (!store.state.openPopup) {
+//   oneHoursPopup();
+// }
 
-let intervalID = null; // setInterval'in ID'sini saklamak için bir değişken tanımlıyoruz
+// let intervalID = null; // setInterval'in ID'sini saklamak için bir değişken tanımlıyoruz
 
-function startPopupInterval() {
-  // Eğer intervalID değeri null ise, yani interval henüz başlatılmamışsa
-  if (intervalID === null) {
-    // Eğer openPopup false ise, her 30 saniyede bir oneHoursPopup fonksiyonunu çağır
-    if (!store.state.openPopup) {
-      intervalID = setInterval(oneHoursPopup, 30 * 1000); // 30 saniye = 30 * 1000 milisaniye
-    }
-  }
-}
+// function startPopupInterval() {
+//   // Eğer intervalID değeri null ise, yani interval henüz başlatılmamışsa
+//   if (intervalID === null) {
+//     // Eğer openPopup false ise, her 30 saniyede bir oneHoursPopup fonksiyonunu çağır
+//     if (!store.state.openPopup) {
+//       intervalID = setInterval(oneHoursPopup, 30 * 1000); // 30 saniye = 30 * 1000 milisaniye
+//     }
+//   }
+// }
 
-// Sayfa yenilendiğinde çalışacak kod
-window.onload = function() {
-  clearInterval(intervalID); // Önceki setInterval'ı temizle
-  startPopupInterval(); // Yeniden setInterval'ı başlat
-};
+// // Sayfa yenilendiğinde çalışacak kod
+// window.onload = function() {
+//   clearInterval(intervalID); // Önceki setInterval'ı temizle
+//   startPopupInterval(); // Yeniden setInterval'ı başlat
+// };
 
 </script>
 
@@ -145,7 +145,7 @@ window.onload = function() {
         </IconBtn>
 
         <!-- Otel türleri -->
-        <NavbarHotelTypes :disabled="store.state.openPopup"/>
+        <NavbarHotelTypes />
         <!-- date picker -->
         <NavBarDatePicker
           v-if="!disabledDatePicker()"
