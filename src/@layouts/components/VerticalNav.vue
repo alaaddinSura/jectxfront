@@ -11,6 +11,8 @@ import {
   VerticalNavSectionTitle,
 } from '@layouts/components'
 import { config } from '@layouts/config'
+import axios from "@axios";
+
 
 const props = defineProps({
   tag: {
@@ -34,6 +36,41 @@ const props = defineProps({
     required: true,
   },
 })
+
+
+const navRole = computed(()=>{
+  return props.navItems
+})
+
+const links = computed(()=>{
+let userRoles = JSON.parse(localStorage.getItem("userRole"))
+let user = JSON.parse(localStorage.getItem("userData"))
+let userEmail =  user.email
+let userDataRoles = userRoles.filter(item => userEmail.includes(item.email))
+let rolePage = userDataRoles.flatMap(role => role.pages);
+const roleNav = navRole.value
+
+const filteredChildren = roleNav.flatMap(item => {
+  const filtered = item.children.filter(child => {
+    // Burada child.title'in rolePage içinde olup olmadığını kontrol ediyoruz
+    return rolePage.includes(child.title)
+  })
+  // Filtrelenmiş children'ı döndürüyoruz
+  return { ...item, children: filtered }
+})
+  return filteredChildren
+})
+
+onMounted(() => {
+  links.value;
+})
+
+
+watch(() => {
+  return [localStorage.getItem("userRole"), localStorage.getItem("userData")]
+}, () => {
+  links.value
+}, { deep: true });
 
 const refNav = ref()
 const { width: windowWidth } = useWindowSize()
@@ -149,10 +186,10 @@ const handleNavScroll = evt => {
       >
         <Component
           :is="resolveNavItemComponent(item)"
-          v-for="(item, index) in navItems"
+          v-for="(item, index) in navRole"
           :key="index"
           :item="item"
-        />
+        /> 
       </PerfectScrollbar>
     </slot>
   </Component>

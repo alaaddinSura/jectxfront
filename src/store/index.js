@@ -1,5 +1,5 @@
-import * as dates from "@/views/dashboards/functions/dates"
-import { createStore } from "vuex"
+import * as dates from "@/views/dashboards/functions/dates";
+import { createStore } from "vuex";
 
 export const store = createStore({
   state: {
@@ -16,7 +16,7 @@ export const store = createStore({
     haftaDoluluk: [],
     sonYediAyDoluluk: [],
     gecmisRezervasyonlar: [],
-    rezAnaliz:[],
+    rezAnaliz: [],
     iptalAnaliz: [],
     iptalEdebilirAnaliz: [],
     iptalEdilebilirAnalizGunluk: [],
@@ -34,6 +34,8 @@ export const store = createStore({
     rezMiktarIptalAnaliz: [],
     lastMonthRezervMiktarOran: [],
     lastMonthOnlineRez: [],
+    userRole: [],
+    openPopup: false,
     //Loaderlar
     yatakDagilimLoader: [1],
     //Misafir Dağılım - Oda Tipi Dağılım
@@ -89,181 +91,187 @@ export const store = createStore({
   },
   getters: {},
   mutations: {
-    changeDateRange(state, payload){
-      state.dateRange = payload
+    changeDateRange(state, payload) {
+      state.dateRange = payload;
     },
-    changeSelectedHotels(state, payload){
-      state.selectedHotels = payload
+    changeSelectedHotels(state, payload) {
+      state.selectedHotels = payload;
     },
-    changeGuestTypes(state, payload){
-      state.guestTypes = payload
+    changeGuestTypes(state, payload) {
+      state.guestTypes = payload;
     },
-    changeGuestNations(state, payload){
-      state.guestNations = payload
+    changeGuestNations(state, payload) {
+      state.guestNations = payload;
     },
-    changeRawData(state, payload){
-      state.rawData = payload
+    changeRawData(state, payload) {
+      state.rawData = payload;
     },
-    changeYatakDagilim(state, payload){
-      state.yatakDagilim = payload
+    changeYatakDagilim(state, payload) {
+      state.yatakDagilim = payload;
     },
-    changeGecelemeDagilim(state, payload){
+    changeGecelemeDagilim(state, payload) {
       state.gecelemeDagilim = payload;
     },
-    changeRezervMiktar(state,payload){
+    changeRezervMiktar(state, payload) {
       state.rezervMiktar = payload;
     },
-    changeKanalRezDagilim(state,payload){
+    changeKanalRezDagilim(state, payload) {
       state.kanalRezDagilim = payload;
     },
-    changeOnlineRezMiktari(state, payload){
+    changeOnlineRezMiktari(state, payload) {
       state.onlineRezMiktari = payload;
     },
-    changeDoluluk(state, payload){
+    changeDoluluk(state, payload) {
       state.doluluk = payload;
     },
-    changeAyDoluluk(state,payload){
+    changeAyDoluluk(state, payload) {
       state.ayDoluluk = payload;
     },
-    changeHaftaDoluluk(state,payload){
+    changeHaftaDoluluk(state, payload) {
       state.haftaDoluluk = payload;
     },
-    changesonYediAyDoluluk(state,payload){
+    changesonYediAyDoluluk(state, payload) {
       state.sonYediAyDoluluk = payload;
     },
-    changeDateCount(state, payload){
+    changeDateCount(state, payload) {
       state.dateCount = payload;
     },
-    changeGecmisRezervasyonlar(state, payload){
+    changeGecmisRezervasyonlar(state, payload) {
       state.gecmisRezervasyonlar = payload;
     },
-    changeRezAnaliz(state,payload){
+    changeRezAnaliz(state, payload) {
       state.rezAnaliz = payload;
     },
-    changeIptalAnaliz(state,payload){
+    changeIptalAnaliz(state, payload) {
       state.iptalAnaliz = payload;
     },
-    changeiptalEdebilirAnaliz(state, payload){
+    changeiptalEdebilirAnaliz(state, payload) {
       state.iptalEdebilirAnaliz = payload;
     },
     changeiptalEdebilirAnalizGunluk(state, payload) {
       state.iptalEdilebilirAnalizGunluk = payload;
     },
-    changeGecmisRezervasyonDagilim(state, payload){
+    changeGecmisRezervasyonDagilim(state, payload) {
       state.gecmisRezervasyonDagilim = payload;
     },
-    changeUlkeDagilim(state, payload){
+    changeUlkeDagilim(state, payload) {
       state.ulkeDagilim = payload;
     },
-    changeGelecekDoluluk(state, payload){
+    changeGelecekDoluluk(state, payload) {
       state.gelecekDoluluk = payload;
     },
-    changeOdaTipiDagilim(state, payload){
+    changeOdaTipiDagilim(state, payload) {
       state.odaTipiDagilim = payload;
     },
-    changeChannelTable(state, payload){
+    changeChannelTable(state, payload) {
       state.channelTable = payload;
     },
-    changeRawData(state, payload){
+    changeRawData(state, payload) {
       state.rawData = payload;
     },
-    changeKanalDagilimGelir(state, payload){
+    changeKanalDagilimGelir(state, payload) {
       state.kanalDagilimGelir = payload;
     },
-    changeRezMiktarAnaliz(state,payload){
+    changeRezMiktarAnaliz(state, payload) {
       state.rezMiktarAnaliz = payload;
     },
-    changeRezMiktarIptalAnaliz(state,payload){
+    changeRezMiktarIptalAnaliz(state, payload) {
       state.rezMiktarIptalAnaliz = payload;
     },
-    changeLastMonthRezervMiktarOran(state,payload){
+    changeLastMonthRezervMiktarOran(state, payload) {
       state.lastMonthRezervMiktarOran = payload;
     },
-    changeLastMonthOnlineRez(state,payload){
+    changeLastMonthOnlineRez(state, payload) {
       state.lastMonthOnlineRez = payload;
+    },
+    changeOpenPopup(state, payload){
+      state.openPopup = payload;
     },
     //Loaderlar
     //Misafir Dağılım - Yatak Dağılım
-    changeYatakDagilimLoader(state, payload){
+    changeYatakDagilimLoader(state, payload) {
       state.yatakDagilimLoader = payload;
-    },//Misafir Dağılım - Oda Tipi Dağılımı
-    changeodaTipiDagilimLoader(state,payload){
+    }, //Misafir Dağılım - Oda Tipi Dağılımı
+    changeodaTipiDagilimLoader(state, payload) {
       state.odaTipiDagilimLoader = payload;
-    },//Misafir Dağılım - Ülke Dağılım Loader
-    changeUlkeDagilimLoader(state,payload){
+    }, //Misafir Dağılım - Ülke Dağılım Loader
+    changeUlkeDagilimLoader(state, payload) {
       state.ulkeDagilimLoader = payload;
-    },//Misafir Dağılım - Geceleme Dağılım
-    changeGecelemeDagilimLoader(state,payload){
+    }, //Misafir Dağılım - Geceleme Dağılım
+    changeGecelemeDagilimLoader(state, payload) {
       state.gecelemeDagilimLoader = payload;
-    },//Doluluk Dağılım - Rez Analiz
-    changeRezAnalizLoader(state,payload){
+    }, //Doluluk Dağılım - Rez Analiz
+    changeRezAnalizLoader(state, payload) {
       state.rezAnalizLoader = payload;
-    },//Doluluk Dağılım - İptal Analiz
-    changeIptalAnalizLoader(state,payload){
+    }, //Doluluk Dağılım - İptal Analiz
+    changeIptalAnalizLoader(state, payload) {
       state.iptalAnalizLoader = payload;
-    },//Doluluk Dağılım - Gelecek Doluluk
-    changeGelecekDolulukLoader(state, payload){
+    }, //Doluluk Dağılım - Gelecek Doluluk
+    changeGelecekDolulukLoader(state, payload) {
       state.gelecekDolulukLoader = payload;
-    },//Doluluk Dağılım İptal Edilebilir Analiz (Oranlar)
-    changeIptalEdilebilirAnalizGunlukLoader(state, payload){
+    }, //Doluluk Dağılım İptal Edilebilir Analiz (Oranlar)
+    changeIptalEdilebilirAnalizGunlukLoader(state, payload) {
       state.iptalEdilebilirAnalizGunlukLoader = payload;
-    },//Doluluk Dağılım - İptal Edilebilir Analiz (İstatistik)
-    changeIptalEdebilirAnalizLoader(state,payload){
-      state.iptalEdebilirAnalizLoader = payload
-    },//Rezervasyon Analiz - Raw Tablo
-    changeRawDataLoader(state, payload){
+    }, //Doluluk Dağılım - İptal Edilebilir Analiz (İstatistik)
+    changeIptalEdebilirAnalizLoader(state, payload) {
+      state.iptalEdebilirAnalizLoader = payload;
+    }, //Rezervasyon Analiz - Raw Tablo
+    changeRawDataLoader(state, payload) {
       state.rawDataLoader = payload;
-    },//Rezervasyon Analiz - Geçmiş Rezervasyonlar
-    changeGecmisRezervasyonlarLoader(state, payload){
+    }, //Rezervasyon Analiz - Geçmiş Rezervasyonlar
+    changeGecmisRezervasyonlarLoader(state, payload) {
       state.gecmisRezervasyonlarLoader = payload;
-    },//Rezervasyon Analiz - Kanallara Göre Dağılım
-    changeKanalRezDagilimLoader(state,payload){
+    }, //Rezervasyon Analiz - Kanallara Göre Dağılım
+    changeKanalRezDagilimLoader(state, payload) {
       state.kanalRezDagilimLoader = payload;
-    },//Rezervasyon Analiz - Doluluk
-    changeDolulukLoader(state, payload){
+    }, //Rezervasyon Analiz - Doluluk
+    changeDolulukLoader(state, payload) {
       state.dolulukLoader = payload;
-    },//Rezervasyon Analiz - Hafta Doluluk
-    changeHaftaDolulukLoader(state,payload){
+    }, //Rezervasyon Analiz - Hafta Doluluk
+    changeHaftaDolulukLoader(state, payload) {
       state.haftaDolulukLoader = payload;
-    },//Rezervasyon Analiz - Ay Doluluk
-    changeAyDolulukLoader(state,payload){
+    }, //Rezervasyon Analiz - Ay Doluluk
+    changeAyDolulukLoader(state, payload) {
       state.ayDolulukLoader = payload;
-    },//Rezervasyon Analiz - Son Yedi Ay Doluluk
-    changeSonYediAyDolulukLoader(state,payload){
-      state.sonYediAyDolulukLoader = payload
-    },//Rezervasyon Analiz - Genel Rezerv
-    changeRezervMiktarLoader(state, payload){
+    }, //Rezervasyon Analiz - Son Yedi Ay Doluluk
+    changeSonYediAyDolulukLoader(state, payload) {
+      state.sonYediAyDolulukLoader = payload;
+    }, //Rezervasyon Analiz - Genel Rezerv
+    changeRezervMiktarLoader(state, payload) {
       state.rezervMiktarLoader = payload;
-    },//Rezervasyon Analiz - Online Rezerv
-    changeOnlineRezMiktariLoader(state, payload){
+    }, //Rezervasyon Analiz - Online Rezerv
+    changeOnlineRezMiktariLoader(state, payload) {
       state.onlineRezMiktariLoader = payload;
-    },// Geçmiş Doluluk - Geçmiş Doluluk
-    changeGecmisRezervasyonDagilimLoader(state,payload){
+    }, // Geçmiş Doluluk - Geçmiş Doluluk
+    changeGecmisRezervasyonDagilimLoader(state, payload) {
       state.gecmisRezervasyonDagilimLoader = payload;
-    },//Rezervasyon Analiz - Rezerv Tablo
-    changeChannelTableLoader(state,payload){
+    }, //Rezervasyon Analiz - Rezerv Tablo
+    changeChannelTableLoader(state, payload) {
       state.channelTableLoader = payload;
-    },//Rezervasyon Analiz - Rez Analiz
-    changeRezMiktarAnalizLoader(state,payload){
+    }, //Rezervasyon Analiz - Rez Analiz
+    changeRezMiktarAnalizLoader(state, payload) {
       state.rezMiktarAnalizLoader = payload;
-    },//Rezervasyon Analiz - İptal Analiz
-    changeRezMiktarIptalAnalizLoader(state,payload){
+    }, //Rezervasyon Analiz - İptal Analiz
+    changeRezMiktarIptalAnalizLoader(state, payload) {
       state.rezMiktarIptalAnalizLoader = payload;
-    },// Forgot Password
-    changeisForgotMailWrongLoader(state,payload){
-      state.isForgotMailWrongLoader = payload
-    },//Update Password
-    changeisUpdatePasswordTokenActiveLoader(state,payload){
+    }, // Forgot Password
+    changeisForgotMailWrongLoader(state, payload) {
+      state.isForgotMailWrongLoader = payload;
+    }, //Update Password
+    changeisUpdatePasswordTokenActiveLoader(state, payload) {
       state.isUpdatePasswordTokenActiveLoader = payload;
     },
-     //Hatalar
-     //Forgot Password
-     changeisForgotMailrong(state,payload){
-       state.isForgotMailWrong = payload;
-     },//Update Password Token Active
-     changeisUpdatePasswordTokenActive(state,payload){
+    changeUserRole(state, payload) {
+      state.userRole = payload;
+    },
+    //Hatalar
+    //Forgot Password
+    changeisForgotMailrong(state, payload) {
+      state.isForgotMailWrong = payload;
+    }, //Update Password Token Active
+    changeisUpdatePasswordTokenActive(state, payload) {
       state.isUpdatePasswordTokenActive = payload;
-     }
+    },
   },
   actions: {},
-})
+});

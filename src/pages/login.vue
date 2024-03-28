@@ -151,6 +151,8 @@ const login = () => {
         //Rezervasyon Analiz - İptal Analiz
         fetchData.rezMiktarIptalAnaliz(dateRange,hotelids,true)
 
+        fetchData.userRole()
+
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {

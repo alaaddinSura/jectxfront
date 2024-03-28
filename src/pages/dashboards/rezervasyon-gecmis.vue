@@ -16,4 +16,5 @@ import YillikGecmisKarsilastirma from '@/views/dashboards/rezervasyonGecmis/Yill
             <YillikGecmisKarsilastirma/>
         </VCol>
     </VRow>
+    
 </template>
