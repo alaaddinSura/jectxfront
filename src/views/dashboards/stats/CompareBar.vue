@@ -10,9 +10,6 @@ const props = defineProps({
   loader: Array,
 })
 
-
-console.log("props ==> ", props.series)
-
 const propsData = computed(()=>{
   const min = props.series.min
   const max = props.series.max

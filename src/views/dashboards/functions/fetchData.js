@@ -270,7 +270,6 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
         let dateLength = [...new Set(rData.map(item=> item.DATE))].length
         if (dateLength == 7) {
           store.commit("changeGecmisRezervasyonlar", rData);
-          console.log("28 gelen data ==> ", rData)
           store.state.selectedHotels != "No Hotel"
             ? store.commit("changeGecmisRezervasyonlarLoader", 1)
             : store.commit("changeGecmisRezervasyonlarLoader", 0);
