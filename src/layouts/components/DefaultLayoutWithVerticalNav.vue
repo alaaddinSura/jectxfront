@@ -33,7 +33,6 @@ const disabledDatePicker = () => {
   const disabledUrls = [
     "/dashboards/rezervasyon-gecmis",
     "/dashboards/rezervasyon-gelir",
-    "/dashboards/deneme",
   ];
   if (disabledUrls.includes(route.path)) {
     return true; // NavbarDatePicker engellenir

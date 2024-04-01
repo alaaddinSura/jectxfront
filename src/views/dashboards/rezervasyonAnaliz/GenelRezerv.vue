@@ -25,8 +25,9 @@ let data = computed(() => {
 
   let rezPercent = store.state.lastMonthRezervMiktarOran.length == 0 ? JSON.parse(localStorage.getItem('lastMonthRezMiktar')) : store.state.lastMonthRezervMiktarOran
   let statPercent = rezPercent.filter(item => chosenHotels.includes(item.hotelId))
+  console.log("rez ==> ",rezPercent)
   let totalPercent =  statPercent.map(item => item.count).reduce((f,s)=>f+s,0)
-  let lastMonthPercent = (totalCount - totalPercent ) / totalPercent
+  let lastMonthPercent = rezPercent.length === 0 ? 0 : (totalCount - totalPercent ) / totalPercent
   return {
     totalNight: totalCount,
     percentage: Math.round(lastMonthPercent *100),

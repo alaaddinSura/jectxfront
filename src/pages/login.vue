@@ -252,7 +252,7 @@ const onSubmit = () => {
                   v-model="form.password"
                   label="Password"
                   :rules="[requiredValidator]"
-                  :type="isPasswordVisible ? 'text' : 'password'"
+                  :type="isPasswordVisible ?  'password' : 'text'"
                   :append-inner-icon="
                     isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'
                   "

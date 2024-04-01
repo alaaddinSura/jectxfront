@@ -11,6 +11,7 @@ const props = defineProps({
 })
 
 
+console.log("props ==> ", props.series)
 
 const propsData = computed(()=>{
   const min = props.series.min

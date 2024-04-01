@@ -70,6 +70,7 @@ export const rezervMikariOran = (dateRange, hotelids, isLocal) => {
   axios.request(configs.rezervMiktariConfig(dateRange, hotelids)).then((r) => {
     if (isLocal) {
       localStorage.setItem("lastMonthRezMiktar", JSON.stringify(r.data));
+      
     } else {
       store.commit("changeLastMonthRezervMiktarOran", r.data);
     }
@@ -266,12 +267,14 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
           : store.commit("changeGecmisRezervasyonlarLoader", 0);
       } else {
         let rData = r.data;
-        if (rData.length == 28) {
+        let dateLength = [...new Set(rData.map(item=> item.DATE))].length
+        if (dateLength == 7) {
           store.commit("changeGecmisRezervasyonlar", rData);
+          console.log("28 gelen data ==> ", rData)
           store.state.selectedHotels != "No Hotel"
             ? store.commit("changeGecmisRezervasyonlarLoader", 1)
             : store.commit("changeGecmisRezervasyonlarLoader", 0);
-        } else if (rData.length == 196) {
+        } else if (dateLength == 49) {
           rData.forEach((item) => {
             item["DATE"] = dates.findWeek(item.DATE);
             store.commit("changeGecmisRezervasyonlar", rData);
