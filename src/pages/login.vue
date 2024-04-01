@@ -6,7 +6,7 @@ import authV1BottomShape from "@images/svg/auth-v1-bottom-shape.svg?raw";
 import authV1TopShape from "@images/svg/auth-v1-top-shape.svg?raw";
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { themeConfig } from "@themeConfig";
-import { emailValidator, requiredValidator } from "@validators";
+import { emailValidator, requiredValidator, passwordValidator } from "@validators";
 import { config } from "@/views/dashboards/functions/config";
 import * as fetchData from "@/views/dashboards/functions/fetchData"
 
@@ -251,7 +251,7 @@ const onSubmit = () => {
                 <VTextField
                   v-model="form.password"
                   label="Password"
-                  :rules="[requiredValidator]"
+                  :rules="[requiredValidator, passwordValidator]"
                   :type="isPasswordVisible ?  'password' : 'text'"
                   :append-inner-icon="
                     isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'
