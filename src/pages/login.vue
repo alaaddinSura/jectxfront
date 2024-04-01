@@ -30,7 +30,7 @@ const errors = ref({
   password: undefined,
 });
 
-const isPasswordVisible = ref(false);
+const isPasswordVisible = ref(true);
 
 const login = () => {
   const url = 'https://jectxbackend-672789bf3678.herokuapp.com/login';
