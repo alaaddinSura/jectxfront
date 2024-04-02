@@ -135,15 +135,15 @@ const toggleDatePicker = () => {
       </template>
       <VCard width="300" v-show="datePickerOpen">
         <VCardText>
+          <VBtn class="p-2 my-2 w-100" @click="handleUpdateDate(dateRange)">
+            Raporla
+          </VBtn>
           <AppDateTimePicker
             v-model="dateRange"
             :config="{ mode: 'range' }"
             placeholder="Tarih Seçiniz"
             style="z-index: 9999"
           />
-          <VBtn class="p-2 my-2 w-100" @click="handleUpdateDate(dateRange)">
-            Raporla
-          </VBtn>
         </VCardText>
       </VCard>
     </VMenu>
