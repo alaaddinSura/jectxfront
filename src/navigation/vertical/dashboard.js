@@ -35,6 +35,10 @@ const children = [
   {
     title: "Geçmiş Karşılaştırma",
     to: "dashboards-rezervasyon-gecmis"
+  },
+  {
+    title: "Admin",
+    to: "dashboards-admin"
   }
 ]//.filter(item => rolePage.includes(item.title))
 

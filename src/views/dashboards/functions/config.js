@@ -22,9 +22,36 @@ export const getConfig = (url, data) => {
   return getConfigs;
 };
 
+export const deleteConfig = (url, data) => {
+  let delConfig = {
+    method: "delete",
+    maxBodyLength: Infinity,
+    url: url,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    data: data,
+  };
+  return delConfig
+};
+
+export const callAddUser = (email, pages) =>{
+  let url = "https://jectxbackend-672789bf3678.herokuapp.com/addUser";
+    let data = JSON.stringify({
+      emails: [
+        {
+          email: email,
+          pages: pages,
+          role: "user",
+        }
+      ]
+    })
+    return config(url,data)
+}
+
 export const callUserRole = () => {
   let url = "https://jectxbackend-672789bf3678.herokuapp.com/findUser";
-  let data = "";
+  let data = '';
   return getConfig(url, data);
 };
 
@@ -38,6 +65,14 @@ export const yatakDagilimConfig = (dateRange, hotelidArray) => {
   return config(url, data);
 };
 
+export const callDeleteUser = (email) =>{
+  let url = "https://jectxbackend-672789bf3678.herokuapp.com/deleteUserByEmail"
+
+  let data = JSON.stringify({
+    "email": email
+  })
+  return deleteConfig(url,data)
+}
 export const gecelemeDagilimConfig = (dateRange, hotelidArray) => {
   let url = "https://jectxbackend-672789bf3678.herokuapp.com/gecelemedagilim";
 
@@ -314,3 +349,22 @@ export const callForgotPassword = (email) => {
   });
   return config(url, data);
 };
+
+
+export const sendMail = (email) =>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/sendMail"
+  let data = JSON.stringify({
+    mails: [email]
+  });
+  return config(url,data)
+}
+
+export const callUpdateUser = (email, newRole, newPage) =>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/updateUser"
+  let data = JSON.stringify({
+    email: email,
+    newRole: newRole,
+    newPages: newPage
+  })
+  return config(url,data)
+}

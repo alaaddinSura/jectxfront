@@ -26,8 +26,8 @@ const items = [
 ` }
 
 export const chips = { ts: `<script lang="ts" setup>
-const items = ['foo', 'bar', 'fizz', 'buzz']
-const selected = ref(['foo', 'bar', 'fizz', 'buzz'])
+const items = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma']
+const selected = ref(['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'])
 </script>
 
 <template>

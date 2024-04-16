@@ -35,6 +35,7 @@ export const store = createStore({
     lastMonthRezervMiktarOran: [],
     lastMonthOnlineRez: [],
     userRole: [],
+    userRoleLoader: [1],
     openPopup: false,
     //Loaderlar
     yatakDagilimLoader: [1],
@@ -80,6 +81,8 @@ export const store = createStore({
     rezMiktarAnalizLoader: [1],
     //Rezervasyon Analiz - İptal Analiz
     rezMiktarIptalAnalizLoader: [1],
+    //Dashboards Admin
+    adminUserDeleteLoader: [1],
     //Forgot Password
     isForgotMailWrongLoader: [1],
     //Update Password
@@ -260,9 +263,15 @@ export const store = createStore({
     }, //Update Password
     changeisUpdatePasswordTokenActiveLoader(state, payload) {
       state.isUpdatePasswordTokenActiveLoader = payload;
+    },//Admin - User Delete
+    changeAdminUserDeleteLoader(state,payload){
+      state.adminUserDeleteLoader = payload;
     },
     changeUserRole(state, payload) {
       state.userRole = payload;
+    },
+    changeuserRoleLoader(state,payload){
+      state.userRoleLoader = payload
     },
     //Hatalar
     //Forgot Password

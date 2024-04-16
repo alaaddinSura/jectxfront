@@ -70,7 +70,6 @@ export const rezervMikariOran = (dateRange, hotelids, isLocal) => {
   axios.request(configs.rezervMiktariConfig(dateRange, hotelids)).then((r) => {
     if (isLocal) {
       localStorage.setItem("lastMonthRezMiktar", JSON.stringify(r.data));
-      
     } else {
       store.commit("changeLastMonthRezervMiktarOran", r.data);
     }
@@ -267,7 +266,7 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
           : store.commit("changeGecmisRezervasyonlarLoader", 0);
       } else {
         let rData = r.data;
-        let dateLength = [...new Set(rData.map(item=> item.DATE))].length
+        let dateLength = [...new Set(rData.map((item) => item.DATE))].length;
         if (dateLength == 7) {
           store.commit("changeGecmisRezervasyonlar", rData);
           store.state.selectedHotels != "No Hotel"
@@ -906,19 +905,57 @@ export const forgotPassword = (email) => {
     });
 };
 
-export const userRole = () => {
-  axios
-    .request(configs.callUserRole())
+export const userRole = (isLocal) => {
+  store.commit("changeuserRoleLoader",0)
+  axios.request(configs.callUserRole())
     .then((r) => {
-      //console.log("Response data:", r.data); // Log the response data
+      console.log("Datanın içerisine Girdi ==> ", r.data)
+      if(isLocal){
+        console.log("Veriler LocalStorage girildi ==> ", r.data)
       localStorage.setItem("userRole", JSON.stringify(r.data));
-      store.commit("changeUserRole", r.data);
-      // console.log(
-      //   "Hemen Local Storage Verisi ==> ",
-      //   JSON.parse(localStorage.getItem("userRole"))
-      // );
+      store.commit("changeuserRoleLoader",1)
+      }
+      else{
+        store.commit("changeUserRole", r.data);
+        store.commit("changeuserRoleLoader",1)
+      }
     })
     .catch((error) => {
       console.log(error);
     });
 };
+
+export const deleteUser = (email) => {
+  store.commit("changeAdminUserDeleteLoader", 0);
+  axios.request(configs.callDeleteUser(email)).then((r)=>{
+    userRole()
+    store.commit("changeAdminUserDeleteLoader",1)
+  })
+};
+
+export const addUser = (email,pages) =>{
+  axios.request(configs.callAddUser(email,pages)).then((r) =>{
+    console.log("Maili ==> ", email)
+    console.log("Kullanıcı Eklenmiştir. ==> ", r.data)
+    userRole()
+  }).catch((error) =>{
+    console.log("Add User Hata ==> ", error)
+  })
+}
+
+export const sendMail = (email) =>{
+  axios.request(configs.sendMail(email)).then((r)=>{
+    console.log("Maili başarıyla Gönderilmiştir.")
+  }).catch((error)=>{
+    console.log("Mail Gönderimi Başarısızdır ", error)
+  })
+}
+
+export const updateUser = (email, newRole, newPage) =>{
+  axios.request(configs.callUpdateUser(email, newRole, newPage)).then((r)=>{
+    console.log("Güncelleme Yapılmıştır ==> ", r.data)
+    userRole()
+  }).catch((error)=>{
+    console.log("Kullanıcı Güncellemesi Hatalı ", error)
+  })
+}

@@ -4,7 +4,6 @@ import * as dates from '@/views/dashboards/functions/dates'
 import axios from '@axios'
 import TableWithChannelFilters from '../stats/TableWithChannelFilters.vue'
 
-
 let tableHeaders = [
   {
     title: 'Ana Kanal',
@@ -31,6 +30,7 @@ let tableHeaders = [
     key: 'REVENUE',
   },
 ]
+
 
 let tableData = computed(() => {
 

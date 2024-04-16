@@ -3,9 +3,9 @@ import { isEmpty, isEmptyArray, isNullOrUndefined } from './index'
 // 👉 Required Validator
 export const requiredValidator = value => {
   if (isNullOrUndefined(value) || isEmptyArray(value) || value === false)
-    return 'This field is required'
+    return 'Lütfen boş bırakmayınız !!'
   
-  return !!String(value).trim().length || 'This field is required'
+  return !!String(value).trim().length || 'Lütfen boş bırakmayınız !!'
 }
 
 // 👉 Email Validator
