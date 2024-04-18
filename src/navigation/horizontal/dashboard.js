@@ -20,10 +20,6 @@ const children = [
     title: "Rezervasyon Karşılaştırma",
     to: "dashboards-rezervasyon-karsilastirma",
   },
-  {
-    title: "Admin",
-    to: "dashboards-admin"
-  }
 ]
 
 export default [

@@ -43,8 +43,8 @@ const navRole = computed(()=>{
 })
 
 const links = computed(()=>{
-let userRoles = JSON.parse(localStorage.getItem("userRole"))
-let user = JSON.parse(localStorage.getItem("userData"))
+let userRoles = localStorage.getItem("userRole") ? JSON.parse(localStorage.getItem("userRole")) : []
+let user = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : []
 let userEmail =  user.email
 let userDataRoles = userRoles.filter(item => userEmail.includes(item.email))
 let rolePage = userDataRoles.flatMap(role => role.pages);
