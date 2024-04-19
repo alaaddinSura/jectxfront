@@ -84,7 +84,7 @@ const exitModal = () =>{
             >
               <VAutocomplete
                 v-model="entry.role"
-                :items="['user', 'admin']"
+                :items="['admin','user']"
                 label="Rolü"
               />
             </VCol> 

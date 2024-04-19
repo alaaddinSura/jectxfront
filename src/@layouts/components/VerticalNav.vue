@@ -12,7 +12,9 @@ import {
 } from '@layouts/components'
 import { config } from '@layouts/config'
 import axios from "@axios";
-
+import { store } from "@/store/index";
+import Loader from "@/views/dashboards/functions/loader.vue";
+import { watchEffect } from 'vue'
 
 const props = defineProps({
   tag: {
@@ -37,33 +39,52 @@ const props = defineProps({
   },
 })
 
-
 const navRole = computed(()=>{
   return props.navItems
 })
 
+const userData = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : null;
+  const userRole = localStorage.getItem("userRole") ? JSON.parse(localStorage.getItem("userRole")) : null;
+
+  if (userData && userRole) {
+  // Kullanıcı verileri mevcutsa, işlemleri gerçekleştir
+  // Örneğin, filtreleme işlemleri gibi
+} else {
+  // Kullanıcı verileri henüz yüklenmemişse, uygun bir şekilde beklet veya işlem yap
+}
+
 const links = computed(()=>{
-let userRoles = localStorage.getItem("userRole") ? JSON.parse(localStorage.getItem("userRole")) : []
-let user = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : []
-let userEmail =  user.email
-let userDataRoles = userRoles.filter(item => userEmail.includes(item.email))
-let rolePage = userDataRoles.flatMap(role => role.pages);
-const roleNav = navRole.value
-
-const filteredChildren = roleNav.flatMap(item => {
-  const filtered = item.children.filter(child => {
-    // Burada child.title'in rolePage içinde olup olmadığını kontrol ediyoruz
-    return rolePage.includes(child.title)
+  let user = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : []
+  const roleNav = navRole.value
+  const filteredChildren = roleNav.flatMap(item => {
+    const filtered = item.children.filter(child => {
+      return user.pages.includes(child.title)
+    })
+    return { ...item, children: filtered }
   })
-  // Filtrelenmiş children'ı döndürüyoruz
-  return { ...item, children: filtered }
-})
-  return filteredChildren
-})
+    return filteredChildren[0]
+  })
 
-onMounted(() => {
-  links.value;
-})
+
+  const filterLinks = computed(()=>{
+  const loginUser = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : []
+  const admin = loginUser.role.charAt(0).toUpperCase() + userRole[0].role.slice(1);
+  let filteredNav;
+  if (admin.includes("Admin")) {
+    // admin, "Admin" içeriyorsa tüm verileri getir
+    filteredNav = navRole.value;
+    filteredNav[0] = links.value
+  } else {
+    // admin, "Admin" içermiyorsa, "title"ı "Admin" olanı hariç tutarak filtrele
+    filteredNav = navRole.value.filter(item => item.title !== "Admin");
+    filteredNav[0] = links.value
+  }
+  return filteredNav;
+  })
+  
+  onMounted(() => {
+    links.value;
+  })
 
 
 watch(() => {
@@ -186,7 +207,7 @@ const handleNavScroll = evt => {
       >
         <Component
           :is="resolveNavItemComponent(item)"
-          v-for="(item, index) in navRole"
+          v-for="(item, index) in filterLinks"
           :key="index"
           :item="item"
         /> 

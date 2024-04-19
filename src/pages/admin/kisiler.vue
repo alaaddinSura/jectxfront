@@ -1,7 +1,8 @@
 <script setup>
 import Kisiler from "@/views/admin/kisiler/Kisiler.vue"
 
-</script>
+// console.log("loginUser Ne geldi Görme ==> ", userRole)
+</script>   
 
 <template>
 

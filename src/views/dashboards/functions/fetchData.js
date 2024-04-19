@@ -909,9 +909,7 @@ export const userRole = (isLocal) => {
   store.commit("changeuserRoleLoader",0)
   axios.request(configs.callUserRole())
     .then((r) => {
-      console.log("Datanın içerisine Girdi ==> ", r.data)
       if(isLocal){
-        console.log("Veriler LocalStorage girildi ==> ", r.data)
       localStorage.setItem("userRole", JSON.stringify(r.data));
       store.commit("changeuserRoleLoader",1)
       }

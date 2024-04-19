@@ -4,6 +4,31 @@ import { isUserLoggedIn } from './utils'
 import routes from '~pages'
 import { canNavigate } from '@layouts/plugins/casl'
 
+let userPages
+let originalData
+if(localStorage.getItem("userData")){
+  userPages = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : []
+
+  originalData = userPages.pages;
+  
+  if (Array.isArray(originalData)) {
+    originalData = originalData.map((item) =>
+      item
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/ğ/g, "g")
+        .replace(/ı/g, "i")
+    );
+  } else {
+    originalData = originalData
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/ğ/g, "g")
+      .replace(/ı/g, "i");
+  }
+}
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -38,6 +63,40 @@ const router = createRouter({
 // Docs: https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 router.beforeEach(to => {
   const isLoggedIn = isUserLoggedIn()
+  const queryPath = to.path.substring(to.path.indexOf('/', 1) + 1);
+  
+  if(localStorage.getItem("userData")){
+    if(userPages.role === 'admin'){
+      if (to.path.startsWith('/dashboards/')) {
+        // queryPath originalData dizisinde bulunuyorsa:
+        if (originalData.includes(queryPath)) {
+          console.log("Doğru");
+        } else {
+          router.push('/dashboards/' + originalData[0]);
+        }
+      } else {
+      }
+    }else{
+      if (to.path.startsWith('/dashboards/')) {
+        // queryPath originalData dizisinde bulunuyorsa:
+        if (originalData.includes(queryPath)) {
+        } else {
+          router.push('/dashboards/' + originalData[0]);
+        }
+      } else {
+        router.push('/dashboards/' + originalData[0]);
+      }
+    }
+  }
+  // if (!isLoggedIn) {
+  //   // Kullanıcı giriş yapmamışsa ve talep edilen sayfa giriş sayfası değilse, giriş sayfasına yönlendir
+  //   return { name: 'login', query: { to: to.name !== 'index' ? to.fullPath : undefined } };
+  // }
+
+  // // Eğer kullanıcı giriş yapmışsa ve talep edilen sayfa originalData'da bulunan linklerden biri değilse, ilk link sayfasına yönlendir
+  // if (!originalData.includes(to.name)) {
+  //   return { name: originalData[0] };
+  // }
 
   /*
   

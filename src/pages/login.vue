@@ -6,10 +6,13 @@ import authV1BottomShape from "@images/svg/auth-v1-bottom-shape.svg?raw";
 import authV1TopShape from "@images/svg/auth-v1-top-shape.svg?raw";
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 import { themeConfig } from "@themeConfig";
-import { emailValidator, requiredValidator, passwordValidator } from "@validators";
+import {
+  emailValidator,
+  requiredValidator,
+  passwordValidator,
+} from "@validators";
 import { config } from "@/views/dashboards/functions/config";
-import * as fetchData from "@/views/dashboards/functions/fetchData"
-
+import * as fetchData from "@/views/dashboards/functions/fetchData";
 
 const route = useRoute();
 const router = useRouter();
@@ -33,128 +36,134 @@ const errors = ref({
 const isPasswordVisible = ref(true);
 
 const login = () => {
-  const url = 'https://jectxbackend-672789bf3678.herokuapp.com/login';
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/login";
   const data = {
-  email: form.value.email,
-  password: form.value.password
-};
-  axios.post(url, data)
+    email: form.value.email,
+    password: form.value.password,
+  };
+  axios
+    .post(url, data)
     .then((r) => {
       form.value.showMessage = true;
       form.value.isValid = true;
-      
+
       if (form.value.isValid) {
         form.value.showMessage = false;
 
         let dateRange = [dates.findYesterdayDate()];
-        let hotelids =  [22964, 22966];
+        let hotelids = [22964, 22966];
 
-        //Rezerv Miktarı        
-        fetchData.callRezervMiktari(dateRange,hotelids,true)
+        //Rezerv Miktarı
+        fetchData.callRezervMiktari(dateRange, hotelids, true);
 
         //Rezervasyon Analiz Rezerv Miktarı Oran
-        fetchData.rezervMikariOran(dateRange,hotelids,true)
+        fetchData.rezervMikariOran(dateRange, hotelids, true);
 
         //Kanalara rezervasyon Dağılım
-        fetchData.callKanalRezDagilim(dateRange, hotelids, true)
+        fetchData.callKanalRezDagilim(dateRange, hotelids, true);
 
         //Online Rezervasyon Miktarı
-        fetchData.callOnlineRezMiktari(dateRange, hotelids, true)
+        fetchData.callOnlineRezMiktari(dateRange, hotelids, true);
 
         //Rezervasyon Analiz - Online Rezervasyon Miktarı Yüzdelik Oran
-        fetchData.lastMonthOnlineRezMiktari(dateRange, hotelids, true)
+        fetchData.lastMonthOnlineRezMiktari(dateRange, hotelids, true);
 
         //Geceleme Miktarı (Doluluk)
-        fetchData.callGecelemeMiktari(dateRange, hotelids, true)
-        
-        // yatak dağılım çağırma
-        fetchData.callYatakDagilim(dateRange, hotelids, true)
+        fetchData.callGecelemeMiktari(dateRange, hotelids, true);
 
-        //Geceleme Dağılım 
-        fetchData.callGecelemeDagilim(dateRange, hotelids, true)
+        // yatak dağılım çağırma
+        fetchData.callYatakDagilim(dateRange, hotelids, true);
+
+        //Geceleme Dağılım
+        fetchData.callGecelemeDagilim(dateRange, hotelids, true);
 
         //Ülke Dağılım
-        fetchData.callUlkeDagilim(dateRange, hotelids, true)
+        fetchData.callUlkeDagilim(dateRange, hotelids, true);
 
         //Hafta Doluluk
-        fetchData.callHaftaDoluluk(dateRange[0], hotelids,true)
+        fetchData.callHaftaDoluluk(dateRange[0], hotelids, true);
 
         //Ay Doluluk
-        fetchData.callAyDoluluk(dateRange[0], hotelids, true)
+        fetchData.callAyDoluluk(dateRange[0], hotelids, true);
 
         //Son 7 ay Doluluk
-        fetchData.callSonYediAyDoluluk(dateRange[0], hotelids, true)
+        fetchData.callSonYediAyDoluluk(dateRange[0], hotelids, true);
 
         //Geçmiş Rezervasyonlar
-        fetchData.callGecmisRez(dateRange[0], dateRange.length, hotelids, true)
+        fetchData.callGecmisRez(dateRange[0], dateRange.length, hotelids, true);
 
         //Rez Analiz
-        fetchData.callRezAnaliz(dateRange, hotelids, true)
+        fetchData.callRezAnaliz(dateRange, hotelids, true);
 
         //İptal Analiz
-        fetchData.callIptalAnaliz(dateRange, hotelids, true)
+        fetchData.callIptalAnaliz(dateRange, hotelids, true);
 
         //İptal Edebilir Analiz
-        fetchData.callIptalEdebilirAnaliz(dateRange, hotelids, true)
+        fetchData.callIptalEdebilirAnaliz(dateRange, hotelids, true);
 
         //İptal Edilebilie Analiz GÜnlük
-        fetchData.callIptalEdebilirAnalizGunluk(dateRange, hotelids, true)
+        fetchData.callIptalEdebilirAnalizGunluk(dateRange, hotelids, true);
 
         //Geçmiş Rezervasyonlar Dağılım
-        fetchData.callGecmisRezervasyonDagilim(dateRange[0], dateRange.length, hotelids, true)
+        fetchData.callGecmisRezervasyonDagilim(
+          dateRange[0],
+          dateRange.length,
+          hotelids,
+          true
+        );
 
         //Gelecek Doluluk
-        fetchData.callDolulukGelecekRez(dateRange[0],hotelids,true)
+        fetchData.callDolulukGelecekRez(dateRange[0], hotelids, true);
 
         //Oda Tipi Dağılım
-        fetchData.callOdatipiDagilim(dateRange,hotelids,true)
+        fetchData.callOdatipiDagilim(dateRange, hotelids, true);
 
         // Geçmiş Rezervasyon Karşılaştırma gunluk
-        fetchData.callRezervasyonGecmisGunluk(hotelids, true)
+        fetchData.callRezervasyonGecmisGunluk(hotelids, true);
 
         // Geçmiş Rezervasyon Karşılaştırma Haftalık
-        fetchData.rezervasyonGecmisHaftalik(hotelids,true)
-        
+        fetchData.rezervasyonGecmisHaftalik(hotelids, true);
+
         //Geçmiş Rezervasyon Karşılaştırma Aylik
-        fetchData.callRezervasyonGecmisAylik(hotelids, true)
+        fetchData.callRezervasyonGecmisAylik(hotelids, true);
 
         //Channel table
-        fetchData.callChannelTable(dateRange, hotelids, true)
-        
+        fetchData.callChannelTable(dateRange, hotelids, true);
+
         //Call raw data
-        fetchData.callRawData(dateRange, hotelids, true)
+        fetchData.callRawData(dateRange, hotelids, true);
 
         //Call kanal dağılım gelirler
-        fetchData.callKanalDagilimGelir(dateRange, hotelids, true)
+        fetchData.callKanalDagilimGelir(dateRange, hotelids, true);
 
         //Call günlük takip
-        fetchData.callGunlukTakip(dateRange, hotelids, true)
+        fetchData.callGunlukTakip(dateRange, hotelids, true);
 
         //Call aylik takip
-        fetchData.callAylikTakip(dateRange, hotelids, true)
+        fetchData.callAylikTakip(dateRange, hotelids, true);
 
         //Aylık Kazanç Durumu Rezervasyon Miktarı
-        fetchData.callKazancDurumuRezMiktari(dateRange,hotelids)
+        fetchData.callKazancDurumuRezMiktari(dateRange, hotelids);
 
         //Aylık Kazanç Durumu 7'li Grafik
-        fetchData.callKazancDurumu7AyGrafik(dateRange,hotelids)
+        fetchData.callKazancDurumu7AyGrafik(dateRange, hotelids);
 
         //Kanal Dağılım Gelirler
-        fetchData.callKanalDagilimGelirler(dateRange,hotelids)
+        fetchData.callKanalDagilimGelirler(dateRange, hotelids);
 
         //Kazanç Durumu Oran
-        fetchData.callKazancDurumuOran(dateRange,hotelids)
+        fetchData.callKazancDurumuOran(dateRange, hotelids);
 
         //Rezervasyon Analiz - Rez Analiz
-        fetchData.rezMiktarAnaliz(dateRange,hotelids,true)
+        fetchData.rezMiktarAnaliz(dateRange, hotelids, true);
 
         //Rezervasyon Analiz - İptal Analiz
-        fetchData.rezMiktarIptalAnaliz(dateRange,hotelids,true)
+        fetchData.rezMiktarIptalAnaliz(dateRange, hotelids, true);
 
         //Rol Belirleme ve Admin - Kişiler
-        fetchData.userRole()
+        fetchData.userRole(true);
 
-        
+        console.log("pages ==> ", r.data.pages);
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {
@@ -162,24 +171,51 @@ const login = () => {
           email: form.value.email,
           fullName: form.value.email,
           id: 1,
-          role: form.value.isValid ? "admin" : None,
+          role: form.value.isValid ? r.data.role : None,
           username: form.value.email,
-          pages: r.data.role,
+          pages: r.data.pages,
         };
 
         localStorage.setItem("userAbilities", JSON.stringify(userAbilities));
         ability.update(userAbilities);
         localStorage.setItem("userData", JSON.stringify(userData));
         localStorage.setItem("accessToken", JSON.stringify(accessToken));
+        console.log(
+          "userData ==> ",
+          JSON.parse(localStorage.getItem("userData"))
+        );
 
+        let originalData = userData.pages[0]; // ['Misafir Dağılım']
+
+        if (Array.isArray(originalData)) {
+          originalData = originalData.map((item) =>
+            item
+              .toLowerCase()
+              .replace(/\s+/g, "-")
+              .replace(/ğ/g, "g")
+              .replace(/ı/g, "i")
+          );
+        } else {
+          originalData = originalData
+            .toLowerCase()
+            .replace(/\s+/g, "-")
+            .replace(/ğ/g, "g")
+            .replace(/ı/g, "i");
+        }
         // Redirect to `to` query if exist or redirect to index route
-        router.replace(route.query.to ? String(route.query.to) : "/");
+        router.replace(
+          route.query.to
+            ? String(route.query.to)
+            : userData.pages.includes("Rezervasyon Analiz")
+            ? "/dashboards/rezervasyon-analiz"
+            : `/dashboards/${originalData}`
+        );
       } else {
         form._value.showMessage = true;
       }
     })
     .catch((e) => {
-      form.value.showMessage = true
+      form.value.showMessage = true;
       console.log(e);
     });
 };
@@ -254,7 +290,7 @@ const onSubmit = () => {
                   v-model="form.password"
                   label="Password"
                   :rules="[requiredValidator, passwordValidator]"
-                  :type="isPasswordVisible ?  'password' : 'text'"
+                  :type="isPasswordVisible ? 'password' : 'text'"
                   :append-inner-icon="
                     isPasswordVisible ? 'tabler-eye-off' : 'tabler-eye'
                   "

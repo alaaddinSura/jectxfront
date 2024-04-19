@@ -7,6 +7,7 @@ const logOut = () => {
   localStorage.removeItem('userData')
   localStorage.removeItem('accessToken')
   localStorage.removeItem('userAbilities')
+  //localStorage.clear();
   router.replace('/')
 }
 </script>
