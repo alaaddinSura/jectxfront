@@ -68,7 +68,7 @@ const logOut = () => {
   router.replace("/");
 };
 
-let logoutTimeThreshold = 15 * 60 * 1000;
+let logoutTimeThreshold = 15 * 60 * 1000; //15 dakika
 const dateMinutes = () =>{
   const lastTimeDate = new Date(JSON.parse(localStorage.getItem("lastTimeDate")))
   const currentDate = new Date()
@@ -84,10 +84,10 @@ const dateMinutes = () =>{
 router.beforeEach(to => {
   const isLoggedIn = isUserLoggedIn()
   const queryPath = to.path.substring(to.path.indexOf('/', 1) + 1);
-  
-  if(isLoggedIn){
+  const admin = userPages.role ? userPages.role.toLowerCase() : userPages.role
+  console.log("")
     if(localStorage.getItem("userData")){
-      if(userPages.role.toLowerCase() === 'admin'){
+      if(admin === 'admin'){
         if (to.path.startsWith('/dashboards/')) {
           // queryPath originalData dizisinde bulunuyorsa:
           if (!originalData.includes(queryPath)) {
@@ -110,7 +110,7 @@ router.beforeEach(to => {
         }
       }
     }
-  }
+  
   
   
   // if (!isLoggedIn) {
