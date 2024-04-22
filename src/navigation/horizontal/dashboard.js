@@ -1,3 +1,4 @@
+const userPages = JSON.parse(localStorage.getItem("userData"))
 
 const children = [
   {
@@ -27,7 +28,7 @@ export default [
     title: 'Dashboards',
     icon: { icon: 'tabler-smart-home' },
     children: children,
-    badgeContent: children.length,
+    badgeContent: userPages.pages.length,
     badgeClass: 'bg-primary',
   },
 ]

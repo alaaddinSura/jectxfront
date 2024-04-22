@@ -11,10 +11,6 @@ import {
   VerticalNavSectionTitle,
 } from '@layouts/components'
 import { config } from '@layouts/config'
-import axios from "@axios";
-import { store } from "@/store/index";
-import Loader from "@/views/dashboards/functions/loader.vue";
-import { watchEffect } from 'vue'
 
 const props = defineProps({
   tag: {
@@ -43,15 +39,7 @@ const navRole = computed(()=>{
   return props.navItems
 })
 
-const userData = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : null;
-  const userRole = localStorage.getItem("userRole") ? JSON.parse(localStorage.getItem("userRole")) : null;
-
-  if (userData && userRole) {
-  // Kullanıcı verileri mevcutsa, işlemleri gerçekleştir
-  // Örneğin, filtreleme işlemleri gibi
-} else {
-  // Kullanıcı verileri henüz yüklenmemişse, uygun bir şekilde beklet veya işlem yap
-}
+const userRole = localStorage.getItem("userRole") ? JSON.parse(localStorage.getItem("userRole")) : null;
 
 const links = computed(()=>{
   let user = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : []

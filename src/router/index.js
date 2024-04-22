@@ -29,6 +29,8 @@ if(localStorage.getItem("userData")){
 }
 
 
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -59,35 +61,58 @@ const router = createRouter({
   ],
 })
 
+const logOut = () => {
+  localStorage.removeItem("userData");
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("userAbilities");
+  router.replace("/");
+};
+
+let logoutTimeThreshold = 15 * 60 * 1000;
+const dateMinutes = () =>{
+  const lastTimeDate = new Date(JSON.parse(localStorage.getItem("lastTimeDate")))
+  const currentDate = new Date()
+  const inactiveTimeInMillis = currentDate.getTime() - lastTimeDate.getTime();
+  if(inactiveTimeInMillis >= logoutTimeThreshold){
+    logOut()
+  }else{
+    localStorage.setItem("lastTimeDate", JSON.stringify(new Date()))
+  }
+}
 
 // Docs: https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 router.beforeEach(to => {
   const isLoggedIn = isUserLoggedIn()
   const queryPath = to.path.substring(to.path.indexOf('/', 1) + 1);
   
-  if(localStorage.getItem("userData")){
-    if(userPages.role === 'admin'){
-      if (to.path.startsWith('/dashboards/')) {
-        // queryPath originalData dizisinde bulunuyorsa:
-        if (originalData.includes(queryPath)) {
-          console.log("Doğru");
-        } else {
-          router.push('/dashboards/' + originalData[0]);
+  if(isLoggedIn){
+    if(localStorage.getItem("userData")){
+      if(userPages.role.toLowerCase() === 'admin'){
+        if (to.path.startsWith('/dashboards/')) {
+          // queryPath originalData dizisinde bulunuyorsa:
+          if (!originalData.includes(queryPath)) {
+            router.push('/dashboards/' + originalData[0]);
+            dateMinutes()
+          }
+          dateMinutes()
         }
-      } else {
-      }
-    }else{
-      if (to.path.startsWith('/dashboards/')) {
-        // queryPath originalData dizisinde bulunuyorsa:
-        if (originalData.includes(queryPath)) {
-        } else {
+      }else{
+        if (to.path.startsWith('/dashboards/')) {
+          dateMinutes()
+          // queryPath originalData dizisinde bulunuyorsa:
+          if (!originalData.includes(queryPath)) {
+            router.push('/dashboards/' + originalData[0]);
+            dateMinutes()
+          }
+          }else{
           router.push('/dashboards/' + originalData[0]);
+          dateMinutes()
         }
-      } else {
-        router.push('/dashboards/' + originalData[0]);
       }
     }
   }
+  
+  
   // if (!isLoggedIn) {
   //   // Kullanıcı giriş yapmamışsa ve talep edilen sayfa giriş sayfası değilse, giriş sayfasına yönlendir
   //   return { name: 'login', query: { to: to.name !== 'index' ? to.fullPath : undefined } };

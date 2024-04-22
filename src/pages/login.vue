@@ -162,8 +162,6 @@ const login = () => {
 
         //Rol Belirleme ve Admin - Kişiler
         fetchData.userRole(true);
-
-        console.log("pages ==> ", r.data.pages);
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {
@@ -180,11 +178,7 @@ const login = () => {
         ability.update(userAbilities);
         localStorage.setItem("userData", JSON.stringify(userData));
         localStorage.setItem("accessToken", JSON.stringify(accessToken));
-        console.log(
-          "userData ==> ",
-          JSON.parse(localStorage.getItem("userData"))
-        );
-
+        localStorage.setItem("lastTimeDate", JSON.stringify(new Date()))
         let originalData = userData.pages[0]; // ['Misafir Dağılım']
 
         if (Array.isArray(originalData)) {
