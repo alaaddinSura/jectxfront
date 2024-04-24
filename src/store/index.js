@@ -37,6 +37,14 @@ export const store = createStore({
     userRole: [],
     userRoleLoader: [1],
     openPopup: false,
+    //Admin
+    getGoals: [],
+    //Loader
+    goalsLoader: [1],
+
+
+
+    //Dashboards
     //Loaderlar
     yatakDagilimLoader: [1],
     //Misafir Dağılım - Oda Tipi Dağılım
@@ -281,6 +289,14 @@ export const store = createStore({
     changeisUpdatePasswordTokenActive(state, payload) {
       state.isUpdatePasswordTokenActive = payload;
     },
+    //Admin
+    changeGetGoals(state, payload){
+      state.getGoals = payload;
+    },
+    //Loader
+    changeGoalsLoader(state,payload){
+      state.goalsLoader = payload;
+    }
   },
   actions: {},
 });

@@ -67,7 +67,6 @@ export const yatakDagilimConfig = (dateRange, hotelidArray) => {
 
 export const callDeleteUser = (email) =>{
   let url = "https://jectxbackend-672789bf3678.herokuapp.com/deleteUserByEmail"
-
   let data = JSON.stringify({
     "email": email
   })

@@ -2,7 +2,6 @@ import axios from "@axios";
 import * as configs from "@/views/dashboards/functions/config";
 import { store } from "@/store/index";
 import * as dates from "@/views/dashboards/functions/dates";
-import * as request from "@/views/dashboards/functions/request";
 import _ from "lodash";
 
 export const callYatakDagilim = (dateRange, hotelids, isLocal) => {
@@ -933,8 +932,6 @@ export const deleteUser = (email) => {
 
 export const addUser = (email,pages) =>{
   axios.request(configs.callAddUser(email,pages)).then((r) =>{
-    console.log("Maili ==> ", email)
-    console.log("Kullanıcı Eklenmiştir. ==> ", r.data)
     userRole()
   }).catch((error) =>{
     console.log("Add User Hata ==> ", error)
@@ -943,7 +940,6 @@ export const addUser = (email,pages) =>{
 
 export const sendMail = (email) =>{
   axios.request(configs.sendMail(email)).then((r)=>{
-    console.log("Maili başarıyla Gönderilmiştir.")
   }).catch((error)=>{
     console.log("Mail Gönderimi Başarısızdır ", error)
   })
@@ -951,7 +947,6 @@ export const sendMail = (email) =>{
 
 export const updateUser = (email, newRole, newPage) =>{
   axios.request(configs.callUpdateUser(email, newRole, newPage)).then((r)=>{
-    console.log("Güncelleme Yapılmıştır ==> ", r.data)
     userRole()
   }).catch((error)=>{
     console.log("Kullanıcı Güncellemesi Hatalı ", error)

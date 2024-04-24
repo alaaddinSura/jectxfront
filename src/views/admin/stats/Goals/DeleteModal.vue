@@ -1,22 +1,22 @@
 <script setup>
-import * as fetchData from "@/views/dashboards/functions/fetchData";
+import * as adminFetchData from "@/views/admin/functions/adminFetchData";
 
 const isDialogVisible = ref(false)
 
 const props = defineProps({
-    email: String
+    delete: String
 })
 
-const email = computed(()=>{
-    return props.email
+const deleted = computed(()=>{
+    return props.delete
 })
 
 
 
-const deleteUser = (email) => {
-  fetchData.deleteUser(email);
+const deleteGoals = (deleted) => {
+  console.log("Deleted Mail", deleted);
+  adminFetchData.deleteGoals(deleted)
   isDialogVisible.value = true
-  store.commit("changeAdminUserDeleteLoader", 0);
 };
 
 </script>
@@ -43,9 +43,9 @@ const deleteUser = (email) => {
     <DialogCloseBtn @click="isDialogVisible = !isDialogVisible" />
 
     <!-- Dialog Content -->
-    <VCard title="Kişi Silme">
+    <VCard title="Hedef Silme">
         <VIcon
-        :icon="'tabler-mood-x'"
+        :icon="'tabler-target-arrow'"
         size="62"
         :color="'error'"
         class="mx-auto"
@@ -53,7 +53,7 @@ const deleteUser = (email) => {
         v-bind="props"
         />
       <VCardText>
-        İlgili kişiyi veritabanından kalıcı olarak silmek istediğinizden emin misiniz ?
+        İlgili hedefi veritabanından kalıcı olarak silmek istediğinizden emin misiniz ?
       </VCardText>
 
       <VCardText class="d-flex justify-end gap-3 flex-wrap">
@@ -64,7 +64,7 @@ const deleteUser = (email) => {
         >
           İptal
         </VBtn>
-        <VBtn color="error" @click="deleteUser(email)">
+        <VBtn color="error" @click="deleteGoals(deleted)">
           Sil
         </VBtn>
       </VCardText>

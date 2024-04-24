@@ -6,13 +6,9 @@ import * as fetchData from "@/views/dashboards/functions/fetchData";
 import { useRouter } from "vue-router";
 import Loader from "@/views/dashboards/functions/loader.vue";
 import { store } from "@/store/index";
-import AddUserModal from "@/views/admin/stats/AddUserModal.vue"
-import EditUserModal from "@/views/admin/stats/EditUserModal.vue"
-import DeleteUserModal from "@/views/admin/stats/DeleteUserModal.vue"
-import * as demoCode from '@/views/demos/components/dialog/demoCodeDialog'
-
-const router = useRouter();
-
+import AddGoalsModal from "@/views/admin/stats/Goals/AddGoalsModal.vue"
+import EditGoalsModal from "@/views/admin/stats/Goals/EditGoalsModal.vue"
+import DeleteModal from "@/views/admin/stats/Goals/DeleteModal.vue"
 
 
 const userListStore = useUserListStore();
@@ -21,14 +17,14 @@ const rowPerPage = ref(10);
 const currentPage = ref(1);
 const totalPage = ref(1);
 const totalUsers = ref(0);
-const users = ref([]);
-const selectedRows = ref([])
 
 let tableData = computed(() => {
-  let channelData = store.state.userRole.length == 0 ? JSON.parse(localStorage.getItem("userRole")) : store.state.userRole;
-
+  let channelData = store.state.getGoals.length == 0 ? JSON.parse(localStorage.getItem("getGoals")) : store.state.getGoals
   return channelData;
 });
+
+console.log(Array.isArray(tableData))
+
 
 // 👉 watching current page
 watchEffect(() => {
@@ -47,7 +43,7 @@ const filteredUsers = computed(() => {
     // If searchQuery is empty, show all users
     if (!searchQuery.value) return true;
     // If searchQuery is present, filter users based on email
-    return user.email.toLowerCase().includes(searchQuery.value.toLowerCase());
+    return user.date.toLowerCase().includes(searchQuery.value.toLowerCase());
   });
 });
 
@@ -67,8 +63,8 @@ watch(rowPerPage, () => {
   if (currentPage.value > totalPage.value) {
     currentPage.value = totalPage.value;
   }
-  console.log("rowPerPage ==> ", rowPerPage.value)
 });
+
 
 // 👉 Computing pagination data
 const paginationData = computed(() => {
@@ -87,7 +83,6 @@ const paginationData = computed(() => {
 
 const addNewUser = (userData) => {
   userListStore.addUser(userData);
-
   // refetch User
   fetchUsers();
 };
@@ -102,7 +97,7 @@ const addNewUser = (userData) => {
 
           <VCardText class="d-flex align-center flex-wrap justify-space-between gap-4">
             <!-- 👉 Metin -->
-            <span class="text-h6">Kişiler</span>
+            <span class="text-h6">Aylık Hedefler</span>
           
 
            <div class="d-flex gap-4">
@@ -113,7 +108,7 @@ const addNewUser = (userData) => {
                 :items="[7, 10, 20, 30, 50]"
               />
             </div>
-            <AddUserModal />
+            <AddGoalsModal />
             <!-- 👉 Search  -->
             <div style="width: 10rem">
               <VTextField
@@ -128,12 +123,14 @@ const addNewUser = (userData) => {
 
           <VTable
             class="text-no-wrap"
-            v-if="store.state.userRoleLoader == 1"
+            v-if="store.state.goalsLoader == 1"
           >
             <!-- 👉 table head -->
             <thead>
               <tr>
-                <th scope="col">EMAİL</th>
+                <th scope="col">OTEL</th>
+                <th scope="col">AY</th>
+                <th scope="col">HEDEF</th>
                 <th scope="col">SİL</th>
                 <th scope="col">EDİT</th>
               </tr>
@@ -142,7 +139,7 @@ const addNewUser = (userData) => {
             <tbody>
               <tr
                 v-for="user in paginatedUsers"
-                :key="user.id"
+                :key="user._id"
                 style="height: 3.75rem"
               >
                 <!-- 👉 User -->
@@ -150,7 +147,7 @@ const addNewUser = (userData) => {
                   <div class="d-flex align-center">
                     <VAvatar
                       variant="tonal"
-                      :icon="'tabler-user'"
+                      :icon="'tabler-building-skyscraper'"
                       :color="'success'"
                       class="me-3"
                       size="38"
@@ -160,27 +157,44 @@ const addNewUser = (userData) => {
 
                     <div class="d-flex flex-column">
                       <h6 class="text-base">
-                        {{ user.email }}
+                        {{ user.hotelId != "22966" ?  "DESİGN" : "AYASOFYA" }}
                       </h6>
                       <span class="text-sm text-disabled"></span>
                     </div>
                   </div>
                 </td>
 
+                <td>
+                  <div class="d-flex flex-column">
+                    <h6 class="text-base">
+                      {{ user.date }}
+                    </h6>
+                    <span class="text-sm text-disabled"></span>
+                  </div>
+                </td>
+
+                <td>
+                  <div class="d-flex flex-column">
+                    <h6 class="text-base">
+                      {{ user.value }}
+                    </h6>
+                    <span class="text-sm text-disabled"></span>
+                  </div>
+                </td>
                 <!-- 👉 Delete -->
                 <td>
-                  <DeleteUserModal :email="user.email"/>
+                  <DeleteModal :delete="user._id"/>
                 </td>
 
                 <!-- 👉 Actions -->
                 <td>
-                    <EditUserModal :email="user.email" />
+                    <EditGoalsModal :id="user._id" />
                 </td>
               </tr>
             </tbody>
           </VTable>
 
-          <VTable v-if="store.state.userRoleLoader == 0">
+          <VTable v-if="store.state.goalsLoader == 0">
             <Loader
               style="
                 width: 100px;

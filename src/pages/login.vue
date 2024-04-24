@@ -13,6 +13,7 @@ import {
 } from "@validators";
 import { config } from "@/views/dashboards/functions/config";
 import * as fetchData from "@/views/dashboards/functions/fetchData";
+import * as adminFetchData from "@/views/admin/functions/adminFetchData";
 
 const route = useRoute();
 const router = useRouter();
@@ -162,6 +163,12 @@ const login = () => {
 
         //Rol Belirleme ve Admin - Kişiler
         fetchData.userRole(true);
+
+        //Admin Fetch Data
+
+        //Hedefler - Aylık Hedefler
+        adminFetchData.getGoal(true);
+        
         let userAbilities = [{ action: "manage", subject: "all" }];
         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
         let userData = {

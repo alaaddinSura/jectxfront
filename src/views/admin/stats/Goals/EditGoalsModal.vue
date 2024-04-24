@@ -1,6 +1,6 @@
 <script setup>
 import * as fetchData from "@/views/dashboards/functions/fetchData";
-import EditUserConfirmation from "./EditUserConfirmation.vue"
+import EditGoalsConfirmation from "./EditGoalsConfirmation.vue"
 import { store } from "@/store/index";
 
 const isDialogVisible = ref(false)
@@ -8,32 +8,31 @@ const email = ref('asd')
 const pages = ref([])
 const role = ref('')
 
-
 const props = defineProps({
-    email: String
+    id: String
 })
 
-const formEntries = ref([{ email: props.email, pages: [], role: '' }]);
+const updateId = computed(()=>{
+  return props.id;
+})
 
-const updateUser = () =>{
-    for (const entry of formEntries.value) {
-        fetchData.updateUser(entry.email,entry.role, Object.values(entry.pages))
-    }
-  isDialogVisible.value = false
-}
+
+
+const formEntries = ref([{ target: '', date: '', hotels: '' }]);
 
 const isSaveButtonActive = computed(() => {
   for (const entry of formEntries.value) {
-    if (entry.pages.length === 0 || entry.role.length === 0) {
+    if (entry.target.length === 0 || entry.date.length === 0 || entry.hotels.length === 0) {
       return false;
     }
   }
   return true;
 });
 
-const exitModal = () =>{
-  formEntries.value = ([{ email: props.email, pages: [], role: '' }]);
+const exitModal = (updateId) =>{
+  formEntries.value = ([{ target: '', date: '', hotels: '' }]);
   isDialogVisible.value = false
+  console.log("updateId ==> ", updateId)
 }
 </script>
 
@@ -57,36 +56,33 @@ const exitModal = () =>{
     <DialogCloseBtn @click="isDialogVisible = !isDialogVisible" />
 
     <!-- Dialog Content -->
-    <VCard title="Kişiyi Güncelle">
+    <VCard title="Aylık Hedef Güncelle">
       <VCardText>
         <VRow class="mb-3" v-for="(entry, index) in formEntries" :key="index">
             <VCol cols="12">
               <VTextField
-              v-model="entry.email"
-                :value="props.email"
-                label="Email"
-                readonly
+              v-model="entry.target"
+                label="Hedef"
+                type="number"
               />
             </VCol>
             <VCol
               cols="12"
               sm="12"
             >
-              <VAutocomplete
-                v-model="entry.pages"
-                multiple
-                :items="['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Analiz','Admin']"
-                label="Sayfalar"
-              />
+            <VTextField
+            v-model="entry.date"
+              label="Tarih"
+            />
             </VCol>
             <VCol
               cols="12"
               sm="12"
             >
               <VAutocomplete
-                v-model="entry.role"
-                :items="['admin','user']"
-                label="Rolü"
+                v-model="entry.hotels"
+                :items="['Ayasofya','Design']"
+                label="Otel"
               />
             </VCol> 
           </VRow>
@@ -102,7 +98,7 @@ const exitModal = () =>{
         </VBtn>
         <VBtn :disabled="!isSaveButtonActive" width="120px">
           <template v-for="(entry, index) in formEntries" :key="index">
-            <EditUserConfirmation :email="entry.email" :pages="entry.pages" :role="entry.role" />
+            <EditGoalsConfirmation :target="entry.target" :date="entry.date" :hotels="entry.hotels" :id="updateId"/>
           </template>
         </VBtn>
       </VCardText>

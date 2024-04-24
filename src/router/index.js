@@ -84,10 +84,9 @@ const dateMinutes = () =>{
 router.beforeEach(to => {
   const isLoggedIn = isUserLoggedIn()
   const queryPath = to.path.substring(to.path.indexOf('/', 1) + 1);
-  const admin = userPages.role ? userPages.role.toLowerCase() : userPages.role
-  console.log("")
+
     if(localStorage.getItem("userData")){
-      if(admin === 'admin'){
+      if(userPages.role.toLowerCase() === 'admin'){
         if (to.path.startsWith('/dashboards/')) {
           // queryPath originalData dizisinde bulunuyorsa:
           if (!originalData.includes(queryPath)) {
@@ -110,6 +109,7 @@ router.beforeEach(to => {
         }
       }
     }
+    
   
   
   

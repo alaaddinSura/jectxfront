@@ -24,9 +24,7 @@ const addNewEntry = () => {
 };
 
 const addUser = () =>{
-    console.log("Değerler ==> ",formEntries.value)
     for (const entry of formEntries.value) {
-        console.log("Email ==> ", entry);
         fetchData.addUser(entry.email, entry.interest, entry.role)
         fetchData.sendMail(entry.email);
     }

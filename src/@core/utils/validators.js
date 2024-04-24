@@ -8,6 +8,14 @@ export const requiredValidator = value => {
   return !!String(value).trim().length || 'Lütfen boş bırakmayınız !!'
 }
 
+export const dateValidator = (value) => {
+  const regex = /^[0-9\-/]*$/; // Sadece rakamlar, tire ve eğik çizgi kabul edilir
+  if (!regex.test(value)) {
+    return "Lütfen sadece rakamlar, tire ve eğik çizgi kullanın.";
+  }
+  return true;
+};
+
 // 👉 Email Validator
 export const emailValidator = value => {
   if (isEmpty(value))
