@@ -14,7 +14,6 @@ const deleted = computed(()=>{
 
 
 const deleteGoals = (deleted) => {
-  console.log("Deleted Mail", deleted);
   adminFetchData.deleteGoals(deleted)
   isDialogVisible.value = true
 };

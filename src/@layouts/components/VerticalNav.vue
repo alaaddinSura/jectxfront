@@ -11,6 +11,9 @@ import {
   VerticalNavSectionTitle,
 } from '@layouts/components'
 import { config } from '@layouts/config'
+import { useRoute } from 'vue-router'
+
+const route = useRoute();
 
 const props = defineProps({
   tag: {
@@ -35,6 +38,7 @@ const props = defineProps({
   },
 })
 
+
 const navRole = computed(()=>{
   return props.navItems
 })
@@ -56,9 +60,9 @@ const links = computed(()=>{
 
   const filterLinks = computed(()=>{
   const loginUser = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : []
-  const admin = loginUser.role.charAt(0).toUpperCase() + userRole[0].role.slice(1);
+  const admin = loginUser.role.toLowerCase()
   let filteredNav;
-  if (admin.includes("Admin")) {
+  if (admin.includes("admin")) {
     // admin, "Admin" içeriyorsa tüm verileri getir
     filteredNav = navRole.value;
     filteredNav[0] = links.value
@@ -69,7 +73,7 @@ const links = computed(()=>{
   }
   return filteredNav;
   })
-  
+
   onMounted(() => {
     links.value;
   })
@@ -105,7 +109,6 @@ const resolveNavItemComponent = item => {
   return VerticalNavLink
 }
 
-const route = useRoute()
 
 watch(() => route.name, () => {
   props.toggleIsOverlayNavActive(false)
@@ -117,6 +120,7 @@ const updateIsVerticalNavScrolled = val => isVerticalNavScrolled.value = val
 const handleNavScroll = evt => {
   isVerticalNavScrolled.value = evt.target.scrollTop > 0
 }
+
 </script>
 
 <template>

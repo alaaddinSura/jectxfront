@@ -67,7 +67,6 @@ watch(rowPerPage, () => {
   if (currentPage.value > totalPage.value) {
     currentPage.value = totalPage.value;
   }
-  console.log("rowPerPage ==> ", rowPerPage.value)
 });
 
 // 👉 Computing pagination data
@@ -150,8 +149,8 @@ const addNewUser = (userData) => {
                   <div class="d-flex align-center">
                     <VAvatar
                       variant="tonal"
-                      :icon="'tabler-user'"
-                      :color="'success'"
+                      :icon="user.role != 'admin' ? 'tabler-user' : 'tabler-user-cog'"
+                      :color="user.role != 'admin' ? 'warning' : 'success'"
                       class="me-3"
                       size="38"
                     >
@@ -166,15 +165,14 @@ const addNewUser = (userData) => {
                     </div>
                   </div>
                 </td>
-
                 <!-- 👉 Delete -->
                 <td>
-                  <DeleteUserModal :email="user.email"/>
+                  <DeleteUserModal v-if="user.role !== 'admin'" :email="user.email" :disabled="user.role === 'admin'"/>
                 </td>
 
                 <!-- 👉 Actions -->
-                <td>
-                    <EditUserModal :email="user.email" />
+                <td :disabled="user.role === 'admin'">
+                    <EditUserModal :email="user.email" :role="user.role" :pages="user.pages" v-if="user.role !== 'admin'"/>
                 </td>
               </tr>
             </tbody>

@@ -34,6 +34,8 @@ const errors = ref({
   password: undefined,
 });
 
+refVForm.value = refVForm.value || {};
+
 const isPasswordVisible = ref(true);
 
 const login = () => {
@@ -47,10 +49,8 @@ const login = () => {
     .then((r) => {
       form.value.showMessage = true;
       form.value.isValid = true;
-
       if (form.value.isValid) {
         form.value.showMessage = false;
-
         let dateRange = [dates.findYesterdayDate()];
         let hotelids = [22964, 22966];
 
@@ -169,51 +169,56 @@ const login = () => {
         //Hedefler - Aylık Hedefler
         adminFetchData.getGoal(true);
         
-        let userAbilities = [{ action: "manage", subject: "all" }];
-        let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
-        let userData = {
-          avatar: "/src/assets/images/avatars/avatar-1.png",
-          email: form.value.email,
-          fullName: form.value.email,
-          id: 1,
-          role: form.value.isValid ? r.data.role : None,
-          username: form.value.email,
-          pages: r.data.pages,
-        };
-
-        localStorage.setItem("userAbilities", JSON.stringify(userAbilities));
-        ability.update(userAbilities);
-        localStorage.setItem("userData", JSON.stringify(userData));
-        localStorage.setItem("accessToken", JSON.stringify(accessToken));
-        localStorage.setItem("lastTimeDate", JSON.stringify(new Date()))
-        let originalData = userData.pages[0]; // ['Misafir Dağılım']
-
-        if (Array.isArray(originalData)) {
-          originalData = originalData.map((item) =>
-            item
-              .toLowerCase()
-              .replace(/\s+/g, "-")
-              .replace(/ğ/g, "g")
-              .replace(/ı/g, "i")
-          );
-        } else {
-          originalData = originalData
-            .toLowerCase()
-            .replace(/\s+/g, "-")
-            .replace(/ğ/g, "g")
-            .replace(/ı/g, "i");
-        }
-        // Redirect to `to` query if exist or redirect to index route
-        router.replace(
-          route.query.to
-            ? String(route.query.to)
-            : userData.pages.includes("Rezervasyon Analiz")
-            ? "/dashboards/rezervasyon-analiz"
-            : `/dashboards/${originalData}`
-        );
+        
       } else {
         form._value.showMessage = true;
       }
+
+      return r.data
+    }).then((b)=>{
+       form.value.isValid = true;
+       if (form.value.isValid){
+         let userAbilities = [{ action: "manage", subject: "all" }];
+         let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
+         let userData = {
+           avatar: "/src/assets/images/avatars/avatar-1.png",
+           email: form.value.email,
+           fullName: form.value.email,
+           id: 1,
+           role: form.value.isValid ? b.role : None,
+           username: form.value.email,
+           pages: b.pages,
+         }
+         localStorage.setItem("userAbilities", JSON.stringify(userAbilities));
+         ability.update(userAbilities);
+         localStorage.setItem("userData", JSON.stringify(userData));
+         localStorage.setItem("accessToken", JSON.stringify(accessToken));
+         localStorage.setItem("lastTimeDate", JSON.stringify(new Date()))
+         let originalData = userData.pages[0]; // ['Misafir Dağılım'
+         if (Array.isArray(originalData)) {
+           originalData = originalData.map((item) =>
+             item
+               .toLowerCase()
+               .replace(/\s+/g, "-")
+               .replace(/ğ/g, "g")
+               .replace(/ı/g, "i")
+           );
+         } else {
+           originalData = originalData
+             .toLowerCase()
+             .replace(/\s+/g, "-")
+             .replace(/ğ/g, "g")
+             .replace(/ı/g, "i");
+         }
+         // Redirect to `to` query if exist or redirect to index route
+         router.replace(
+           route.query.to
+             ? String(route.query.to)
+             : userData.pages.includes("Rezervasyon Analiz")
+             ? "/dashboards/rezervasyon-analiz"
+             : `/dashboards/${originalData}`
+         );
+       }
     })
     .catch((e) => {
       form.value.showMessage = true;

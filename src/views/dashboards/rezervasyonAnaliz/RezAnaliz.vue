@@ -5,7 +5,8 @@ import Bar from "../stats/Bar.vue"
 
 const statistics = computed(()=>{
   let chosenHotels = store.state.selectedHotels
-  let rezData2 = store.state.rezMiktarAnaliz == 0 ? JSON.parse(localStorage.getItem('rezMiktarAnaliz')) : store.state.rezMiktarAnaliz
+  let rezData2 = store.state.rezMiktarAnaliz.length == 0 ? JSON.parse(localStorage.getItem('rezMiktarAnaliz')) : store.state.rezMiktarAnaliz
+  
   let statData2 = rezData2.filter(item => chosenHotels.includes(item.hotelId))
   let rezCountTotal = statData2.map(item=> item.count).reduce((f,s)=>f+s,0)
   let rezNightTotal = statData2.map(item => item.night).reduce((f,s)=>f+s,0)

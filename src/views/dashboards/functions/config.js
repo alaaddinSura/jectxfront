@@ -35,14 +35,14 @@ export const deleteConfig = (url, data) => {
   return delConfig
 };
 
-export const callAddUser = (email, pages) =>{
+export const callAddUser = (email, pages, role) =>{
   let url = "https://jectxbackend-672789bf3678.herokuapp.com/addUser";
     let data = JSON.stringify({
       emails: [
         {
           email: email,
           pages: pages,
-          role: "user",
+          role: role,
         }
       ]
     })

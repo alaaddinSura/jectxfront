@@ -16,12 +16,8 @@ const email = computed(()=>{
 const formEntries = ref([{ email: props.email, pages: props.pages, role: props.role }]);
 
 const updateUser = () =>{
-    // console.log("props email ==> ", props.email)
-     console.log("props Pages ==> ", props.role)
-     console.log("props Role ==> ", Object.values(props.pages))
      for (const entry of formEntries.value) {
-         fetchData.updateUser(entry.email,entry.role, Object.values(entry.pages))
-         fetchData.updateUser(entry.email,entry.role,entry.pages)
+         fetchData.updateUser(entry.email,entry.role, Object.values(props.pages))
      }
   isDialogVisible.value = false
 }

@@ -6,7 +6,7 @@ import Bar from "../stats/Bar.vue"
 const statistics = computed(()=>{
   let chosenHotels = store.state.selectedHotels
   const today = new Date();
-  let rezData = store.state.rezAnaliz == 0 ? JSON.parse(localStorage.getItem("rezAnaliz")) : store.state.rezAnaliz
+  let rezData = store.state.rezAnaliz.length == 0 ? JSON.parse(localStorage.getItem("rezAnaliz")) : store.state.rezAnaliz
   // bugün ve daha büyük tarihli veriler nigti 0 alınıyor çünkü folyoda yoktur. Average tutturmak amacı ile
   let previous = rezData.filter(item => (new Date(item.DATE)) <= today)
   let current = rezData.filter(item => (new Date(item.DATE)) > today && item.NIGHT != 0)

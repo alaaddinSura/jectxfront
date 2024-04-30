@@ -1,15 +1,33 @@
 <script setup>
 import * as adminFetchData from "@/views/admin/functions/adminFetchData";
-
+import { store } from "@/store/index";
 const isDialogVisible = ref(false);
 
+let tableData = computed(() => {
+  let channelData = store.state.getGoals.length == 0 ? JSON.parse(localStorage.getItem("getGoals")) : store.state.getGoals
+  return channelData;
+});
 
 
 const formEntries = ref([{ target: "", date: "", otel: "" }]);
 
 const isSaveButtonActive = computed(() => {
+  const tableDataValue = tableData.value.map(item=> item.value)
+  const tableDataDate = tableData.value.map(item=> item.date)
+  const tableDataHotelId = tableData.value.map(item=> item.hotelId)
+
   for (const entry of formEntries.value) {
     if (entry.target.length === 0 || entry.date.length === 0 || entry.otel.length === 0){
+      
+      return false;
+    }
+    // Girişin otel değeri tableDataValue içinde var mı kontrol et
+    const entryOtelExists = entry.otel === "Ayasofya" ? 22964 : 22966
+    const otelExists = tableDataValue.includes(parseInt(entry.target));
+    const dateExists = tableDataDate.includes(entry.date);
+    const hotelExits = tableDataHotelId.includes(entryOtelExists)
+
+    if (dateExists && hotelExits) {
       return false;
     }
   }
@@ -18,6 +36,7 @@ const isSaveButtonActive = computed(() => {
 
 const addNewEntry = () => {
   formEntries.value.push({ target: "", date: "", otel: "" });
+  
 };
 
 const addUser = () => {
@@ -72,11 +91,13 @@ const resetDialog = () => {
           <VCol cols="12">
             <p>Yeni Aylık Hedef</p>
           </VCol>
-          <VCol cols="12">
-            <VTextField
-              v-model="entry.target"
-              label="Hedef"
-              type="number"
+          <VCol cols="12" sm="12">
+            <VAutocomplete
+              v-model="entry.otel"
+              :items="['Ayasofya', 'Design']"
+              label="Otel"
+              :disable-filter="true"
+              @keydown.prevent
             />
           </VCol>
           <VCol cols="12" sm="12">
@@ -85,16 +106,11 @@ const resetDialog = () => {
               label="Tarih"
             />
           </VCol>
-          <VCol cols="12" sm="12">
-            <VAutocomplete
-              v-model="entry.otel"
-              :items="['Ayasofya', 'Design']"
-              label="Otel"
-              clearable
-              hide-details
-              no-filter
-              :disable-filter="true"
-              @keydown.prevent
+          <VCol cols="12">
+            <VTextField
+              v-model="entry.target"
+              label="Hedef"
+              type="number"
             />
           </VCol>
         </VRow>

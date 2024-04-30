@@ -6,7 +6,7 @@ import { store } from '@/store/index'
 
 const statistic = computed(()=>{
   let chosenHotels = store.state.selectedHotels
-
+  
   let nightScatter = JSON.parse(localStorage.getItem("gecelemeDagilim"))
   let statData = store.state.gecelemeDagilim.length == 0 ? nightScatter : store.state.gecelemeDagilim
   statData = statData.filter(item=> chosenHotels.includes(item.hotelId))

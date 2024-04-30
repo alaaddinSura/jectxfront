@@ -4,9 +4,35 @@ import { useTheme } from 'vuetify'
 import { hexToRgb } from '@layouts/utils'
 import { store } from '@/store/index'
 import Loader from '../functions/loader.vue'
+import * as dates from "@/views/dashboards/functions/dates";
 
 const vuetifyTheme = useTheme()
-const series = [36]
+//const series = [50]
+
+const seriesPercent = computed(()=>{
+  let data = JSON.parse(localStorage.getItem('gunlukTakip'))
+  let chosenHotels = store.state.selectedHotels.length == 0 ? [22966, 22964] : store.state.selectedHotels
+  data = data.filter(item => chosenHotels.includes(item.hotelId))
+  let dataCount = data.map(item => item.gelir).reduce((f, s) => f + s, 0)
+
+  const statData =  store.state.getGoals.length == 0 ? JSON.parse(localStorage.getItem("getGoals")) : store.state.getGoals
+  let rezData = statData.filter(item => chosenHotels.includes(item.hotelId))
+  
+  let todayDate;
+  let monthData;
+  if(rezData.filter(item => dates.findCurrentMonth().includes(item.date))){
+    todayDate = rezData.filter(item => dates.findCurrentMonth().includes(item.date))
+    monthData = todayDate.map(item => item.value).reduce((f,s)=> f+s,0)
+  }else{
+    monthData = 1000000
+  }
+  const monthCount = (monthData / 30)
+  const monthPercent = (( dataCount / monthCount ) * 100).toFixed(0)
+
+  return monthPercent
+})
+
+let series = Array(seriesPercent.value)
 
 const chartOptions = computed(() => {
   const currentTheme = vuetifyTheme.current.value.colors

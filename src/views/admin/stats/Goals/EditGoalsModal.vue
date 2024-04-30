@@ -9,7 +9,10 @@ const pages = ref([])
 const role = ref('')
 
 const props = defineProps({
-    id: String
+    id: String,
+    hotels: String,
+    target: String,
+    date: String,
 })
 
 const updateId = computed(()=>{
@@ -18,7 +21,7 @@ const updateId = computed(()=>{
 
 
 
-const formEntries = ref([{ target: '', date: '', hotels: '' }]);
+const formEntries = ref([{ target: props.target, date: props.date, hotels: props.hotels }]);
 
 const isSaveButtonActive = computed(() => {
   for (const entry of formEntries.value) {
@@ -30,7 +33,7 @@ const isSaveButtonActive = computed(() => {
 });
 
 const exitModal = (updateId) =>{
-  formEntries.value = ([{ target: '', date: '', hotels: '' }]);
+  formEntries.value = ([{ target: '', date: props.date, hotels: props.hotels }]);
   isDialogVisible.value = false
   console.log("updateId ==> ", updateId)
 }
@@ -61,9 +64,11 @@ const exitModal = (updateId) =>{
         <VRow class="mb-3" v-for="(entry, index) in formEntries" :key="index">
             <VCol cols="12">
               <VTextField
-              v-model="entry.target"
-                label="Hedef"
-                type="number"
+                v-model="entry.hotels"
+                :value="props.hotels === 22966 ? 'Ayasofya' : 'Design'"
+                label="Otel"
+                readonly
+                disabled
               />
             </VCol>
             <VCol
@@ -72,18 +77,22 @@ const exitModal = (updateId) =>{
             >
             <VTextField
             v-model="entry.date"
+            :value="props.date"
               label="Tarih"
+              readonly
+              disabled
             />
             </VCol>
             <VCol
               cols="12"
               sm="12"
             >
-              <VAutocomplete
-                v-model="entry.hotels"
-                :items="['Ayasofya','Design']"
-                label="Otel"
-              />
+            <VTextField
+            v-model="entry.target"
+            :hint="props.target"
+              label="Hedef"
+              type="number"
+            />
             </VCol> 
           </VRow>
       </VCardText>

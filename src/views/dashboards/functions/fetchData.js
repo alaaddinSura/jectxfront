@@ -930,8 +930,8 @@ export const deleteUser = (email) => {
   })
 };
 
-export const addUser = (email,pages) =>{
-  axios.request(configs.callAddUser(email,pages)).then((r) =>{
+export const addUser = (email,pages, role) =>{
+  axios.request(configs.callAddUser(email,pages,role)).then((r) =>{
     userRole()
   }).catch((error) =>{
     console.log("Add User Hata ==> ", error)

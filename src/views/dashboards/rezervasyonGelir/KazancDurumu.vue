@@ -5,6 +5,7 @@ import { hexToRgb } from "@layouts/utils";
 import { store } from "@/store/index";
 import { computed } from "vue";
 import Loader from "../functions/loader.vue";
+import * as dates from "@/views/dashboards/functions/dates";
 
 const vuetifyTheme = useTheme();
 
@@ -115,12 +116,23 @@ const earningsReports = computed(() => {
   let chosenHotels = store.state.selectedHotels.length == 0 ? [22966, 22964] : store.state.selectedHotels
   data = data.filter(item => chosenHotels.includes(item.hotelId))
 
+  const statData =  store.state.getGoals.length == 0 ? JSON.parse(localStorage.getItem("getGoals")) : store.state.getGoals
+  let rezData = statData.filter(item => chosenHotels.includes(item.hotelId))
+  let todayDate;
+  let monthData;
+  if(rezData.filter(item => dates.findCurrentMonth().includes(item.date))){
+    todayDate = rezData.filter(item => dates.findCurrentMonth().includes(item.date))
+    monthData = todayDate.map(item => item.value).reduce((f,s)=> f+s,0)
+  }else{
+    monthData = 1000000
+  }
+
   return [
     {
       color: "primary",
       icon: "tabler-target-arrow",
       title: "Hedef",
-      amount: "1.2M",
+      amount: monthData,
       progress: "55",
     },
     {
@@ -164,7 +176,23 @@ const revenueChange = computed(() => {
 });
 
 const successRate = computed(() => {
-  let statisticBar = 80;
+  let data = JSON.parse(localStorage.getItem("aylikTakip"));
+  let chosenHotels = store.state.selectedHotels.length == 0 ? [22966, 22964] : store.state.selectedHotels
+  data = data.filter(item => chosenHotels.includes(item.hotelId))
+  let dataMonth = data.map(item => item.gelir).reduce((f,s) => f+s, 0).toFixed(2)
+
+  const statData =  store.state.getGoals.length == 0 ? JSON.parse(localStorage.getItem("getGoals")) : store.state.getGoals
+  let rezData = statData.filter(item => chosenHotels.includes(item.hotelId))
+  let todayDate;
+  let monthData;
+  if(rezData.filter(item => dates.findCurrentMonth().includes(item.date))){
+    todayDate = rezData.filter(item => dates.findCurrentMonth().includes(item.date))
+    monthData = todayDate.map(item => item.value).reduce((f,s)=> f+s,0)
+  }else{
+    monthData = 1000000
+  }
+  const monthCount = ( dataMonth / monthData) * 100
+  let statisticBar = monthCount.toFixed(0);
 
   return {
     bar: statisticBar,
@@ -178,6 +206,7 @@ function formatNumber(num) {
   }
   return num.toString();
 }
+
 </script>
 
 <template>

@@ -6,6 +6,7 @@ export const store = createStore({
     dateCount: 1,
     dateRange: dates.findYesterdayDate() + "to" + dates.findYesterdayDate(),
     selectedHotels: [22964, 22966],
+    inActive: false,
     yatakDagilim: [],
     gecelemeDagilim: [],
     rezervMiktar: [],
@@ -110,6 +111,9 @@ export const store = createStore({
     },
     changeGuestTypes(state, payload) {
       state.guestTypes = payload;
+    },
+    changeInActive(state,payload){
+      state.inActive = payload;
     },
     changeGuestNations(state, payload) {
       state.guestNations = payload;

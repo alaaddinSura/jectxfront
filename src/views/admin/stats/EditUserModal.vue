@@ -2,25 +2,18 @@
 import * as fetchData from "@/views/dashboards/functions/fetchData";
 import EditUserConfirmation from "./EditUserConfirmation.vue"
 import { store } from "@/store/index";
+import { watch } from "vue";
 
 const isDialogVisible = ref(false)
-const email = ref('asd')
-const pages = ref([])
-const role = ref('')
-
 
 const props = defineProps({
-    email: String
+    email: String,
+    role: String,
+    pages: Array
 })
 
-const formEntries = ref([{ email: props.email, pages: [], role: '' }]);
+const formEntries = ref([{ email: props.email, pages: props.pages, role: props.role }]);
 
-const updateUser = () =>{
-    for (const entry of formEntries.value) {
-        fetchData.updateUser(entry.email,entry.role, Object.values(entry.pages))
-    }
-  isDialogVisible.value = false
-}
 
 const isSaveButtonActive = computed(() => {
   for (const entry of formEntries.value) {
@@ -31,8 +24,17 @@ const isSaveButtonActive = computed(() => {
   return true;
 });
 
+watch(() => formEntries.value[0].role, (newValue, oldValue) => {
+  if (newValue === 'admin') {
+    formEntries.value[0].pages = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'];
+  } else {
+    // Eğer rol 'admin' değilse tüm sayfaların seçimini kaldır
+    formEntries.value[0].pages = props.pages
+  }
+});
+
 const exitModal = () =>{
-  formEntries.value = ([{ email: props.email, pages: [], role: '' }]);
+  formEntries.value = ([{ email: props.email, pages: props.pages, role: props.role }]);
   isDialogVisible.value = false
 }
 </script>
@@ -72,21 +74,23 @@ const exitModal = () =>{
               cols="12"
               sm="12"
             >
-              <VAutocomplete
-                v-model="entry.pages"
-                multiple
-                :items="['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Analiz','Admin']"
-                label="Sayfalar"
-              />
+            <VAutocomplete
+            v-model="entry.role"
+            :items="['admin','user']"
+            label="Rolü"
+          />
             </VCol>
             <VCol
               cols="12"
               sm="12"
             >
               <VAutocomplete
-                v-model="entry.role"
-                :items="['admin','user']"
-                label="Rolü"
+                v-model="entry.pages"
+                multiple
+                :items="['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma']"
+                label="Sayfalar"
+                @click="updateUserInterest()"
+                :disabled="entry.role === 'admin'"
               />
             </VCol> 
           </VRow>

@@ -23,8 +23,6 @@ let tableData = computed(() => {
   return channelData;
 });
 
-console.log(Array.isArray(tableData))
-
 
 // 👉 watching current page
 watchEffect(() => {
@@ -147,8 +145,8 @@ const addNewUser = (userData) => {
                   <div class="d-flex align-center">
                     <VAvatar
                       variant="tonal"
-                      :icon="'tabler-building-skyscraper'"
-                      :color="'success'"
+                      :icon="user.hotelId != '22966' ? 'tabler-building' : 'tabler-building-skyscraper'"
+                      :color="user.hotelId != '22966' ? 'warning': 'success'"
                       class="me-3"
                       size="38"
                     >
@@ -183,12 +181,12 @@ const addNewUser = (userData) => {
                 </td>
                 <!-- 👉 Delete -->
                 <td>
-                  <DeleteModal :delete="user._id"/>
+                  <DeleteModal :delete="user._id"/> 
                 </td>
 
                 <!-- 👉 Actions -->
                 <td>
-                    <EditGoalsModal :id="user._id" />
+                    <EditGoalsModal :id="user._id" :hotels="user.hotelId" :date="user.date" :target="user.value"/>
                 </td>
               </tr>
             </tbody>

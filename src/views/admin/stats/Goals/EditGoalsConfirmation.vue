@@ -19,14 +19,21 @@ const dateProps = computed(()=>{
 })
 
 const hotelsProps = computed(()=>{
-  return props.hotels
+  return props.hotels === "Ayasofya" ? 22966 : 22964
 })
+
+let newHotelId
+if(hotelsProps === 'Ayasofya'){
+  newHotelId = 22964
+}else{
+  newHotelId = 22966
+}
 
 const formEntries = ref([{ target: targetProps, date: dateProps, hotels: hotelsProps }]);
 
 const updateUser = () =>{
       for (const entry of formEntries.value) {
-          adminFetchData.updateGoals(props.id,parseInt(entry.target), entry.date, props.hotels === "Ayasofya" ? 22966 : 22964)
+          adminFetchData.updateGoals(props.id,parseInt(entry.target), entry.date, props.hotels)
       }
   isDialogVisible.value = false
 }
