@@ -186,11 +186,11 @@ const revenueChange = computed(() => {
   console.log("---------------------Oran Belirleme Yeri---------------------------")
   let chosenHotels = store.state.selectedHotels;
   let rezData = JSON.parse(localStorage.getItem("kazancDurumuOran"))
-  console.log("Oran Verinin Ham Hali ==> ", statData)
+  console.log("Oran Verinin Ham Hali ==> ", rezData)
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
   console.log("Oran Verinin Hotel Seçmeli Hali ==> ", statData)
   let totalCount = statData.map(item => item.count).reduce((f,s)=> f+s,0)
-  console.log("Oran Verinin Toplamının Hali ==> ", statData)
+  console.log("Oran Verinin Toplamının Hali ==> ", totalCount)
   let thisMonths = rezAdetMonth.value
   let changeRevenue = (thisMonths - totalCount) *100 / totalCount
   console.log("Oran Verinin Oranı Hali ==> ", changeRevenue)
