@@ -145,8 +145,8 @@ const addNewUser = (userData) => {
                   <div class="d-flex align-center">
                     <VAvatar
                       variant="tonal"
-                      :icon="user.hotelId != '22966' ? 'tabler-building' : 'tabler-building-skyscraper'"
-                      :color="user.hotelId != '22966' ? 'warning': 'success'"
+                      :icon="user.hotelId != '22964' ? 'tabler-building' : 'tabler-building-skyscraper'"
+                      :color="user.hotelId != '22964' ? 'warning': 'success'"
                       class="me-3"
                       size="38"
                     >
@@ -155,7 +155,7 @@ const addNewUser = (userData) => {
 
                     <div class="d-flex flex-column">
                       <h6 class="text-base">
-                        {{ user.hotelId != "22966" ?  "DESİGN" : "AYASOFYA" }}
+                        {{ user.hotelId != "22964" ?  "DESİGN" : "AYASOFYA" }}
                       </h6>
                       <span class="text-sm text-disabled"></span>
                     </div>

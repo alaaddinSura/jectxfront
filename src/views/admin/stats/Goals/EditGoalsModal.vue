@@ -35,7 +35,6 @@ const isSaveButtonActive = computed(() => {
 const exitModal = (updateId) =>{
   formEntries.value = ([{ target: '', date: props.date, hotels: props.hotels }]);
   isDialogVisible.value = false
-  console.log("updateId ==> ", updateId)
 }
 </script>
 

@@ -1,6 +1,7 @@
 <script setup>
 import * as adminFetchData from "@/views/admin/functions/adminFetchData";
 import { store } from "@/store/index";
+import * as dates from "@/views/dashboards/functions/dates"
 const isDialogVisible = ref(false);
 
 let tableData = computed(() => {
@@ -12,22 +13,16 @@ let tableData = computed(() => {
 const formEntries = ref([{ target: "", date: "", otel: "" }]);
 
 const isSaveButtonActive = computed(() => {
-  const tableDataValue = tableData.value.map(item=> item.value)
-  const tableDataDate = tableData.value.map(item=> item.date)
-  const tableDataHotelId = tableData.value.map(item=> item.hotelId)
 
   for (const entry of formEntries.value) {
     if (entry.target.length === 0 || entry.date.length === 0 || entry.otel.length === 0){
-      
       return false;
     }
     // Girişin otel değeri tableDataValue içinde var mı kontrol et
-    const entryOtelExists = entry.otel === "Ayasofya" ? 22964 : 22966
-    const otelExists = tableDataValue.includes(parseInt(entry.target));
-    const dateExists = tableDataDate.includes(entry.date);
-    const hotelExits = tableDataHotelId.includes(entryOtelExists)
-
-    if (dateExists && hotelExits) {
+    const entryOtelExists = entry.otel === "Ayasofya" ? [22964] : [22966]
+    const designHotels = tableData.value.filter(item => entryOtelExists.includes(item.hotelId)).map(item => item.date)
+    const sameDateDesign = designHotels.includes(entry.date)
+    if (sameDateDesign) {
       return false;
     }
   }
@@ -36,12 +31,16 @@ const isSaveButtonActive = computed(() => {
 
 const addNewEntry = () => {
   formEntries.value.push({ target: "", date: "", otel: "" });
-  
 };
 
 const addUser = () => {
   for (const entry of formEntries.value) {
-    adminFetchData.addGoals(parseInt(entry.target), entry.date, entry.otel === "Ayasofya" ? 22966 : 22964)
+     if(entry.otel === "Ayasofya"){
+      adminFetchData.addGoals(parseInt(entry.target), entry.date, 22964 )
+    }else{
+       adminFetchData.addGoals(parseInt(entry.target), entry.date, 22966)
+     }
+    //adminFetchData.addGoals(parseInt(entry.target), entry.date, entry.otel === "Ayasofya" ? parseInt(22966) : parseInt(22964))
   }
   isDialogVisible.value = false;
 };
