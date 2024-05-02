@@ -172,7 +172,7 @@ const earningsReports = computed(() => {
 const rezAdetMonth = computed(() => {
   console.log("---------------------Aylık Rezerve Miktarı---------------------------")
   let chosenHotels = store.state.selectedHotels;
-  let rezData = JSON.parse(localStorage.getItem("kazancDurumuRezMiktar"));
+  let rezData = JSON.parse(localStorage.getItem("kazancDurumuRezMiktar")); //Bu Gelmiyor
   console.log("Aylık Rezerve Ham Hali ==> ", rezData)
   let statData = rezData.filter((item) => chosenHotels.includes(item.hotelId));
   console.log("Aylık Rezerve Otel Seçmeli ==> ", rezData)

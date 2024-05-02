@@ -740,10 +740,12 @@ export const callGunlukTakip = (dateRange, hotelids, isLocal) => {
 };
 
 export const callAylikTakip = (dateRange, hotelids, isLocal) => {
+  console.log("aylik takip dateRange ==> ", dateRange)
   dateRange = dates.findBetweenDates(
     dateRange[0].split("-")[0] + "-" + dateRange[0].split("-")[1] + "-01",
     dateRange[0]
   );
+  console.log("aylik takip dateRange ikinci hal ==> ", dateRange)
   axios
     .request(configs.callKazancTakip(dateRange, hotelids))
     .then((r) => {
@@ -776,10 +778,13 @@ export const callAylikTakip = (dateRange, hotelids, isLocal) => {
 };
 
 export const callKazancDurumuRezMiktari = (dateRange, hotelids) => {
+  console.log("kazancDurumuRezMiktar ilk geldiği dateRange ==> ", dateRange)
   dateRange = dates.findBetweenDates(
     dateRange[0].split("-")[0] + "-" + dateRange[0].split("-")[1] + "-01",
     dateRange[0]
   );
+  console.log("kazancDurumuRezMiktar dateRange ==> ", dateRange)
+  console.log("kazancDurumuRezMiktar hotelIds => ", hotelids)
   axios
     .request(configs.rezervMiktariConfig(dateRange, hotelids))
     .then((r) => {

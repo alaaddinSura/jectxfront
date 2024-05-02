@@ -338,7 +338,7 @@ export function findBetweenDates(startDate, endDate){
 
     // Eğer tarih değerleri eksikse veya aynı değerdeyse boş bir dizi döndürelim
     if (!tarih1 || !tarih2 || tarih1 === tarih2) {
-        return [];
+      return [tarih1];;
     }
 
     // Tarih değerlerini Date nesnelerine çevirelim
