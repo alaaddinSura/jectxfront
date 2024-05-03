@@ -38,9 +38,9 @@ watchEffect(() => {
 
 const filteredUsers = computed(() => {
   return tableData.value.filter(user => {
-    // If searchQuery is empty, show all users
-    if (!searchQuery.value) return true;
-    // If searchQuery is present, filter users based on email
+    // If searchQuery is empty or undefined, show all users
+    if (!searchQuery.value || searchQuery.value.trim() === '') return true;
+    // If searchQuery is present, filter users based on date
     return user.date.toLowerCase().includes(searchQuery.value.toLowerCase());
   });
 });
@@ -63,6 +63,10 @@ watch(rowPerPage, () => {
   }
 });
 
+watch(searchQuery, () => {
+  // Search query changed, reset current page to 1
+  currentPage.value = 1;
+});
 
 // 👉 Computing pagination data
 const paginationData = computed(() => {

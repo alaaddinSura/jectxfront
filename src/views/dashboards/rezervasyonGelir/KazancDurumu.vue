@@ -10,28 +10,21 @@ import * as dates from "@/views/dashboards/functions/dates";
 const vuetifyTheme = useTheme();
 
 const series = computed(() => {
-  console.log("-------------------Yukarıdaki Bar İstatistik Çizgileri-----------------------------")
   let chosenHotels = store.state.selectedHotels;
-  let rezData = JSON.parse(localStorage.getItem("kazancDurumu7AyGrafik"));
-  console.log("7 aylık kazanç ham hali ==> ", rezData)
+  let rezData = JSON.parse(localStorage.getItem("kazancDurumu7AyGrafik"))
 
   rezData.forEach(item => {
     if(item.TOTALREVENUE == null){
       item.TOTALREVENUE = 0
     }
   })
-  console.log("7 aylık kazanç Nulları 0'a getirme ==> ", rezData)
 
   let statData = rezData.filter((item) => chosenHotels.includes(item.HOTELID));
-  console.log("Yukarıdaki İstatistik Çizgi otel belirleme(chosenHotel) ==> ", statData)
   let dates = [...new Set(statData.map(item => item.DATE))].sort()
-  console.log("Yukarıdaki İstatistik Çizgi tarihleri getirme ==> ", dates)
   let data = dates.map(hotel => statData
   .filter(item => item.DATE == hotel)
   .map(item => item.TOTALREVENUE)
   .reduce((f,s) => f+s, 0))
-  console.log("Yukarıdaki İstatistik Çizgi Verilerin listesi ==> ", data)
-  console.log("----------------------------------------------------------------")
   return [
     {
       data
@@ -41,13 +34,9 @@ const series = computed(() => {
 
 
 const chartOptions = computed(() => {
-  console.log("--------------------Yukarıdaki İstatistik Bar Tarih----------------------------")
   const currentTheme = vuetifyTheme.current.value.colors;
   const variableTheme = vuetifyTheme.current.value.variables;
   let rezData = JSON.parse(localStorage.getItem("kazancDurumu7AyGrafik"));
-  console.log("Yukarıdaki İstatistik Tarih Bar Ham Hali ==> ", rezData)
-  console.log("Yukarıdaki İstatistik Tarih Hali chosenHotels ==> ", [...new Set(rezData.map(item => item.DATE))].sort())
-  console.log("------------------------------------------------")
   return {
     chart: {
       parentHeightOffset: 0,
@@ -121,17 +110,12 @@ const chartOptions = computed(() => {
 });
 
 const earningsReports = computed(() => {
-  console.log("----------------------Verilerin Toplamı Aşağıdaki Rakam--------------------------")
   let data = JSON.parse(localStorage.getItem("aylikTakip"));
-  console.log("Verilerin Rakamlı Hali Saf Hali ==> ", data)
   let chosenHotels = store.state.selectedHotels.length == 0 ? [22966, 22964] : store.state.selectedHotels
   data = data.filter(item => chosenHotels.includes(item.hotelId))
-  console.log("Verilerin Rakamlı Hali chosenHotels ==> ", data)
 
   const statData =  store.state.getGoals.length == 0 ? JSON.parse(localStorage.getItem("getGoals")) : store.state.getGoals
-  console.log("Rakamlı Verilerin Hedef Saf Hali ==> ", statData)
   let rezData = statData.filter(item => chosenHotels.includes(item.hotelId))
-  console.log("Verilerin Rakamlı Hali Hedef ==> ", rezData)
   let todayDate;
   let monthData;
   if(rezData.filter(item => dates.findCurrentMonth().includes(item.date))){
@@ -140,10 +124,6 @@ const earningsReports = computed(() => {
   }else{
     monthData = 1000000
   }
-  console.log("Verilerin Rakamlı Hali Hedeflerin Toplamı ==> ", monthData)
-  console.log("Verilerin Rakamlı Hali Kazanç ==> ", data.map(item => item.gelir).reduce((f,s) => f+s, 0).toFixed(2))
-  console.log("Verilerin Rakamlı Hali Kayıp ==> ", data.map(item => item.kayip).reduce((f, s) => f + s, 0).toFixed(2))
-  console.log("----------------------------------------------------------------------------")
   return [
     {
       color: "primary",
@@ -170,31 +150,20 @@ const earningsReports = computed(() => {
 });
 
 const rezAdetMonth = computed(() => {
-  console.log("---------------------Aylık Rezerve Miktarı---------------------------")
   let chosenHotels = store.state.selectedHotels;
-  let rezData = JSON.parse(localStorage.getItem("kazancDurumuRezMiktar")); //Bu Gelmiyor
-  console.log("Aylık Rezerve Ham Hali ==> ", rezData)
+  let rezData = JSON.parse(localStorage.getItem("kazancDurumuRezMiktar"));
   let statData = rezData.filter((item) => chosenHotels.includes(item.hotelId));
-  console.log("Aylık Rezerve Otel Seçmeli ==> ", rezData)
   let totalRez = statData.map((item) => item.count).reduce((f, s) => f + s, 0);
-  console.log("Aylık Rezerve Toplam Rezerve ==> ", totalRez)
-  console.log("------------------------------------------------")
   return totalRez;
 });
 
 const revenueChange = computed(() => {
-  console.log("---------------------Oran Belirleme Yeri---------------------------")
   let chosenHotels = store.state.selectedHotels;
   let rezData = JSON.parse(localStorage.getItem("kazancDurumuOran"))
-  console.log("Oran Verinin Ham Hali ==> ", rezData)
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
-  console.log("Oran Verinin Hotel Seçmeli Hali ==> ", statData)
   let totalCount = statData.map(item => item.count).reduce((f,s)=> f+s,0)
-  console.log("Oran Verinin Toplamının Hali ==> ", totalCount)
   let thisMonths = rezAdetMonth.value
   let changeRevenue = (thisMonths - totalCount) *100 / totalCount
-  console.log("Oran Verinin Oranı Hali ==> ", changeRevenue)
-  console.log("------------------------------------------------")
 
   return {
     oran: changeRevenue.toFixed(2),
@@ -203,35 +172,23 @@ const revenueChange = computed(() => {
 });
 
 const successRate = computed(() => {
-  console.log("---------------------Aşağıdaki Yeşil Dolma Yeri---------------------------")
   let data = JSON.parse(localStorage.getItem("aylikTakip"));
-  console.log("Yeşil Bar Aylık Takip Ham Hali ==> ", data)
   let chosenHotels = store.state.selectedHotels.length == 0 ? [22966, 22964] : store.state.selectedHotels
   data = data.filter(item => chosenHotels.includes(item.hotelId))
-  console.log("Yeşil Bar Aylık Takip Otel Belirleme ==> ", data)
   let dataMonth = data.map(item => item.gelir).reduce((f,s) => f+s, 0).toFixed(2)
-  console.log("Yeşil Bar Aylık Takip Gelirin Toplamı ==> ", dataMonth)
 
   const statData =  store.state.getGoals.length == 0 ? JSON.parse(localStorage.getItem("getGoals")) : store.state.getGoals
-  console.log("Yeşil Bar Aylık GetGoals Ham Hali ==> ", statData)
   let rezData = statData.filter(item => chosenHotels.includes(item.hotelId))
-  console.log("Yeşil Bar Aylık GetGoals Otel Seçmeli ==> ", rezData)
   let todayDate;
   let monthData;
   if(rezData.filter(item => dates.findCurrentMonth().includes(item.date))){
     todayDate = rezData.filter(item => dates.findCurrentMonth().includes(item.date))
-    console.log("Yeşil Bar Aylık GetGoals İf koşulunu sağlamış O ayki veri veriyi getirme ==> ", todayDate)
     monthData = todayDate.map(item => item.value).reduce((f,s)=> f+s,0)
-    console.log("Yeşil Bar Aylık GetGoals O ay ki hedefin toplamı ==> ", monthData)
   }else{
     monthData = 1000000
-    console.log("Yeşil Bar Aylık GetGoals Aylık Hedef Yok Else'ye geldi ==> ", monthData)
   }
   const monthCount = ( dataMonth / monthData) * 100
-  console.log("Yeşil Bar Aylık GetGoals ve Aylık Takip Oran ==> ", monthCount)
   let statisticBar = monthCount.toFixed(0);
-  console.log("Yeşil Bar Aylık GetGoals Barda Görüntülenmesi İçin Son Hali ==> ", statisticBar)
-  console.log("-----------------------------------------------------------------------")
   return {
     bar: statisticBar,
   };

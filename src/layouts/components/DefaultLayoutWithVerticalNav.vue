@@ -33,6 +33,20 @@ const disabledDatePicker = () => {
   const disabledUrls = [
     "/dashboards/rezervasyon-gecmis",
     "/dashboards/rezervasyon-gelir",
+    "/admin/kisiler",
+    "/admin/hedefler"
+  ];
+  if (disabledUrls.includes(route.path)) {
+    return true; // NavbarDatePicker engellenir
+  } else {
+    return false; // NavbarDatePicker engellenmez
+  }
+};
+
+const disabledSelectedHotels = () => {
+  const disabledUrls = [
+    "/admin/kisiler",
+    "/admin/hedefler"
   ];
   if (disabledUrls.includes(route.path)) {
     return true; // NavbarDatePicker engellenir
@@ -63,7 +77,7 @@ const disabledNextDate = () => {
         </IconBtn>
 
         <!-- Otel türleri -->
-        <NavbarHotelTypes />
+        <NavbarHotelTypes v-if="!disabledSelectedHotels()"/>
         <!-- date picker -->
         <NavBarDatePicker
           v-if="!disabledDatePicker()"

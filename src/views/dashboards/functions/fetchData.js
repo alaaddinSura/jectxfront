@@ -212,6 +212,7 @@ export const callSonYediAyDoluluk = (endDate, hotelids, isLocal) => {
           ? store.commit("changeSonYediAyDolulukLoader", 1)
           : store.commit("changeSonYediAyDolulukLoader", 0);
       } else {
+        console.log("Store State'e girdi")
         store.commit("changesonYediAyDoluluk", r.data);
         store.state.selectedHotels != "No Hotel"
           ? store.commit("changeSonYediAyDolulukLoader", 1)
@@ -265,7 +266,10 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
           : store.commit("changeGecmisRezervasyonlarLoader", 0);
       } else {
         let rData = r.data;
-        let dateLength = [...new Set(rData.map((item) => item.DATE))].length;
+        let missingDates = dateRange.filter(date => !rData.some(item => item.DATE === date));
+
+      // Eğer eksik tarihlerin sayısı tüm tarihlerin sayısına eşitse, dateLength'i 0 olarak ayarlayalım
+      let dateLength = missingDates.length === dateRange.length ? 0 : [...new Set(rData.map((item) => item.DATE))].length;
         if (dateLength == 7) {
           store.commit("changeGecmisRezervasyonlar", rData);
           store.state.selectedHotels != "No Hotel"
@@ -280,6 +284,7 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
             ? store.commit("changeGecmisRezervasyonlarLoader", 1)
             : store.commit("changeGecmisRezervasyonlarLoader", 0);
         } else {
+          console.log("Aylıkta ==> ", dateRange)
           rData.forEach((item) => {
             item["DATE"] =
               item.DATE.split("-")[0] + "-" + item.DATE.split("-")[1];
@@ -489,14 +494,10 @@ export const callOdatipiDagilim = (dateRange, hotelids, isLocal) => {
     .then((r) => {
       if (isLocal) {
         localStorage.setItem("odaTipiDagilim", JSON.stringify(r.data));
-        store.state.selectedHotels != "No Hotel"
-          ? store.commit("changeodaTipiDagilimLoader", 1)
-          : store.commit("changeodaTipiDagilimLoader", 0);
+        store.state.selectedHotels != "No Hotel" ? store.commit("changeodaTipiDagilimLoader", 1): store.commit("changeodaTipiDagilimLoader", 0);
       } else {
         store.commit("changeOdaTipiDagilim", r.data);
-        store.state.selectedHotels != "No Hotel"
-          ? store.commit("changeodaTipiDagilimLoader", 1)
-          : store.commit("changeodaTipiDagilimLoader", 0);
+        store.state.selectedHotels != "No Hotel" ? store.commit("changeodaTipiDagilimLoader", 1): store.commit("changeodaTipiDagilimLoader", 0);
       }
     })
     .catch((d) => {
@@ -740,12 +741,10 @@ export const callGunlukTakip = (dateRange, hotelids, isLocal) => {
 };
 
 export const callAylikTakip = (dateRange, hotelids, isLocal) => {
-  console.log("aylik takip dateRange ==> ", dateRange)
   dateRange = dates.findBetweenDates(
     dateRange[0].split("-")[0] + "-" + dateRange[0].split("-")[1] + "-01",
     dateRange[0]
   );
-  console.log("aylik takip dateRange ikinci hal ==> ", dateRange)
   axios
     .request(configs.callKazancTakip(dateRange, hotelids))
     .then((r) => {
@@ -778,13 +777,10 @@ export const callAylikTakip = (dateRange, hotelids, isLocal) => {
 };
 
 export const callKazancDurumuRezMiktari = (dateRange, hotelids) => {
-  console.log("kazancDurumuRezMiktar ilk geldiği dateRange ==> ", dateRange)
   dateRange = dates.findBetweenDates(
     dateRange[0].split("-")[0] + "-" + dateRange[0].split("-")[1] + "-01",
     dateRange[0]
   );
-  console.log("kazancDurumuRezMiktar dateRange ==> ", dateRange)
-  console.log("kazancDurumuRezMiktar hotelIds => ", hotelids)
   axios
     .request(configs.rezervMiktariConfig(dateRange, hotelids))
     .then((r) => {

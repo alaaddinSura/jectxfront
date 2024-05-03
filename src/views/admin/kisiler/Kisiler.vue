@@ -62,8 +62,14 @@ watchEffect(() => {
   totalPage.value = Math.ceil(totalUsers.value / rowPerPage.value);
 });
 
+// Arama sorgusu değiştiğinde sayfalandırma verilerini sıfırla
+watch(searchQuery, () => {
+  currentPage.value = 1;
+});
+
+// 👉 Watching row per page
 watch(rowPerPage, () => {
-  totalPage.value = Math.ceil(totalUsers.value / rowPerPage.value);
+  totalPage.value = Math.ceil(filteredUsers.value.length / rowPerPage.value);
   if (currentPage.value > totalPage.value) {
     currentPage.value = totalPage.value;
   }

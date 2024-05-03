@@ -19,17 +19,16 @@ let nightcount = computed(() => {
     }
   ]
 
-  let rezData = store.state.sonYediAyDoluluk == 0 ? JSON.parse(localStorage.getItem('gecelemeDagilimSon7Ay')) : store.state.sonYediAyDoluluk
+  let rezData = store.state.sonYediAyDoluluk.length == 0 ? JSON.parse(localStorage.getItem('gecelemeDagilimSon7Ay')) : store.state.sonYediAyDoluluk
   let statData = rezData.filter(item => chosenHotels.includes(item.hotelId))
 
   roomCounts = roomCounts.filter((item => chosenHotels.includes(item.hotelId)))
   roomCounts = roomCounts.map(item => item.count).reduce((f,s) => f+s, 0)
 
-  let geceCount = statData.map(item => item.count != 'nan' ? Number(item.count): 0).reduce((f,s)=>f+s,0)
-  
-  let oran = [((geceCount / roomCounts * 100).toFixed(2))]
+  let geceCount = statData.map(item => item.count).reduce((f,s)=>f+s,0)
 
- 
+  let oran = [(((geceCount / roomCounts) * 100).toFixed(2))]
+
 
   return {
     geceCount, oran,
