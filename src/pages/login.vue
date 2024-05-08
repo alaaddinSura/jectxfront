@@ -39,7 +39,7 @@ refVForm.value = refVForm.value || {};
 const isPasswordVisible = ref(true);
 
 const login = () => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/login";
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/loginV2";
   const data = {
     email: form.value.email,
     password: form.value.password,
@@ -164,6 +164,10 @@ const login = () => {
         //Rol Belirleme ve Admin - Kişiler
         fetchData.userRole(true);
 
+        fetchData.userRoleTwo(true);
+
+        //loginV2
+        fetchData.loginTwo(form.value.email, form.value.password)
         //Admin Fetch Data
 
         //Hedefler - Aylık Hedefler
@@ -177,6 +181,7 @@ const login = () => {
       return r.data
     }).then((b)=>{
        form.value.isValid = true;
+       console.log("b => ", b.pages)
        if (form.value.isValid){
          let userAbilities = [{ action: "manage", subject: "all" }];
          let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
@@ -194,30 +199,27 @@ const login = () => {
          localStorage.setItem("userData", JSON.stringify(userData));
          localStorage.setItem("accessToken", JSON.stringify(accessToken));
          localStorage.setItem("lastTimeDate", JSON.stringify(new Date()))
-         let originalData = userData.pages[0]; // ['Misafir Dağılım'
-         if (Array.isArray(originalData)) {
-           originalData = originalData.map((item) =>
-             item
-               .toLowerCase()
-               .replace(/\s+/g, "-")
-               .replace(/ğ/g, "g")
-               .replace(/ı/g, "i")
-           );
-         } else {
-           originalData = originalData
-             .toLowerCase()
-             .replace(/\s+/g, "-")
-             .replace(/ğ/g, "g")
-             .replace(/ı/g, "i");
-         }
-         // Redirect to `to` query if exist or redirect to index route
-         router.replace(
-           route.query.to
-             ? String(route.query.to)
-             : userData.pages.includes("Rezervasyon Analiz")
-             ? "/dashboards/rezervasyon-analiz"
-             : `/dashboards/${originalData}`
-         );
+
+         console.log(JSON.parse(localStorage.getItem("userData")))
+      //    let originalData = userData.pages[0]; // ['Misafir Dağılım'
+      //    if (Array.isArray(originalData)) {
+      //      originalData = originalData.map((item) =>
+      //        item
+      //          .toLowerCase()
+      //          .replace(/\s+/g, "-")
+      //          .replace(/ğ/g, "g")
+      //          .replace(/ı/g, "i")
+      //      );
+      //    } else {
+      //      originalData = originalData
+      //        .toLowerCase()
+      //        .replace(/\s+/g, "-")
+      //        .replace(/ğ/g, "g")
+      //        .replace(/ı/g, "i");
+      //    }
+      //    // Redirect to `to` query if exist or redirect to index route : userData.pages.includes("Rezervasyon Analiz"): `/dashboards/${originalData}` ? 
+          router.replace(route.query.to ? String(route.query.to) : "/dashboards/rezervasyon-analiz");
+      //  }
        }
     })
     .catch((e) => {

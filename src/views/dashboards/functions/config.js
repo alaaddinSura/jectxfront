@@ -367,3 +367,43 @@ export const callUpdateUser = (email, newRole, newPage) =>{
   })
   return config(url,data)
 }
+
+export const callLoginTwo = (email, password) => {
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/loginV2"
+  let data = JSON.stringify({
+    email: email,
+    password: password
+  })
+  return config(url, data)
+}
+
+
+export const calladdUserTwo = (email,from,newRole) => {
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/addUserV2";
+  let data = JSON.stringify({
+  emails:[
+    {
+      email: email,
+      role: newRole,
+      pages:from
+    }
+  ]
+  });
+  return config(url,data)
+}
+
+export const callUserRoleTwo = () => {
+  let url = "https://jectxbackend-672789bf3678.herokuapp.com/findUserV2";
+  let data = '';
+  return getConfig(url, data);
+};
+
+export const callUpdateUserTwo = (email, newRole, newPage) =>{
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/updateUserV2"
+  let data = JSON.stringify({
+    email: email,
+    newRole: newRole,
+    newPages: newPage
+  })
+  return config(url,data)
+}

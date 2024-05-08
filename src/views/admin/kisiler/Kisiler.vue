@@ -25,7 +25,7 @@ const users = ref([]);
 const selectedRows = ref([])
 
 let tableData = computed(() => {
-  let channelData = store.state.userRole.length == 0 ? JSON.parse(localStorage.getItem("userRole")) : store.state.userRole;
+  let channelData = store.state.userRole.length == 0 ? JSON.parse(localStorage.getItem("userRoles")) : store.state.userRole;
 
   return channelData;
 });

@@ -1,15 +1,15 @@
 <script setup>
 import { emailValidator, requiredValidator } from "@validators";
 import * as fetchData from "@/views/dashboards/functions/fetchData";
+import SelectPageModal from "../stats/Goals/SelectPageModal.vue"
 
 const isDialogVisible = ref(false);
-const email = ref('');
 const interestOptions = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'];
 const formEntries = ref([{ email: '', interest: [], role: '' }]);
 
 const isSaveButtonActive = computed(() => {
   for (const entry of formEntries.value) {
-    if (emailValidator(entry.email) !== true || entry.interest.length === 0 || entry.role.length === 0 || entry.email.length === 0) {
+    if (emailValidator(entry.email) !== true ||  entry.role.length === 0 || entry.email.length === 0) {
       return false;
     }
   }
@@ -30,11 +30,54 @@ const updateUserInterest = (role, entry) => {
   }
 };
 
-const addUser = () => {
-  for (const entry of formEntries.value) {
-    fetchData.addUser(entry.email, entry.interest, entry.role);
-    fetchData.sendMail(entry.email);
+const handleDataSelection = (data) => {
+  const emitData = data[0]
+  const interestData = emitData.interest.length != 0 ? emitData.interest.flatMap((item)=> item) : [];
+  const adminPagesData = emitData.adminPages.length != 0 ? emitData.adminPages.flatMap((item)=> item) : [];
+  if(interestData.length != 0 || adminPagesData.length != 0){
+   for (const entry of formEntries.value) {
+    entry.interest = [
+      {
+      from: 'Dashboards',
+      to:[...interestData]
+    },
+    {
+      from: 'Admin',
+      to: [...adminPagesData]
+    }
+    ]
+   }
   }
+
+  if(interestData.length != 0 || adminPagesData.length == 0){
+   for (const entry of formEntries.value) {
+    entry.interest = [
+      {
+      from: 'Dashboards',
+      to:[...interestData]
+    }
+    ]
+   }
+  }
+
+  if(interestData.length == 0 || adminPagesData.length != 0){
+   for (const entry of formEntries.value) {
+    entry.interest = [
+      {
+      from: 'Admin',
+      to:[...adminPagesData]
+    }
+    ]
+   }
+  }
+
+};
+
+const addUser = () => {
+   for (const entry of formEntries.value) {
+     fetchData.addUserTwo(entry.email, entry.interest, entry.role);
+     fetchData.sendMail(entry.email);
+   }
   isDialogVisible.value = false;
 };
 
@@ -109,7 +152,13 @@ for (const entry of formEntries.value) {
               cols="12"
               sm="12"
             >
-            <VAutocomplete
+            <SelectPageModal :role="entry.role" @pagesPost="handleDataSelection"/>
+            </VCol>
+            <VCol
+              cols="12"
+              sm="12"
+            >
+            <!-- <VAutocomplete
                 v-model="entry.interest"
                 multiple
                 :items="['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma']"
@@ -117,7 +166,7 @@ for (const entry of formEntries.value) {
                 :disabled="entry.role === 'admin'"
                 :selected-items="entry.role === 'admin' ? ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'] : []"
               />
-              
+               -->
             </VCol>
           </VRow>
       </VCardText>

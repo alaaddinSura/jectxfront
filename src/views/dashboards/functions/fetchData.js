@@ -953,3 +953,49 @@ export const updateUser = (email, newRole, newPage) =>{
     console.log("Kullanıcı Güncellemesi Hatalı ", error)
   })
 }
+
+export const loginTwo = (email, password) => {
+  axios.request(configs.callLoginTwo(email,password)).then((r)=>{
+    localStorage.setItem("loginV2", JSON.stringify(r.data))
+  }).catch(error =>{
+    console.log("Login V2 hata ==> ", error)
+  })
+}
+
+export const addUserTwo = (email,from,newRole) => {
+  axios.request(configs.calladdUserTwo(email,from,newRole)).then((r)=>{
+    userRoleTwo()
+    console.log("Veri Girdi ==> ", r.data)
+
+  }).catch((error)=>{
+    console.log("Add User version 2 hata ==> ", error)
+  })
+}
+
+
+export const userRoleTwo = (isLocal) => {
+  //store.commit("changeuserRoleLoader",0)
+  axios.request(configs.callUserRoleTwo())
+    .then((r) => {
+      if(isLocal){
+      localStorage.setItem("userRoles", JSON.stringify(r.data));
+      store.commit("changeuserRoleLoader",1)
+      }
+      else{
+        store.commit("changeUserRole", r.data);
+        store.commit("changeuserRoleLoader",1)
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+
+export const updateUserTwo = (email, newRole, newPage) =>{
+  axios.request(configs.callUpdateUserTwo(email, newRole, newPage)).then((r)=>{
+    userRole()
+  }).catch((error)=>{
+    console.log("Kullanıcı Güncellemesi Hatalı ", error)
+  })
+}
