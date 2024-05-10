@@ -5,6 +5,7 @@ import {
   isUserLogginInActive,
   isActivePage,
   isUserActivePages,
+  isLogginPage
 } from "./utils";
 import routes from "~pages";
 import { canNavigate } from "@layouts/plugins/casl";
@@ -64,19 +65,27 @@ const dateMinutes = () => {
   if (inactiveTimeInMillis >= logoutTimeThreshold) {
     store.commit("changeInActive", true);
     localStorage.setItem("lastTimeDate", JSON.stringify(new Date()));
+    logOut()
   } else {
     localStorage.setItem("lastTimeDate", JSON.stringify(new Date()));
   }
 };
 
+//const queryPath = to.path.substring(to.path.indexOf("/", 1) + 1);
 // Docs: https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 router.beforeEach((to) => {
-  // const isLoggedIn = isUserLoggedIn();
+   const isLoggedIn = isUserLoggedIn();
   // const isAdmin = isUserLogginInActive();
-  // const queryPath = to.path.substring(to.path.indexOf("/", 1) + 1);
+   const queryPath = to.path;
+   const isActivePages = isLogginPage(queryPath)
   // const isActivePages = isActivePage(queryPath);
-  // const isUserActivePage = isUserActivePages();
-
+   const isUserActivePage = isUserActivePages();
+  if(isLoggedIn){
+    dateMinutes();
+    if(!isActivePages){
+      router.push("/dashboards/" + isUserActivePage[0]);
+    }
+  }
   // if (isLoggedIn) {
   //   dateMinutes();
   //   if (isAdmin) {
@@ -101,15 +110,15 @@ router.beforeEach((to) => {
   // }
   
 
-  // if (canNavigate(to)) {
-  //   if (to.meta.redirectIfLoggedIn && isLoggedIn) return "/";
-  // } else {
-  //   if (isLoggedIn) return { name: "not-authorized" };
-  //   else
-  //     return {
-  //       name: "login",
-  //       query: { to: to.name !== "index" ? to.fullPath : undefined },
-  //     };
-  // }
+   if (canNavigate(to)) {
+     if (to.meta.redirectIfLoggedIn && isLoggedIn) return "/";
+   } else {
+     if (isLoggedIn) return { name: "not-authorized" };
+     else
+       return {
+         name: "login",
+         query: { to: to.name !== "index" ? to.fullPath : undefined },
+       };
+   }
 });
 export default router;

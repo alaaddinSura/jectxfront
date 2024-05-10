@@ -212,7 +212,7 @@ export const callSonYediAyDoluluk = (endDate, hotelids, isLocal) => {
           ? store.commit("changeSonYediAyDolulukLoader", 1)
           : store.commit("changeSonYediAyDolulukLoader", 0);
       } else {
-        console.log("Store State'e girdi")
+        console.log("Store State'e girdi");
         store.commit("changesonYediAyDoluluk", r.data);
         store.state.selectedHotels != "No Hotel"
           ? store.commit("changeSonYediAyDolulukLoader", 1)
@@ -266,10 +266,15 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
           : store.commit("changeGecmisRezervasyonlarLoader", 0);
       } else {
         let rData = r.data;
-        let missingDates = dateRange.filter(date => !rData.some(item => item.DATE === date));
+        let missingDates = dateRange.filter(
+          (date) => !rData.some((item) => item.DATE === date)
+        );
 
-      // Eğer eksik tarihlerin sayısı tüm tarihlerin sayısına eşitse, dateLength'i 0 olarak ayarlayalım
-      let dateLength = missingDates.length === dateRange.length ? 0 : [...new Set(rData.map((item) => item.DATE))].length;
+        // Eğer eksik tarihlerin sayısı tüm tarihlerin sayısına eşitse, dateLength'i 0 olarak ayarlayalım
+        let dateLength =
+          missingDates.length === dateRange.length
+            ? 0
+            : [...new Set(rData.map((item) => item.DATE))].length;
         if (dateLength == 7) {
           store.commit("changeGecmisRezervasyonlar", rData);
           store.state.selectedHotels != "No Hotel"
@@ -284,7 +289,7 @@ export const callGecmisRez = (endDate, dayCount, hotelids, isLocal) => {
             ? store.commit("changeGecmisRezervasyonlarLoader", 1)
             : store.commit("changeGecmisRezervasyonlarLoader", 0);
         } else {
-          console.log("Aylıkta ==> ", dateRange)
+          console.log("Aylıkta ==> ", dateRange);
           rData.forEach((item) => {
             item["DATE"] =
               item.DATE.split("-")[0] + "-" + item.DATE.split("-")[1];
@@ -494,10 +499,14 @@ export const callOdatipiDagilim = (dateRange, hotelids, isLocal) => {
     .then((r) => {
       if (isLocal) {
         localStorage.setItem("odaTipiDagilim", JSON.stringify(r.data));
-        store.state.selectedHotels != "No Hotel" ? store.commit("changeodaTipiDagilimLoader", 1): store.commit("changeodaTipiDagilimLoader", 0);
+        store.state.selectedHotels != "No Hotel"
+          ? store.commit("changeodaTipiDagilimLoader", 1)
+          : store.commit("changeodaTipiDagilimLoader", 0);
       } else {
         store.commit("changeOdaTipiDagilim", r.data);
-        store.state.selectedHotels != "No Hotel" ? store.commit("changeodaTipiDagilimLoader", 1): store.commit("changeodaTipiDagilimLoader", 0);
+        store.state.selectedHotels != "No Hotel"
+          ? store.commit("changeodaTipiDagilimLoader", 1)
+          : store.commit("changeodaTipiDagilimLoader", 0);
       }
     })
     .catch((d) => {
@@ -906,16 +915,16 @@ export const forgotPassword = (email) => {
 };
 
 export const userRole = (isLocal) => {
-  store.commit("changeuserRoleLoader",0)
-  axios.request(configs.callUserRole())
+  store.commit("changeuserRoleLoader", 0);
+  axios
+    .request(configs.callUserRole())
     .then((r) => {
-      if(isLocal){
-      localStorage.setItem("userRole", JSON.stringify(r.data));
-      store.commit("changeuserRoleLoader",1)
-      }
-      else{
-        store.commit("changeUserRole", r.data);
-        store.commit("changeuserRoleLoader",1)
+      if (isLocal) {
+        localStorage.setItem("userRole", JSON.stringify(r.data));
+        store.commit("changeuserRoleLoader", 1);
+      } else {
+        //store.commit("changeUserRole", r.data);
+        store.commit("changeuserRoleLoader", 1);
       }
     })
     .catch((error) => {
@@ -925,65 +934,65 @@ export const userRole = (isLocal) => {
 
 export const deleteUser = (email) => {
   store.commit("changeAdminUserDeleteLoader", 0);
-  axios.request(configs.callDeleteUser(email)).then((r)=>{
-    userRole()
-    store.commit("changeAdminUserDeleteLoader",1)
-  })
+  axios.request(configs.callDeleteUser(email)).then((r) => {
+    userRole();
+    store.commit("changeAdminUserDeleteLoader", 1);
+  });
 };
 
-export const addUser = (email,pages, role) =>{
-  axios.request(configs.callAddUser(email,pages,role)).then((r) =>{
-    userRole()
-  }).catch((error) =>{
-    console.log("Add User Hata ==> ", error)
-  })
-}
+export const addUser = (email, pages, role) => {
+  axios
+    .request(configs.callAddUser(email, pages, role))
+    .then((r) => {
+      userRole();
+    })
+    .catch((error) => {
+      console.log("Add User Hata ==> ", error);
+    });
+};
 
-export const sendMail = (email) =>{
-  axios.request(configs.sendMail(email)).then((r)=>{
-  }).catch((error)=>{
-    console.log("Mail Gönderimi Başarısızdır ", error)
-  })
-}
+export const sendMail = (email) => {
+  axios
+    .request(configs.sendMail(email))
+    .then((r) => {})
+    .catch((error) => {
+      console.log("Mail Gönderimi Başarısızdır ", error);
+    });
+};
 
-export const updateUser = (email, newRole, newPage) =>{
-  axios.request(configs.callUpdateUser(email, newRole, newPage)).then((r)=>{
-    userRole()
-  }).catch((error)=>{
-    console.log("Kullanıcı Güncellemesi Hatalı ", error)
-  })
-}
+export const updateUser = (email, newRole, newPage) => {
+  axios
+    .request(configs.callUpdateUser(email, newRole, newPage))
+    .then((r) => {
+      userRole();
+    })
+    .catch((error) => {
+      console.log("Kullanıcı Güncellemesi Hatalı ", error);
+    });
+};
 
 export const loginTwo = (email, password) => {
-  axios.request(configs.callLoginTwo(email,password)).then((r)=>{
-    localStorage.setItem("loginV2", JSON.stringify(r.data))
-  }).catch(error =>{
-    console.log("Login V2 hata ==> ", error)
-  })
-}
-
-export const addUserTwo = (email,from,newRole) => {
-  axios.request(configs.calladdUserTwo(email,from,newRole)).then((r)=>{
-    userRoleTwo()
-    console.log("Veri Girdi ==> ", r.data)
-
-  }).catch((error)=>{
-    console.log("Add User version 2 hata ==> ", error)
-  })
-}
-
+  axios
+    .request(configs.callLoginTwo(email, password))
+    .then((r) => {
+      localStorage.setItem("loginV2", JSON.stringify(r.data));
+    })
+    .catch((error) => {
+      console.log("Login V2 hata ==> ", error);
+    });
+};
 
 export const userRoleTwo = (isLocal) => {
   //store.commit("changeuserRoleLoader",0)
-  axios.request(configs.callUserRoleTwo())
+  axios
+    .request(configs.callUserRoleTwo())
     .then((r) => {
-      if(isLocal){
-      localStorage.setItem("userRoles", JSON.stringify(r.data));
-      store.commit("changeuserRoleLoader",1)
-      }
-      else{
+      if (isLocal) {
+        localStorage.setItem("userRoles", JSON.stringify(r.data));
+        store.commit("changeuserRoleLoader", 1);
+      } else {
         store.commit("changeUserRole", r.data);
-        store.commit("changeuserRoleLoader",1)
+        store.commit("changeuserRoleLoader", 1);
       }
     })
     .catch((error) => {
@@ -991,11 +1000,32 @@ export const userRoleTwo = (isLocal) => {
     });
 };
 
+export const addUserTwo = (from) => {
+  axios
+    .request(configs.calladdUserTwo(from))
+    .then((r) => {
+      userRoleTwo();
+    })
+    .catch((error) => {
+      console.log("Add User version 2 hata ==> ", error);
+    });
+};
 
-export const updateUserTwo = (email, newRole, newPage) =>{
-  axios.request(configs.callUpdateUserTwo(email, newRole, newPage)).then((r)=>{
-    userRole()
-  }).catch((error)=>{
-    console.log("Kullanıcı Güncellemesi Hatalı ", error)
-  })
-}
+export const updateUserTwo = (totalData) => {
+  axios
+    .request(configs.callUpdateUserTwo(totalData))
+    .then((r) => {
+      userRoleTwo();
+    })
+    .catch((error) => {
+      console.log("Kullanıcı Güncellemesi Hatalı ", error);
+    });
+};
+
+export const deleteUserTwo = (email) => {
+  store.commit("changeAdminUserDeleteLoader", 0);
+  axios.request(configs.callDeleteUserTwo(email)).then((r) => {
+    userRoleTwo();
+    store.commit("changeAdminUserDeleteLoader", 1);
+  });
+};

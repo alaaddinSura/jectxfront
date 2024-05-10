@@ -38,8 +38,13 @@ export const store = createStore({
     userRole: [],
     userRoleLoader: [1],
     openPopup: false,
+    
     //Admin
     getGoals: [],
+    //Admin - Add User
+    addUserPages: [],
+    //Admin - Update User
+    updateUserPages : {},
     //Loader
     goalsLoader: [1],
 
@@ -278,6 +283,18 @@ export const store = createStore({
     },//Admin - User Delete
     changeAdminUserDeleteLoader(state,payload){
       state.adminUserDeleteLoader = payload;
+    },//Admin - AddUserPage
+    changeAddUserPages(state,payload){
+      state.addUserPages.push(payload);
+    },// Admin - Add User Remove
+    clearAddUserPages(state) {
+      state.addUserPages = [];
+    },//Admin - Update User
+    changeUpdateUserPages(state,payload){
+      state.updateUserPages = payload
+    },// Admin - Update User Remove
+    clearUpdateUserPages(state){
+      state.updateUserPages = {};
     },
     changeUserRole(state, payload) {
       state.userRole = payload;

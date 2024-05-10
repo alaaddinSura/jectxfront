@@ -3,6 +3,7 @@ import * as fetchData from "@/views/dashboards/functions/fetchData";
 import EditUserConfirmation from "./EditUserConfirmation.vue"
 import { store } from "@/store/index";
 import { watch } from "vue";
+import UserEditSelectPageModal from "./UserEditSelectPageModal.vue";
 
 const isDialogVisible = ref(false)
 
@@ -11,32 +12,65 @@ const props = defineProps({
     role: String,
     pages: Array
 })
-
+const interestOptions = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'];
+const adminPagesOptions = ["Kişiler", "Hedefler"];
 const formEntries = ref([{ email: props.email, pages: props.pages, role: props.role }]);
 
 
+const deneme = (value) =>{
+  const stores = store.state.updateUserPages;
+  store.commit("clearUpdateUserPages")
+  for(const entry of formEntries.value){
+    const propsEmailValue = entry.email;
+
+      const pushStore = {
+     "email": entry.email,
+      "newRole" : entry.role,
+      "newPages": [{
+      "from": "Dashboards",
+      "to": [...interestOptions]
+      },{
+        "from": "Admin",
+        "to": [...adminPagesOptions],
+      }]
+  }
+  store.commit("changeUpdateUserPages", pushStore)
+  console.log("store state güncellendi ==> ", store.state.updateUserPages)
+    if(entry.role === "admin"){
+      console.log("Bu kesin admin ==> ", stores)
+    }
+  }
+}
+
+
+watch(() => formEntries.value[0].role, (newValue, oldValue) => {
+    // Rol değiştiğinde yapılacak işlemler buraya yazılabilir
+    console.log('Rol değişti: Yeni rol:', newValue, ', Eski rol:', oldValue);
+    console.log("Store State watch ==> ", store.state.updateUserPages)
+    if(newValue === "admin"){
+      console.log("Bu bir admin")
+      deneme()
+    }
+});
+
+const handleClikClose = (data)=>{
+  isDialogVisible.value = data
+}
+
 const isSaveButtonActive = computed(() => {
   for (const entry of formEntries.value) {
-    if (entry.pages.length === 0 || entry.role.length === 0) {
+    if (entry.role.length === 0) {
       return false;
     }
   }
   return true;
 });
 
-watch(() => formEntries.value[0].role, (newValue, oldValue) => {
-  if (newValue === 'admin') {
-    formEntries.value[0].pages = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'];
-  } else {
-    // Eğer rol 'admin' değilse tüm sayfaların seçimini kaldır
-    formEntries.value[0].pages = props.pages
-  }
-});
-
 const exitModal = () =>{
   formEntries.value = ([{ email: props.email, pages: props.pages, role: props.role }]);
   isDialogVisible.value = false
 }
+
 </script>
 
 <template>
@@ -84,15 +118,8 @@ const exitModal = () =>{
               cols="12"
               sm="12"
             >
-              <VAutocomplete
-                v-model="entry.pages"
-                multiple
-                :items="['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma']"
-                label="Sayfalar"
-                @click="updateUserInterest()"
-                :disabled="entry.role === 'admin'"
-              />
-            </VCol> 
+              <UserEditSelectPageModal :pages="entry.pages" :role="props.role" :email="props.email"/>
+            </VCol>
           </VRow>
       </VCardText>
 
@@ -106,7 +133,7 @@ const exitModal = () =>{
         </VBtn>
         <VBtn :disabled="!isSaveButtonActive" width="120px">
           <template v-for="(entry, index) in formEntries" :key="index">
-            <EditUserConfirmation :email="entry.email" :pages="entry.pages" :role="entry.role" />
+            <EditUserConfirmation :email="entry.email" :pages="entry.pages" :role="entry.role" @modalClose="handleClikClose" :disabled="store.state.updateUserPages.length == 0"/>
           </template>
         </VBtn>
       </VCardText>

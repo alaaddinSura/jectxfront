@@ -4,12 +4,17 @@ import * as fetchData from "@/views/dashboards/functions/fetchData";
 import { store } from "@/store/index";
 
 const props = defineProps({
+    pages: Array,
     role: String,
     email: String,
 })
 
+const propsPages = computed(()=>{
+    return props.pages
+})
+
 const propsRoles = computed(()=>{
-    return props.role;
+  return props.role;
 })
 
 const propsEmail = computed(()=>{
@@ -18,66 +23,59 @@ const propsEmail = computed(()=>{
 
 const isDialogVisible = ref(false);
 const interestOptions = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'];
-const adminPagesOptions = ["Kişiler", "Hedefler"];
-const formEntries = ref([{ adminPages: [], interest: [], role: propsRoles }]);
+const formEntries = ref([{ adminPages: [], interest: [] }]);
 
 
 const isSaveButtonActive = computed(() => {
   return true;
 });
 
-  
+ const updateUserInterest = (role, entry) => {
+   if (role === 'admin') {
+     entry.interest = [...interestOptions];
+   } else {
+     entry.interest = [];
+   }
+ };
 
-const addUserPage = () =>{
-  
+
+ const updateUserPage = () =>{
+  store.commit("clearUpdateUserPages")
   const formEntry = formEntries.value;
-  const stores = store.state.addUserPages;
-  const propsEmailValue = propsEmail.value;
-
-// Eğer belirli bir email adresi zaten addUserPages dizisinde bulunuyorsa
-if (stores.some(entry => entry.email === propsEmailValue)) {
-  const indexToRemove = stores.findIndex(entry => entry.email === propsEmailValue);
-  
-  // Belirli öğeyi kaldır
-  stores.splice(indexToRemove, 1);
-}
+  console.log("propsEmail ==> ", propsEmail.value)
+  console.log("propsRole ==> ", propsRoles.value)
+  console.log("props Email ==> ", props.email)
+  console.log("props Role ==> ", props.role)
   const pushStore = {
     "email": propsEmail.value,
-    "role" : propsRoles.value,
-    "pages": [{
+    "newRole" : propsRoles.value,
+    "newPages": [{
       "from": "Dashboards",
       "to": formEntry[0].interest.flatMap(item => item)
     }]
   }
-  store.commit("changeAddUserPages", pushStore)
-  console.log("store state ==> ", store.state.addUserPages.flatMap(item => item))
+  store.commit("changeUpdateUserPages", pushStore)
+  formEntries.value = [{ adminPages: [], interest: [], role: '' }];
   isDialogVisible.value = false
 }
 
-// const updateUserInterest = (role, entry) => {
-//   if (role === 'admin') {
-//     entry.interest = [...interestOptions];
-//   } else {
-//     entry.interest = [];
-//   }
-// };
 
 
 const resetDialog = () => {
   formEntries.value = [{ adminPages: [], interest: [], role: '' }];
-  store.commit("clearAddUserPages")
+  store.commit("clearUpdateUserPages")
   isDialogVisible.value = false;
 };
 
-// const watchEntryRole = (entry) => {
-//   watch(() => entry.role, (newValue, oldValue) => {
-//     updateUserInterest(newValue, entry);
-//   });
-// };
+const watchEntryRole = (entry) => {
+  watch(() => entry.role, (newValue, oldValue) => {
+    updateUserInterest(newValue, entry);
+  });
+};
 
-// for (const entry of formEntries.value) {
-//   watchEntryRole(entry); // Sayfa yüklendiğinde tüm girişler için izleme fonksiyonunu başlat
-// }
+for (const entry of formEntries.value) {
+  watchEntryRole(entry); // Sayfa yüklendiğinde tüm girişler için izleme fonksiyonunu başlat
+}
 
 </script>
 
@@ -86,7 +84,7 @@ const resetDialog = () => {
     v-model="isDialogVisible"
     max-width="600"
   >
-    <!-- Dialog Activator   @click="isDialogVisible = true" -->
+    <!-- Dialog Activator -->
     <template #activator="{ props }">
       <VBtn 
       class="me-1"
@@ -98,11 +96,11 @@ const resetDialog = () => {
     <DialogCloseBtn @click="isDialogVisible = !isDialogVisible" />
 
     <!-- Dialog Content -->
-    <VCard title="Yeni Kişi Ekle">
+    <VCard title="Kişiyi Güncelle">
       <VCardText>
         <VRow v-for="(entry, index) in formEntries" :key="index" class="mb-10">
             <VCol cols="12">
-                <p>Sayfa Ekleme</p>
+                <p>Sayfa Düzenleme</p>
             </VCol>
             <VCol
             cols="12">
@@ -114,7 +112,7 @@ const resetDialog = () => {
                 label="Dashboard Sayfaları"
               />
             </VCol>
-            <!-- <VCol
+            <VCol
             cols="12">
             <p class="-mb-6">Admin</p>
             <VAutocomplete
@@ -124,7 +122,7 @@ const resetDialog = () => {
                 label="Admin Sayfaları"
                 :disabled="props.role === 'user'"
               />
-            </VCol> -->
+            </VCol>
           </VRow>
       </VCardText>
 
@@ -137,8 +135,8 @@ const resetDialog = () => {
         >
           Kapat
         </VBtn>
-        <VBtn @click.prevent="addUserPage()" :disabled="!isSaveButtonActive">
-          Sayfaları Ekle
+        <VBtn @click.prevent="updateUserPage()" :disabled="!isSaveButtonActive">
+          Sayfaları Düzenle
         </VBtn>
       </VCardText>
     </VCard>

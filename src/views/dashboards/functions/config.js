@@ -378,16 +378,19 @@ export const callLoginTwo = (email, password) => {
 }
 
 
-export const calladdUserTwo = (email,from,newRole) => {
+export const calladdUserTwo = (from) => {
   const url = "https://jectxbackend-672789bf3678.herokuapp.com/addUserV2";
-  let data = JSON.stringify({
-  emails:[
+  /*
+  console.log('calladdUserTwo function gönderdiği data --> ' ,[
     {
       email: email,
       role: newRole,
       pages:from
     }
-  ]
+  ])
+  */
+  let data = JSON.stringify({
+  emails: from
   });
   return config(url,data)
 }
@@ -398,12 +401,19 @@ export const callUserRoleTwo = () => {
   return getConfig(url, data);
 };
 
-export const callUpdateUserTwo = (email, newRole, newPage) =>{
+export const callUpdateUserTwo = (totalData) =>{
   const url = "https://jectxbackend-672789bf3678.herokuapp.com/updateUserV2"
+  console.log("totalData callUpdateUserTwo ==> ", totalData[0])
   let data = JSON.stringify({
-    email: email,
-    newRole: newRole,
-    newPages: newPage
+    totalData
   })
   return config(url,data)
+}
+
+export const callDeleteUserTwo = (email) =>{
+  let url = "https://jectxbackend-672789bf3678.herokuapp.com/deleteUserByEmailV2"
+  let data = JSON.stringify({
+    "email": email
+  })
+  return deleteConfig(url,data)
 }

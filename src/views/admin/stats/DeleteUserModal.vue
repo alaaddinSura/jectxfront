@@ -14,8 +14,8 @@ const email = computed(()=>{
 
 
 const deleteUser = (email) => {
-  fetchData.deleteUser(email);
-  isDialogVisible.value = true
+  fetchData.deleteUserTwo(email);
+  isDialogVisible.value = false
   store.commit("changeAdminUserDeleteLoader", 0);
 };
 

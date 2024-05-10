@@ -1,5 +1,6 @@
 <script setup>
 import * as fetchData from "@/views/dashboards/functions/fetchData";
+import { store } from "@/store/index";
 
 const isDialogVisible = ref(false)
 
@@ -13,12 +14,11 @@ const email = computed(()=>{
     return props.email
 })
 
-const formEntries = ref([{ email: props.email, pages: props.pages, role: props.role }]);
 
 const updateUser = () =>{
-     for (const entry of formEntries.value) {
-         fetchData.updateUser(entry.email,entry.role, Object.values(props.pages))
-     }
+  console.log("ne geldi ==> ", store.state.updateUserPages)
+      fetchData.updateUserTwo(store.state.updateUserPages)
+     store.commit("clearUpdateUserPages")
   isDialogVisible.value = false
 }
 
@@ -63,7 +63,7 @@ const updateUser = () =>{
         >
           İptal
         </VBtn>
-        <VBtn @click="updateUser()">
+        <VBtn @click="updateUser(), $emit('modalClose', false)">
           Güncelle
         </VBtn>
       </VCardText>
