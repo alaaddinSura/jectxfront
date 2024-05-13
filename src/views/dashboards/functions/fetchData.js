@@ -954,7 +954,9 @@ export const addUser = (email, pages, role) => {
 export const sendMail = (email) => {
   axios
     .request(configs.sendMail(email))
-    .then((r) => {})
+    .then((r) => {
+      console.log("Veri Girdi")
+    })
     .catch((error) => {
       console.log("Mail Gönderimi Başarısızdır ", error);
     });

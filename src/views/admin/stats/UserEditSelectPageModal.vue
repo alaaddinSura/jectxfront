@@ -22,12 +22,11 @@ const propsEmail = computed(()=>{
   return props.email;
 })
 
-
-console.log("props Page ==> ", propsPages.value[0].to.flatMap(item => item))
+const fetchPropsPage = propsPages.value[0].to.flatMap(item => item)
 
 const isDialogVisible = ref(false);
 const interestOptions = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'];
-const formEntries = ref([{ adminPages: [], interest: [] }]);
+const formEntries = ref([{ adminPages: [], interest: fetchPropsPage }]);
 
 
 const isSaveButtonActive = computed(() => {
@@ -35,8 +34,6 @@ const isSaveButtonActive = computed(() => {
 });
 
  const updateUserInterest = (role, entry) => {
-  console.log("Propstan gelenler ==> ", propsPages.value[0].to.flatMap(item => item))
-   console.log("Değişti Emmioğlu ==> ", entry.interest)
    entry.interest = entry.interest.filter(item => interestOptions.includes(item));
   //  entry.interest = propsPages.value[0].to.flatMap(item => item)
  };
@@ -78,7 +75,6 @@ for (const entry of formEntries.value) {
 }
 
 onMounted(()=>{
-  console.log("Girdi Beee")
   formEntries.value.interest = propsPages.value[0].to.flatMap(item => item)
 })
 
@@ -94,7 +90,7 @@ onMounted(()=>{
       <VBtn 
       class="me-1"
       v-bind="props"
-      >Sayfaları Göster</VBtn >
+      ><VIcon icon="tabler-plus" class="mr-2"/> Sayfaları Seç</VBtn >
     </template>
 
     <!-- Dialog close btn -->
@@ -113,7 +109,6 @@ onMounted(()=>{
             <VAutocomplete
                 v-model="entry.interest"
                 multiple
-  
                 :items="['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma']"
                 label="Dashboard Sayfaları"
               />

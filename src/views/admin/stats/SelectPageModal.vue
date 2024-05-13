@@ -1,5 +1,5 @@
 <script setup>
-import { emailValidator, requiredValidator } from "@validators";
+import { emailValidator, requiredValidator,userValidator } from "@validators";
 import * as fetchData from "@/views/dashboards/functions/fetchData";
 import { store } from "@/store/index";
 
@@ -26,8 +26,14 @@ const isSaveButtonActive = computed(() => {
   return true;
 });
 
-  
+const simdilikDeneme = computed(()=>{
+  const dene = "ertugrul.badem@surahotels.com"
+  const allUserData = store.state.userRole.length == 0 ? JSON.parse(localStorage.getItem("userRoles")) : store.state.userRole
+  const isUser = allUserData.map(item=> item.email)
+  console.log("allUserData ==> ", isUser)
+})
 
+simdilikDeneme.value
 const addUserPage = () =>{
   
   const formEntry = formEntries.value;
@@ -90,7 +96,7 @@ const resetDialog = () => {
       <VBtn 
       class="me-1"
       v-bind="props"
-      >Sayfaları Göster</VBtn >
+      ><VIcon icon="tabler-plus" class="mr-2"/> Sayfaları Seç</VBtn >
     </template>
 
     <!-- Dialog close btn -->

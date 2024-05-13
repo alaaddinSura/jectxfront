@@ -355,6 +355,7 @@ export const sendMail = (email) =>{
   let data = JSON.stringify({
     mails: [email]
   });
+  console.log("data ==> ", data)
   return config(url,data)
 }
 

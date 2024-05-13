@@ -1,4 +1,5 @@
 import { isEmpty, isEmptyArray, isNullOrUndefined } from './index'
+import { store } from "@/store/index";
 
 // 👉 Required Validator
 export const requiredValidator = value => {
@@ -117,4 +118,16 @@ export const alphaDashValidator = value => {
   const valueAsString = String(value)
   
   return /^[0-9A-Z_-]*$/i.test(valueAsString) || 'All Character are not valid'
+}
+
+
+// User Validator
+export const userValidator = (value) => {
+  const allUserData = store.state.userRole.length == 0 ? JSON.parse(localStorage.getItem("userRoles")) : store.state.userRole
+  const isUser = allUserData.map(item=> item.email)
+  if(!isUser.includes(value)){
+    return true
+  }
+  return "Bu Mail Kayıtlı, Lütfen kayıtlı olmayan bir mail deneyiniz."
+  console.log("allUserData ==> ", isUser.includes(dene))
 }

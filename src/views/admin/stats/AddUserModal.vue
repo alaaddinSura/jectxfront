@@ -1,11 +1,11 @@
 <script setup>
-import { emailValidator, requiredValidator } from "@validators";
+import { emailValidator, requiredValidator,userValidator } from "@validators";
 import * as fetchData from "@/views/dashboards/functions/fetchData";
 import SelectPageModal from "./SelectPageModal.vue";
 import { store } from "@/store/index";
 
 const isDialogVisible = ref(false);
-const buttonDisabled = ref(true);
+const buttonDisabled = ref(false);
 const adminPagesData = ["Kişiler", "Hedefler"];
 const interestOptions = [
   "Misafir Dağılım",
@@ -21,7 +21,7 @@ const isSaveButtonActive = computed(() => {
     if (
       emailValidator(entry.email) !== true ||
       entry.role.length === 0 ||
-      entry.email.length === 0
+      entry.email.length === 0 || userValidator(entry.email) !== true
     ) {
       return false;
     }
@@ -39,6 +39,7 @@ const updateUserInterest = (role, entry) => {
   const stores = store.state.addUserPages;
   const propsEmailValue = entry.email;
   if (role === "admin") {
+    buttonDisabled.value = false
     if (entry.email.length != 0 && entry.role.length != 0) {
       // Eğer belirli bir email adresi zaten addUserPages dizisinde bulunuyorsa
       if (stores.some((entry) => entry.email === propsEmailValue)) {
@@ -70,10 +71,10 @@ const updateUserInterest = (role, entry) => {
       );
     }
   } else {
+    buttonDisabled.value = true
     for (const entry of formEntries.value) {
       entry.interest = [];
     }
-    buttonDisabled.value = true;
   }
 };
 
@@ -81,7 +82,10 @@ const updateUserInterest = (role, entry) => {
 
 const addUser = () => {
   console.log("Store State ==> ", store.state.addUserPages);
+  const email = store.state.addUserPages.map(item => item.email)
+  console.log("ASDLSO ==> ", ...email)
   fetchData.addUserTwo(store.state.addUserPages.flatMap((item) => item));
+  fetchData.sendMail(...email)
   store.commit("clearAddUserPages");
   formEntries.value = [{ email: "", interest: [], role: "" }];
   isDialogVisible.value = false;
@@ -150,7 +154,7 @@ for (const entry of formEntries.value) {
             <VTextField
               v-model="entry.email"
               label="Email"
-              :rules="[requiredValidator, emailValidator]"
+              :rules="[requiredValidator, emailValidator, userValidator]"
             />
           </VCol>
           <VCol cols="12" sm="12">

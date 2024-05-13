@@ -6,6 +6,7 @@ import { watch } from "vue";
 import UserEditSelectPageModal from "./UserEditSelectPageModal.vue";
 
 const isDialogVisible = ref(false)
+const buttonDisabled = ref(true)
 
 const props = defineProps({
     email: String,
@@ -18,6 +19,7 @@ const formEntries = ref([{ email: props.email, pages: props.pages, role: props.r
 
 
 const deneme = (value) =>{
+  buttonDisabled.value = false
   const stores = store.state.updateUserPages;
   store.commit("clearUpdateUserPages")
   for(const entry of formEntries.value){
@@ -42,6 +44,7 @@ const deneme = (value) =>{
 
 watch(() => formEntries.value[0].role, (newValue, oldValue) => {
     // Rol değiştiğinde yapılacak işlemler buraya yazılabilir
+    buttonDisabled.value = true
     if(newValue === "admin"){
       deneme()
     }
@@ -112,7 +115,7 @@ const exitModal = () =>{
               cols="12"
               sm="12"
             >
-              <UserEditSelectPageModal :pages="entry.pages" :role="props.role" :email="props.email"/>
+              <UserEditSelectPageModal :pages="props.pages" :role="props.role" :email="props.email" :disabled="!buttonDisabled"/>
             </VCol>
           </VRow>
       </VCardText>
