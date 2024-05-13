@@ -35,20 +35,14 @@ const deneme = (value) =>{
       }]
   }
   store.commit("changeUpdateUserPages", pushStore)
-  console.log("store state güncellendi ==> ", store.state.updateUserPages)
-    if(entry.role === "admin"){
-      console.log("Bu kesin admin ==> ", stores)
-    }
+  
   }
 }
 
 
 watch(() => formEntries.value[0].role, (newValue, oldValue) => {
     // Rol değiştiğinde yapılacak işlemler buraya yazılabilir
-    console.log('Rol değişti: Yeni rol:', newValue, ', Eski rol:', oldValue);
-    console.log("Store State watch ==> ", store.state.updateUserPages)
     if(newValue === "admin"){
-      console.log("Bu bir admin")
       deneme()
     }
 });

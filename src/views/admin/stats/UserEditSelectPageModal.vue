@@ -2,6 +2,7 @@
 import { emailValidator, requiredValidator } from "@validators";
 import * as fetchData from "@/views/dashboards/functions/fetchData";
 import { store } from "@/store/index";
+import { onMounted } from "vue";
 
 const props = defineProps({
     pages: Array,
@@ -21,6 +22,9 @@ const propsEmail = computed(()=>{
   return props.email;
 })
 
+
+console.log("props Page ==> ", propsPages.value[0].to.flatMap(item => item))
+
 const isDialogVisible = ref(false);
 const interestOptions = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'];
 const formEntries = ref([{ adminPages: [], interest: [] }]);
@@ -31,29 +35,25 @@ const isSaveButtonActive = computed(() => {
 });
 
  const updateUserInterest = (role, entry) => {
-   if (role === 'admin') {
-     entry.interest = [...interestOptions];
-   } else {
-     entry.interest = [];
-   }
+  console.log("Propstan gelenler ==> ", propsPages.value[0].to.flatMap(item => item))
+   console.log("Değişti Emmioğlu ==> ", entry.interest)
+   entry.interest = entry.interest.filter(item => interestOptions.includes(item));
+  //  entry.interest = propsPages.value[0].to.flatMap(item => item)
  };
 
 
  const updateUserPage = () =>{
   store.commit("clearUpdateUserPages")
   const formEntry = formEntries.value;
-  console.log("propsEmail ==> ", propsEmail.value)
-  console.log("propsRole ==> ", propsRoles.value)
-  console.log("props Email ==> ", props.email)
-  console.log("props Role ==> ", props.role)
   const pushStore = {
-    "email": propsEmail.value,
-    "newRole" : propsRoles.value,
-    "newPages": [{
-      "from": "Dashboards",
-      "to": formEntry[0].interest.flatMap(item => item)
+    email: props.email,
+    newRole : propsRoles.value,
+    newPages: [{
+      from: "Dashboards",
+      to: formEntry[0].interest.flatMap(item => item)
     }]
   }
+  //fetchData.updateUserTwo(pushStore)
   store.commit("changeUpdateUserPages", pushStore)
   formEntries.value = [{ adminPages: [], interest: [], role: '' }];
   isDialogVisible.value = false
@@ -68,7 +68,7 @@ const resetDialog = () => {
 };
 
 const watchEntryRole = (entry) => {
-  watch(() => entry.role, (newValue, oldValue) => {
+  watch(() => entry.interest, (newValue, oldValue) => {
     updateUserInterest(newValue, entry);
   });
 };
@@ -76,6 +76,11 @@ const watchEntryRole = (entry) => {
 for (const entry of formEntries.value) {
   watchEntryRole(entry); // Sayfa yüklendiğinde tüm girişler için izleme fonksiyonunu başlat
 }
+
+onMounted(()=>{
+  console.log("Girdi Beee")
+  formEntries.value.interest = propsPages.value[0].to.flatMap(item => item)
+})
 
 </script>
 
@@ -108,19 +113,9 @@ for (const entry of formEntries.value) {
             <VAutocomplete
                 v-model="entry.interest"
                 multiple
+  
                 :items="['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma']"
                 label="Dashboard Sayfaları"
-              />
-            </VCol>
-            <VCol
-            cols="12">
-            <p class="-mb-6">Admin</p>
-            <VAutocomplete
-                v-model="entry.adminPages"
-                multiple
-                :items="['Kişiler', 'Hedefler']"
-                label="Admin Sayfaları"
-                :disabled="props.role === 'user'"
               />
             </VCol>
           </VRow>

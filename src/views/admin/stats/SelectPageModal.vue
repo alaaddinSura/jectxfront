@@ -50,7 +50,6 @@ if (stores.some(entry => entry.email === propsEmailValue)) {
     }]
   }
   store.commit("changeAddUserPages", pushStore)
-  console.log("store state ==> ", store.state.addUserPages.flatMap(item => item))
   isDialogVisible.value = false
 }
 

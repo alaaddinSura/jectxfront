@@ -89,7 +89,6 @@ export const isActivePage = (queryPath) => {
 
 
 export const isLogginPage = (queryPath) =>{
-  
   let originalData;
   let isActiveQuery;
   if (localStorage.getItem("userData")) {

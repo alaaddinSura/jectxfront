@@ -10,13 +10,7 @@ const props = defineProps({
     role: String,
 })
 
-const email = computed(()=>{
-    return props.email
-})
-
-
 const updateUser = () =>{
-  console.log("ne geldi ==> ", store.state.updateUserPages)
       fetchData.updateUserTwo(store.state.updateUserPages)
      store.commit("clearUpdateUserPages")
   isDialogVisible.value = false

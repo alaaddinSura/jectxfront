@@ -181,7 +181,6 @@ const login = () => {
       return r.data
     }).then((b)=>{
        form.value.isValid = true;
-       console.log("b => ", b.pages)
        if (form.value.isValid){
          let userAbilities = [{ action: "manage", subject: "all" }];
          let accessToken = "cat2xMrZLn0FwicdGtZNzL7ifDTAKWB0k1RurSWjdnw";
@@ -199,8 +198,7 @@ const login = () => {
          localStorage.setItem("userData", JSON.stringify(userData));
          localStorage.setItem("accessToken", JSON.stringify(accessToken));
          localStorage.setItem("lastTimeDate", JSON.stringify(new Date()))
-
-         console.log(JSON.parse(localStorage.getItem("userData")))
+         //const isUserActivePage = isUserActivePages();
       //    let originalData = userData.pages[0]; // ['Misafir Dağılım'
       //    if (Array.isArray(originalData)) {
       //      originalData = originalData.map((item) =>

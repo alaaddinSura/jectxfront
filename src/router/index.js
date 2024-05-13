@@ -75,10 +75,8 @@ const dateMinutes = () => {
 // Docs: https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 router.beforeEach((to) => {
    const isLoggedIn = isUserLoggedIn();
-  // const isAdmin = isUserLogginInActive();
    const queryPath = to.path;
    const isActivePages = isLogginPage(queryPath)
-  // const isActivePages = isActivePage(queryPath);
    const isUserActivePage = isUserActivePages();
   if(isLoggedIn){
     dateMinutes();
@@ -86,28 +84,6 @@ router.beforeEach((to) => {
       router.push("/dashboards/" + isUserActivePage[0]);
     }
   }
-  // if (isLoggedIn) {
-  //   dateMinutes();
-  //   if (isAdmin) {
-  //     if (to.path.startsWith("/dashboards/")) {
-  //       if (isActivePages) {
-  //         router.push("/dashboards/" + isUserActivePage[0]);
-  //       }
-  //     }
-  //   } else {
-  //     if (to.path.startsWith("/dashboards/")) {
-  //       // queryPath originalData dizisinde bulunuyorsa:
-  //       if (!isActivePages) {
-  //         router.push("/dashboards/" + isUserActivePage[0]);
-  //       }
-  //     } else {
-  //       router.push("/dashboards/" + isUserActivePage[0]);
-  //     }
-  //   }
-  //   if (store.state.inActive) {
-  //     logOut();
-  //   }
-  // }
   
 
    if (canNavigate(to)) {

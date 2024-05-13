@@ -403,10 +403,9 @@ export const callUserRoleTwo = () => {
 
 export const callUpdateUserTwo = (totalData) =>{
   const url = "https://jectxbackend-672789bf3678.herokuapp.com/updateUserV2"
-  console.log("totalData callUpdateUserTwo ==> ", totalData[0])
-  let data = JSON.stringify({
+  let data = JSON.stringify(
     totalData
-  })
+  )
   return config(url,data)
 }
 

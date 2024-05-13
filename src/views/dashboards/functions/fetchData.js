@@ -992,6 +992,7 @@ export const userRoleTwo = (isLocal) => {
         store.commit("changeuserRoleLoader", 1);
       } else {
         store.commit("changeUserRole", r.data);
+        localStorage.setItem("userRoles", JSON.stringify(r.data));
         store.commit("changeuserRoleLoader", 1);
       }
     })
@@ -1012,8 +1013,7 @@ export const addUserTwo = (from) => {
 };
 
 export const updateUserTwo = (totalData) => {
-  axios
-    .request(configs.callUpdateUserTwo(totalData))
+  axios.request(configs.callUpdateUserTwo(totalData))
     .then((r) => {
       userRoleTwo();
     })

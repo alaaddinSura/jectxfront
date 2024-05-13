@@ -1,7 +1,7 @@
 <script setup>
 import { emailValidator, requiredValidator } from "@validators";
 import * as fetchData from "@/views/dashboards/functions/fetchData";
-import SelectPageModal from "../stats/Goals/SelectPageModal.vue";
+import SelectPageModal from "./SelectPageModal.vue";
 import { store } from "@/store/index";
 
 const isDialogVisible = ref(false);
@@ -36,7 +36,6 @@ const addNewEntry = () => {
 };
 
 const updateUserInterest = (role, entry) => {
-  console.log("Kullanıcı role'ü seçti ==> ", role);
   const stores = store.state.addUserPages;
   const propsEmailValue = entry.email;
   if (role === "admin") {
