@@ -75,26 +75,37 @@ const dateMinutes = () => {
 // Docs: https://router.vuejs.org/guide/advanced/navigation-guards.html#global-before-guards
 router.beforeEach((to) => {
    const isLoggedIn = isUserLoggedIn();
-   const queryPath = to.path;
-   const isActivePages = isLogginPage(queryPath)
-   const isUserActivePage = isUserActivePages();
-  if(isLoggedIn){
-    dateMinutes();
-    if(!isActivePages){
-      router.push("/dashboards/" + isUserActivePage[0]);
+    const queryPath = to.path;
+    const isActivePages = isLogginPage(queryPath)
+    const isUserActivePage = isUserActivePages();
+   if(to.meta.redirectIfLoggedIn && isLoggedIn){
+    router.push("/dashboards/" + isUserActivePage[0]);
+   }else{
+    if(isLoggedIn){
+      dateMinutes();
+      if(!isActivePages){
+        router.push("/dashboards/" + isUserActivePage[0]);
+      }
     }
-  }
-  
-
-   if (canNavigate(to)) {
-     if (to.meta.redirectIfLoggedIn && isLoggedIn) return "/";
-   } else {
-     if (isLoggedIn) return { name: "not-authorized" };
-     else
-       return {
-         name: "login",
-         query: { to: to.name !== "index" ? to.fullPath : undefined },
-       };
    }
+    
+
+  //  if (canNavigate(to)) {
+  //    if (to.meta.redirectIfLoggedIn && isLoggedIn)return "/"
+    
+  //  } else {
+  //    if (isLoggedIn){
+  //     console.log("Burada 2")
+  //     return { name: "not-authorized" };
+  //    }
+  //    else{
+  //     console.log("Burada 3")
+  //     return {
+  //       name: "login",
+  //       query: { to: to.name !== "index" ? to.fullPath : undefined },
+  //    }
+     
+  //      };
+  //  }
 });
 export default router;
