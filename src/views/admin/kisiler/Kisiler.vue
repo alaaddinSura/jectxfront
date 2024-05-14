@@ -155,8 +155,8 @@ const addNewUser = (userData) => {
                   <div class="d-flex align-center">
                     <VAvatar
                       variant="tonal"
-                      :icon="user.role != 'admin' ? 'tabler-user' : 'tabler-user-cog'"
-                      :color="user.role != 'admin' ? 'warning' : 'success'"
+                      :icon="user.role.toLowerCase() != 'admin' ? 'tabler-user' : 'tabler-user-cog'"
+                      :color="user.role.toLowerCase() != 'admin' ? 'warning' : 'success'"
                       class="me-3"
                       size="38"
                     >
@@ -172,13 +172,13 @@ const addNewUser = (userData) => {
                   </div>
                 </td>
                 <!-- 👉 Delete -->
-                <td>
-                  <DeleteUserModal v-if="user.role !== 'admin'" :email="user.email" :disabled="user.role === 'admin'"/>
+                <td :disabled="user.role.toLowerCase() === 'admin'">
+                  <DeleteUserModal v-if="user.role !== 'admin'" :email="user.email" :disabled="user.role.toLowerCase() === 'admin'"/>
                 </td>
 
                 <!-- 👉 Actions -->
-                <td :disabled="user.role === 'admin'">
-                    <EditUserModal :email="user.email" :role="user.role" :pages="user.pages" v-if="user.role !== 'admin'"/>
+                <td :disabled="user.role.toLowerCase() == 'admin'">
+                    <EditUserModal :email="user.email" :role="user.role" :pages="user.pages" v-if="user.role.toLowerCase() !== 'admin'"/>
                 </td>
               </tr>
             </tbody>

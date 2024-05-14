@@ -23,10 +23,11 @@ const propsEmail = computed(()=>{
 })
 
 const fetchPropsPage = propsPages.value[0].to.flatMap(item => item)
+console.log("fetchPropsPage ==> ", fetchPropsPage)
 
 const isDialogVisible = ref(false);
 const interestOptions = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'];
-const formEntries = ref([{ adminPages: [], interest: fetchPropsPage }]);
+const formEntries = ref([{ adminPages: [], interest: [...fetchPropsPage] }]);
 
 
 const isSaveButtonActive = computed(() => {
