@@ -27,7 +27,7 @@ console.log("fetchPropsPage ==> ", fetchPropsPage)
 
 const isDialogVisible = ref(false);
 const interestOptions = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'];
-const formEntries = ref([{ adminPages: [], interest: [...fetchPropsPage] }]);
+const formEntries = ref([{ adminPages: [], interest: fetchPropsPage }]);
 
 
 const isSaveButtonActive = computed(() => {
@@ -75,9 +75,9 @@ for (const entry of formEntries.value) {
   watchEntryRole(entry); // Sayfa yüklendiğinde tüm girişler için izleme fonksiyonunu başlat
 }
 
-onMounted(()=>{
-  formEntries.value.interest = propsPages.value[0].to.flatMap(item => item)
-})
+// onMounted(()=>{
+//   formEntries.value.interest = propsPages.value[0].to.flatMap(item => item)
+// })
 
 </script>
 
