@@ -44,73 +44,40 @@ const navRole = computed(()=>{
 })
 
 
+   const linksTwo = computed(()=>{
+     let user = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : [];
+     const userPages = user.pages;
+     const navRoles = navRole.value;
 
-  const linksTwo = computed(()=>{
-    let user = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : [];
-    const userPages = user.pages;
-    const navRoles = navRole.value;
+     const matchedPages = navRoles.filter(page => {
+         return userPages.some(role => {
+             return role.from === page.title;
+         });
+     });
 
-    const matchedPages = navRoles.filter(page => {
-        return userPages.some(role => {
-            return role.from === page.title;
-        });
-    });
+     const matchPages = userPages.filter(page => {
+         return navRoles.some(role => {
+             return role.title === page.from;
+         });
+     });
 
-    const matchPages = userPages.filter(page => {
-        return navRoles.some(role => {
-            return role.title === page.from;
-        });
-    });
 
-    // Her sayfanın children özelliğini içeren bir dizi döndür
     const filteredMatchedPages = matchedPages.map(page => {
-        // Karşılık gelen matchPages öğesini bul
-        const matchPage = matchPages.find(match => match.from === page.title);
-        if (matchPage) {
-            // matchedPages'teki başlığı matchPages'teki 'from' değeriyle değiştir
-            page.children = page.children.filter(child => matchPage.to.includes(child.title));
-        }
-        return page;
-    }).filter(page => page.children && page.children.length > 0);
+    const clonedPage = { ...page }; // Klon oluştur
 
-    return filteredMatchedPages;
-  })
+    // Karşılık gelen matchPages öğesini bul
+    const matchPage = matchPages.find(match => match.from === clonedPage.title);
+    if (matchPage) {
+        // matchedPages'teki başlığı matchPages'teki 'from' değeriyle değiştir
+        clonedPage.children = clonedPage.children.filter(child => matchPage.to.includes(child.title));
+    }
 
-  watch(() => props.navItems, () => {
-  // props.navItems her değiştiğinde bu kod çalışır
-  // linksTwo değerini güncelle
-  linksTwo.value = calculateLinksTwo(props.navItems);
-});
-
-// const links = computed(()=>{
-//   let user = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : []
-//   const roleNav = navRole.value
-//   const filteredChildren = roleNav.flatMap(item => {
-//     const filtered = item.children.filter(child => {
-//       return user.pages.includes(child.title)
-//     })
-//     return { ...item, children: filtered }
-//   })
-//     return filteredChildren[0]
-//   })
+    return clonedPage;
+}).filter(page => page.children && page.children.length > 0);
+     return filteredMatchedPages;
+   })
 
 
-//   const filterLinks = computed(()=>{
-//   const loginUser = localStorage.getItem("userData") ? JSON.parse(localStorage.getItem("userData")) : []
-//   console.log("pAGES ==> ", loginUser.pages)
-//   const admin = loginUser.role.toLowerCase()
-//   let filteredNav;
-//   if (admin.includes("admin")) {
-//     // admin, "Admin" içeriyorsa tüm verileri getir
-//     filteredNav = navRole.value;
-//     filteredNav[0] = links.value
-//   } else {
-//     // admin, "Admin" içermiyorsa, "title"ı "Admin" olanı hariç tutarak filtrele
-//     filteredNav = navRole.value.filter(item => item.title !== "Admin");
-//     filteredNav[0] = links.value
-//   }
-//   return filteredNav;
-//   })
 
   onMounted(() => {
     linksTwo.value
@@ -120,6 +87,7 @@ const navRole = computed(()=>{
 watch(() => {
   return [localStorage.getItem("userRole"), localStorage.getItem("userData")]
 }, () => {
+  
   linksTwo.value
 }, { deep: true });
 

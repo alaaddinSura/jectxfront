@@ -1,5 +1,3 @@
-const userPages = JSON.parse(localStorage.getItem("userData"))
-
 
 const children = [
   {

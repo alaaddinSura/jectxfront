@@ -29,7 +29,6 @@ const submit = () =>{
   fetchData.forgotPassword(email)
   form.value.email = ''
   form.value.showMessage = false
-  console.log("store state forgot mail Container ==> ", store.state.isForgotMailWrong)
   routeLogin.value = false
 }
 
