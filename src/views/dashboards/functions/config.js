@@ -333,7 +333,7 @@ export const callrezIptalAnaliz = (dateRange, hotelidArray) => {
 };
 
 export const callUpdatePassword = (token, password) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/updatepassword";
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/updatepasswordV2";
   let data = JSON.stringify({
     token: token,
     password: password,
@@ -342,7 +342,7 @@ export const callUpdatePassword = (token, password) => {
 };
 
 export const callForgotPassword = (email) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/forgetPassword";
+  const url = "https://jectxbackend-672789bf3678.herokuapp.com/forgetPasswordV2";
   let data = JSON.stringify({
     mail: email,
   });

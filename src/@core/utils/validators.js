@@ -129,5 +129,4 @@ export const userValidator = (value) => {
     return true
   }
   return "Bu Mail Kayıtlı, Lütfen kayıtlı olmayan bir mail deneyiniz."
-  console.log("allUserData ==> ", isUser.includes(dene))
 }

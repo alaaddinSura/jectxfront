@@ -15,6 +15,7 @@ const interestOptions = [
   "Geçmiş Karşılaştırma",
 ];
 const formEntries = ref([{ email: "", interest: [], role: "" }]);
+const entryEmail = []
 
 const isSaveButtonActive = computed(() => {
   for (const entry of formEntries.value) {
@@ -65,10 +66,6 @@ const updateUserInterest = (role, entry) => {
         ],
       };
       store.commit("changeAddUserPages", pushStore);
-      console.log(
-        "store state ==> ",
-        store.state.addUserPages.flatMap((item) => item)
-      );
     }
   } else {
     buttonDisabled.value = true
@@ -81,11 +78,12 @@ const updateUserInterest = (role, entry) => {
 
 
 const addUser = () => {
-  console.log("Store State ==> ", store.state.addUserPages);
   const email = store.state.addUserPages.map(item => item.email)
-  console.log("ASDLSO ==> ", ...email)
   fetchData.addUserTwo(store.state.addUserPages.flatMap((item) => item));
-  fetchData.sendMail(...email)
+  for(const mail of email){
+    fetchData.sendMail(mail)
+  }
+  
   store.commit("clearAddUserPages");
   formEntries.value = [{ email: "", interest: [], role: "" }];
   isDialogVisible.value = false;

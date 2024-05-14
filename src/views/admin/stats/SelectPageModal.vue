@@ -26,14 +26,6 @@ const isSaveButtonActive = computed(() => {
   return true;
 });
 
-const simdilikDeneme = computed(()=>{
-  const dene = "ertugrul.badem@surahotels.com"
-  const allUserData = store.state.userRole.length == 0 ? JSON.parse(localStorage.getItem("userRoles")) : store.state.userRole
-  const isUser = allUserData.map(item=> item.email)
-  console.log("allUserData ==> ", isUser)
-})
-
-simdilikDeneme.value
 const addUserPage = () =>{
   
   const formEntry = formEntries.value;
@@ -59,14 +51,6 @@ if (stores.some(entry => entry.email === propsEmailValue)) {
   isDialogVisible.value = false
 }
 
-// const updateUserInterest = (role, entry) => {
-//   if (role === 'admin') {
-//     entry.interest = [...interestOptions];
-//   } else {
-//     entry.interest = [];
-//   }
-// };
-
 
 const resetDialog = () => {
   formEntries.value = [{ adminPages: [], interest: [], role: '' }];
@@ -74,15 +58,6 @@ const resetDialog = () => {
   isDialogVisible.value = false;
 };
 
-// const watchEntryRole = (entry) => {
-//   watch(() => entry.role, (newValue, oldValue) => {
-//     updateUserInterest(newValue, entry);
-//   });
-// };
-
-// for (const entry of formEntries.value) {
-//   watchEntryRole(entry); // Sayfa yüklendiğinde tüm girişler için izleme fonksiyonunu başlat
-// }
 
 </script>
 
