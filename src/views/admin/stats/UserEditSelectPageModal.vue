@@ -75,12 +75,12 @@ for (const entry of formEntries.value) {
   watchEntryRole(entry); // Sayfa yüklendiğinde tüm girişler için izleme fonksiyonunu başlat
 }
 
- onMounted(()=>{
-  console.log("Updateeeeeeeee")
-   for(const entry of formEntries.value){
-    entry.interest = fetchPropsPage
-   }
- })
+  onMounted(()=>{
+   console.log("Updateeeeeeeee")
+   const entry = formEntries.value[0]
+   entry.interest = fetchPropsPage
+   console.log("entry ==> ", entry.interest)
+  })
 
 </script>
 

@@ -173,7 +173,7 @@ const addNewUser = (userData) => {
                 </td>
                 <!-- 👉 Delete -->
                 <td :disabled="user.role.toLowerCase() === 'admin'">
-                  <DeleteUserModal v-if="user.role !== 'admin'" :email="user.email" :disabled="user.role.toLowerCase() === 'admin'"/>
+                  <DeleteUserModal v-if="user.role.toLowerCase() !== 'admin'" :email="user.email" :disabled="user.role.toLowerCase() === 'admin'"/>
                 </td>
 
                 <!-- 👉 Actions -->
