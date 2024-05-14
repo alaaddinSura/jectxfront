@@ -1,86 +1,63 @@
 <script setup>
-import { emailValidator, requiredValidator } from "@validators";
+import { emailValidator, requiredValidator,userValidator } from "@validators";
 import * as fetchData from "@/views/dashboards/functions/fetchData";
 import { store } from "@/store/index";
-import { onMounted } from "vue";
 
 const props = defineProps({
-    pages: Array,
     role: String,
     email: String,
-})
-
-const propsPages = computed(()=>{
-    return props.pages
+    pages: Array
 })
 
 const propsRoles = computed(()=>{
-  return props.role;
+    return props.role;
 })
 
 const propsEmail = computed(()=>{
   return props.email;
 })
 
+const propsPages = computed(()=>{
+  return props.pages;
+})
+
 const fetchPropsPage = propsPages.value[0].to.flatMap(item => item)
-console.log("fetchPropsPage ==> ", fetchPropsPage)
 
 const isDialogVisible = ref(false);
 const interestOptions = ['Misafir Dağılım', 'Doluluk Dağılım', 'Rezervasyon Gelir', 'Rezervasyon Analiz', 'Geçmiş Karşılaştırma'];
-const formEntries = ref([{ adminPages: [], interest: [] }]);
+const adminPagesOptions = ["Kişiler", "Hedefler"];
+const formEntries = ref([{ adminPages: [], interest: fetchPropsPage, role: propsRoles }]);
+
+
 
 
 const isSaveButtonActive = computed(() => {
   return true;
 });
 
- const updateUserInterest = (role, entry) => {
-   entry.interest = entry.interest.filter(item => interestOptions.includes(item));
-  //  entry.interest = propsPages.value[0].to.flatMap(item => item)
- };
-
-
- const updateUserPage = () =>{
-  store.commit("clearUpdateUserPages")
+const addUserPage = () =>{
+  
   const formEntry = formEntries.value;
+  store.commit("clearUpdateUserPages")
   const pushStore = {
-    email: props.email,
-    newRole : propsRoles.value,
-    newPages: [{
-      from: "Dashboards",
-      to: formEntry[0].interest.flatMap(item => item)
+    "email": props.email,
+    "newRole" : propsRoles.value,
+    "newPages": [{
+      "from": "Dashboards",
+      "to": formEntry[0].interest.flatMap(item => item)
     }]
   }
-  //fetchData.updateUserTwo(pushStore)
   store.commit("changeUpdateUserPages", pushStore)
-  formEntries.value = [{ adminPages: [], interest: [], role: '' }];
   isDialogVisible.value = false
 }
 
 
-
 const resetDialog = () => {
   formEntries.value = [{ adminPages: [], interest: [], role: '' }];
-  store.commit("clearUpdateUserPages")
+  store.commit("clearAddUserPages")
   isDialogVisible.value = false;
 };
 
-const watchEntryRole = (entry) => {
-  watch(() => entry.interest, (newValue, oldValue) => {
-    updateUserInterest(newValue, entry);
-  });
-};
-
-for (const entry of formEntries.value) {
-  watchEntryRole(entry); // Sayfa yüklendiğinde tüm girişler için izleme fonksiyonunu başlat
-}
-
-  // onMounted(()=>{
-  //  console.log("Updateeeeeeeee")
-  //  const entry = formEntries.value[0]
-  //  entry.interest = fetchPropsPage
-  //  console.log("entry ==> ", entry.interest)
-  // })
 
 </script>
 
@@ -89,7 +66,7 @@ for (const entry of formEntries.value) {
     v-model="isDialogVisible"
     max-width="600"
   >
-    <!-- Dialog Activator -->
+    <!-- Dialog Activator   @click="isDialogVisible = true" -->
     <template #activator="{ props }">
       <VBtn 
       class="me-1"
@@ -104,9 +81,6 @@ for (const entry of formEntries.value) {
     <VCard title="Kişiyi Güncelle">
       <VCardText>
         <VRow v-for="(entry, index) in formEntries" :key="index" class="mb-10">
-            <VCol cols="12">
-                <p>Sayfa Düzenleme</p>
-            </VCol>
             <VCol
             cols="12">
             <p>Dashboards</p>
@@ -117,6 +91,17 @@ for (const entry of formEntries.value) {
                 label="Dashboard Sayfaları"
               />
             </VCol>
+            <!-- <VCol
+            cols="12">
+            <p class="-mb-6">Admin</p>
+            <VAutocomplete
+                v-model="entry.adminPages"
+                multiple
+                :items="['Kişiler', 'Hedefler']"
+                label="Admin Sayfaları"
+                :disabled="props.role === 'user'"
+              />
+            </VCol> -->
           </VRow>
       </VCardText>
 
@@ -129,8 +114,8 @@ for (const entry of formEntries.value) {
         >
           Kapat
         </VBtn>
-        <VBtn @click.prevent="updateUserPage()" :disabled="!isSaveButtonActive">
-          Sayfaları Düzenle
+        <VBtn @click.prevent="addUserPage()" :disabled="!isSaveButtonActive">
+          Sayfaları Ekle
         </VBtn>
       </VCardText>
     </VCard>
