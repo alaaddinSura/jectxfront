@@ -1,4 +1,4 @@
-const baseUrl = "https://jectxbackend-672789bf3678.herokuapp.com"
+const baseUrl = "http://kpi.anteholding.com:3000"
 
 export const config = (url, data) => {
     let resConfig = {
