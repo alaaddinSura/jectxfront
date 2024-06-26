@@ -13,8 +13,6 @@ function formatNumber(num) {
 }
 
 
-
-
 const salesByCountries = computed(()=>{
   
   let chosenHotels = store.state.selectedHotels

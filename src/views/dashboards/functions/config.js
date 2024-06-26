@@ -1,3 +1,5 @@
+const baseUrl = "http://kpi.anteholding.com:3000"
+
 export const config = (url, data) => {
   let resConfig = {
     method: "post",
@@ -36,7 +38,7 @@ export const deleteConfig = (url, data) => {
 };
 
 export const callAddUser = (email, pages, role) =>{
-  let url = "https://jectxbackend-672789bf3678.herokuapp.com/addUser";
+  let url = `${baseUrl}/addUser`;
     let data = JSON.stringify({
       emails: [
         {
@@ -50,13 +52,13 @@ export const callAddUser = (email, pages, role) =>{
 }
 
 export const callUserRole = () => {
-  let url = "https://jectxbackend-672789bf3678.herokuapp.com/findUser";
+  let url = `${baseUrl}/findUser`;
   let data = '';
   return getConfig(url, data);
 };
 
 export const yatakDagilimConfig = (dateRange, hotelidArray) => {
-  let url = "https://jectxbackend-672789bf3678.herokuapp.com/yatakdagilim";
+  let url = `${baseUrl}/yatakdagilim`;
 
   let data = JSON.stringify({
     dateRange: dateRange,
@@ -66,14 +68,14 @@ export const yatakDagilimConfig = (dateRange, hotelidArray) => {
 };
 
 export const callDeleteUser = (email) =>{
-  let url = "https://jectxbackend-672789bf3678.herokuapp.com/deleteUserByEmail"
+  let url = `${baseUrl}/deleteUserByEmail`
   let data = JSON.stringify({
     "email": email
   })
   return deleteConfig(url,data)
 }
 export const gecelemeDagilimConfig = (dateRange, hotelidArray) => {
-  let url = "https://jectxbackend-672789bf3678.herokuapp.com/gecelemedagilim";
+  let url = `${baseUrl}/gecelemedagilim`;
 
   let data = JSON.stringify({
     dateRange: dateRange,
@@ -83,7 +85,7 @@ export const gecelemeDagilimConfig = (dateRange, hotelidArray) => {
 };
 
 export const rezervMiktariConfig = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/rezmiktari";
+  const url = `${baseUrl}/rezmiktari`;
 
   let data = JSON.stringify({
     dateRange: dateRange,
@@ -93,7 +95,7 @@ export const rezervMiktariConfig = (dateRange, hotelidArray) => {
 };
 
 export const kanallaraRezDagilimConfig = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/kanalrezdagilim";
+  const url = `${baseUrl}/kanalrezdagilim`;
 
   let data = JSON.stringify({
     dateRange: dateRange,
@@ -103,7 +105,7 @@ export const kanallaraRezDagilimConfig = (dateRange, hotelidArray) => {
 };
 
 export const onlineRezervMiktariConfig = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/onlrezmiktari";
+  const url = `${baseUrl}/onlrezmiktari`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -112,8 +114,7 @@ export const onlineRezervMiktariConfig = (dateRange, hotelidArray) => {
 };
 
 export const gecelemeMiktariConfig = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/gecelemiktarlari";
+  const url = `${baseUrl}/gecelemiktarlari`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -122,8 +123,7 @@ export const gecelemeMiktariConfig = (dateRange, hotelidArray) => {
 };
 
 export const ayDolulukConfig = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/gecelemiktarlari";
+  const url = `${baseUrl}/gecelemiktarlari`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -132,8 +132,7 @@ export const ayDolulukConfig = (dateRange, hotelidArray) => {
 };
 
 export const haftaDolulukConfig = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/gecelemiktarlari";
+  const url =`${baseUrl}/gecelemiktarlari`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -142,8 +141,7 @@ export const haftaDolulukConfig = (dateRange, hotelidArray) => {
 };
 
 export const sonYediAyDolulukConfig = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/gecelemiktarlari";
+  const url =`${baseUrl}/gecelemiktarlari`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -152,7 +150,7 @@ export const sonYediAyDolulukConfig = (dateRange, hotelidArray) => {
 };
 
 export const ulkeDagilimConfig = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/ulkedagilim";
+  const url = `${baseUrl}/ulkedagilim`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -161,8 +159,7 @@ export const ulkeDagilimConfig = (dateRange, hotelidArray) => {
 };
 
 export const callGecmisRezConfig = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/gecmisRezervasyonlar";
+  const url = `${baseUrl}/gecmisRezervasyonlar`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -171,7 +168,7 @@ export const callGecmisRezConfig = (dateRange, hotelidArray) => {
 };
 
 export const rezAnalizConfig = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/rezAnaliz";
+  const url = `${baseUrl}/rezAnaliz`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -180,7 +177,7 @@ export const rezAnalizConfig = (dateRange, hotelidArray) => {
 };
 
 export const iptalAnalizConfig = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/iptalAnaliz";
+  const url = `${baseUrl}/iptalAnaliz`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -189,8 +186,7 @@ export const iptalAnalizConfig = (dateRange, hotelidArray) => {
 };
 
 export const iptalEdebilirAnalizConfig = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/iptalEdilebilirAnalizAylik";
+  const url = `${baseUrl}/iptalEdilebilirAnalizAylik`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -199,8 +195,7 @@ export const iptalEdebilirAnalizConfig = (dateRange, hotelidArray) => {
 };
 
 export const iptalEdebilirAnalizConfigGunluk = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/iptalEdilebilirAnaliz";
+  const url = `${baseUrl}/iptalEdilebilirAnaliz`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -209,7 +204,7 @@ export const iptalEdebilirAnalizConfigGunluk = (dateRange, hotelidArray) => {
 };
 
 export const gecmisRezervasyonDagilimConfig = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/doluluk";
+  const url = `${baseUrl}/doluluk`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -218,7 +213,7 @@ export const gecmisRezervasyonDagilimConfig = (dateRange, hotelidArray) => {
 };
 
 export const odaTipiDagilimConfig = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/odatipidagilim";
+  const url = `${baseUrl}/odatipidagilim`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -227,7 +222,7 @@ export const odaTipiDagilimConfig = (dateRange, hotelidArray) => {
 };
 
 export const dolulukGelecekRezConfig = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/dolulukaylik";
+  const url = `${baseUrl}/dolulukaylik`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -236,8 +231,7 @@ export const dolulukGelecekRezConfig = (dateRange, hotelidArray) => {
 };
 
 export const callRezervasyonGecmisGunluk = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/rezervasyonkarsilastirma";
+  const url = `${baseUrl}/rezervasyonkarsilastirma`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -246,8 +240,7 @@ export const callRezervasyonGecmisGunluk = (dateRange, hotelidArray) => {
 };
 
 export const callRezervasyonGecmisAylik = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/rezervasyonkarsilastirmaAylik";
+  const url = `${baseUrl}/rezervasyonkarsilastirmaAylik`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -256,8 +249,7 @@ export const callRezervasyonGecmisAylik = (dateRange, hotelidArray) => {
 };
 
 export const callChannelTable = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/kanallaragoretablo";
+  const url = `${baseUrl}/kanallaragoretablo`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -266,7 +258,7 @@ export const callChannelTable = (dateRange, hotelidArray) => {
 };
 
 export const callRawData = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/rawdatatablo";
+  const url = `${baseUrl}/rawdatatablo`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -275,8 +267,7 @@ export const callRawData = (dateRange, hotelidArray) => {
 };
 
 export const callKanalDagilimGelir = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/kanaldagilimgelir";
+  const url = `${baseUrl}/kanaldagilimgelir`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -285,7 +276,7 @@ export const callKanalDagilimGelir = (dateRange, hotelidArray) => {
 };
 
 export const callKazancTakip = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/kazanctakip";
+  const url = `${baseUrl}/kazanctakip`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -294,8 +285,7 @@ export const callKazancTakip = (dateRange, hotelidArray) => {
 };
 
 export const callKazancTakipAylik = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/kazanctakipAylik";
+  const url = `${baseUrl}/kazanctakipAylik`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -304,8 +294,7 @@ export const callKazancTakipAylik = (dateRange, hotelidArray) => {
 };
 
 export const kanalDagilimGelirlerconfig = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/kanaldagilimgelir";
+  const url = `${baseUrl}/kanaldagilimgelir`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -314,8 +303,7 @@ export const kanalDagilimGelirlerconfig = (dateRange, hotelidArray) => {
 };
 
 export const callHaftalikGecmisKarsilastirma = (dateRange, hotelidArray) => {
-  const url =
-    "https://jectxbackend-672789bf3678.herokuapp.com/rezervasyonkarsilastirmaHaftalik";
+  const url = `${baseUrl}/rezervasyonkarsilastirmaHaftalik`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -324,7 +312,7 @@ export const callHaftalikGecmisKarsilastirma = (dateRange, hotelidArray) => {
 };
 
 export const callrezIptalAnaliz = (dateRange, hotelidArray) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/iptalAnalizz";
+  const url = `${baseUrl}/iptalAnalizz`;
   let data = JSON.stringify({
     dateRange: dateRange,
     hotelidArray: hotelidArray,
@@ -333,7 +321,7 @@ export const callrezIptalAnaliz = (dateRange, hotelidArray) => {
 };
 
 export const callUpdatePassword = (token, password) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/updatepasswordV2";
+  const url = `${baseUrl}/updatepasswordV2`;
   let data = JSON.stringify({
     token: token,
     password: password,
@@ -342,7 +330,7 @@ export const callUpdatePassword = (token, password) => {
 };
 
 export const callForgotPassword = (email) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/forgetPasswordV2";
+  const url = `${baseUrl}/forgetPasswordV2`;
   let data = JSON.stringify({
     mail: email,
   });
@@ -351,7 +339,7 @@ export const callForgotPassword = (email) => {
 
 
 export const sendMail = (email) =>{
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/sendMail"
+  const url = `${baseUrl}/sendMail`;
   let data = JSON.stringify({
     mails: [email]
   });
@@ -360,7 +348,7 @@ export const sendMail = (email) =>{
 }
 
 export const callUpdateUser = (email, newRole, newPage) =>{
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/updateUser"
+  const url = `${baseUrl}/updateUser`
   let data = JSON.stringify({
     email: email,
     newRole: newRole,
@@ -370,7 +358,7 @@ export const callUpdateUser = (email, newRole, newPage) =>{
 }
 
 export const callLoginTwo = (email, password) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/loginV2"
+  const url = `${baseUrl}/loginV2`
   let data = JSON.stringify({
     email: email,
     password: password
@@ -380,7 +368,7 @@ export const callLoginTwo = (email, password) => {
 
 
 export const calladdUserTwo = (from) => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/addUserV2";
+  const url = `${baseUrl}/addUserV2`;
   /*
   console.log('calladdUserTwo function gönderdiği data --> ' ,[
     {
@@ -397,13 +385,13 @@ export const calladdUserTwo = (from) => {
 }
 
 export const callUserRoleTwo = () => {
-  let url = "https://jectxbackend-672789bf3678.herokuapp.com/findUserV2";
+  let url = `${baseUrl}/findUserV2`;
   let data = '';
   return getConfig(url, data);
 };
 
 export const callUpdateUserTwo = (totalData) =>{
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/updateUserV2"
+  const url = `${baseUrl}/updateUserV2`;
   let data = JSON.stringify(
     totalData
   )
@@ -411,7 +399,7 @@ export const callUpdateUserTwo = (totalData) =>{
 }
 
 export const callDeleteUserTwo = (email) =>{
-  let url = "https://jectxbackend-672789bf3678.herokuapp.com/deleteUserByEmailV2"
+  let url = `${baseUrl}/deleteUserByEmailV2`;
   let data = JSON.stringify({
     "email": email
   })

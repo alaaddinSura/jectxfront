@@ -1,3 +1,5 @@
+const baseUrl = "https://jectxbackend-672789bf3678.herokuapp.com"
+
 export const config = (url, data) => {
     let resConfig = {
       method: "post",
@@ -36,13 +38,13 @@ export const config = (url, data) => {
   };
 
   export const getGoals = () =>{
-    let url = "https://jectxbackend-672789bf3678.herokuapp.com/findGoal";
+    let url = `${baseUrl}/findGoal`;
     let data = ""
     return getConfig(url, data)
   }
 
   export const deleteGoals = (id) =>{
-    let url = "https://jectxbackend-672789bf3678.herokuapp.com/deleteGoal";
+    let url = `${baseUrl}/deleteGoal`;
     let data = JSON.stringify({
       "_id": id
     })
@@ -50,7 +52,7 @@ export const config = (url, data) => {
   }
 
   export const addGoals = (value, date, hotelId) => {
-    let url = "https://jectxbackend-672789bf3678.herokuapp.com/addGoal";
+    let url = `${baseUrl}/addGoal`;
     let data = JSON.stringify([{
       type: "Aylik Hedef Gelir",
       value: value,
@@ -61,7 +63,7 @@ export const config = (url, data) => {
   };
 
   export const updateGoals = (id,value, date, hotelId) => {
-    let url = "https://jectxbackend-672789bf3678.herokuapp.com/updateGoal";
+    let url = `${baseUrl}/updateGoal`;
     let data = JSON.stringify({
       _id: id,
       value: value,

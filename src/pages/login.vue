@@ -15,6 +15,8 @@ import { config } from "@/views/dashboards/functions/config";
 import * as fetchData from "@/views/dashboards/functions/fetchData";
 import * as adminFetchData from "@/views/admin/functions/adminFetchData";
 
+const baseUrl = "http://kpi.anteholding.com:3000"
+
 const route = useRoute();
 const router = useRouter();
 const ability = useAppAbility();
@@ -39,7 +41,7 @@ refVForm.value = refVForm.value || {};
 const isPasswordVisible = ref(true);
 
 const login = () => {
-  const url = "https://jectxbackend-672789bf3678.herokuapp.com/loginV2";
+  const url = `${baseUrl}/loginV2`;
   const data = {
     email: form.value.email,
     password: form.value.password,
